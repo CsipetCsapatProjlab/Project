@@ -14,11 +14,17 @@
 <ownedType>
 <reflist>
 <ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
+<ref refid="1120d12a-ec90-11ef-b04b-9f5e68e7dea6"/>
+<ref refid="3fc5ee6f-ec90-11ef-847f-9f5e68e7dea6"/>
+<ref refid="499af3ba-ec90-11ef-a00f-9f5e68e7dea6"/>
 </reflist>
 </ownedType>
 <packagedElement>
 <reflist>
 <ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
+<ref refid="1120d12a-ec90-11ef-b04b-9f5e68e7dea6"/>
+<ref refid="3fc5ee6f-ec90-11ef-847f-9f5e68e7dea6"/>
+<ref refid="499af3ba-ec90-11ef-a00f-9f5e68e7dea6"/>
 </reflist>
 </packagedElement>
 </UML:Package>
@@ -32,6 +38,11 @@
 <ownedPresentation>
 <reflist>
 <ref refid="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6"/>
+<ref refid="11211397-ec90-11ef-ac28-9f5e68e7dea6"/>
+<ref refid="3fc629c8-ec90-11ef-8b64-9f5e68e7dea6"/>
+<ref refid="499b2801-ec90-11ef-9ac4-9f5e68e7dea6"/>
+<ref refid="952bdc6c-ec90-11ef-9bd5-9f5e68e7dea6"/>
+<ref refid="ab9ecb85-ec90-11ef-a79b-9f5e68e7dea6"/>
 </reflist>
 </ownedPresentation>
 </UML:Diagram>
@@ -50,10 +61,16 @@
 <ref refid="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="a4212f65-ec90-11ef-8b2c-9f5e68e7dea6"/>
+<ref refid="aefb336c-ec90-11ef-897a-9f5e68e7dea6"/>
+</reflist>
+</specialization>
 </UML:Actor>
 <UML:ActorItem id="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 116.0, 130.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 71.0, 464.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -71,5 +88,204 @@
 <ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
 </subject>
 </UML:ActorItem>
+<UML:UseCase id="1120d12a-ec90-11ef-b04b-9f5e68e7dea6">
+<name>
+<val>Szerep választás</val>
+</name>
+<owningPackage>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</owningPackage>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="11211397-ec90-11ef-ac28-9f5e68e7dea6"/>
+</reflist>
+</presentation>
+</UML:UseCase>
+<UML:UseCaseItem id="11211397-ec90-11ef-ac28-9f5e68e7dea6">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 214.5289256198347, 460.50000000000006)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>177.0</val>
+</width>
+<height>
+<val>67.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="1120d12a-ec90-11ef-b04b-9f5e68e7dea6"/>
+</subject>
+</UML:UseCaseItem>
+<UML:Actor id="3fc5ee6f-ec90-11ef-847f-9f5e68e7dea6">
+<generalization>
+<reflist>
+<ref refid="aefb336c-ec90-11ef-897a-9f5e68e7dea6"/>
+</reflist>
+</generalization>
+<name>
+<val>Gombász</val>
+</name>
+<note>
+<val></val>
+</note>
+<owningPackage>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</owningPackage>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="3fc629c8-ec90-11ef-8b64-9f5e68e7dea6"/>
+</reflist>
+</presentation>
+</UML:Actor>
+<UML:ActorItem id="3fc629c8-ec90-11ef-8b64-9f5e68e7dea6">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 71.00000000000003, 625.9501373551714)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>38.0</val>
+</width>
+<height>
+<val>60.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="3fc5ee6f-ec90-11ef-847f-9f5e68e7dea6"/>
+</subject>
+</UML:ActorItem>
+<UML:Actor id="499af3ba-ec90-11ef-a00f-9f5e68e7dea6">
+<generalization>
+<reflist>
+<ref refid="a4212f65-ec90-11ef-8b2c-9f5e68e7dea6"/>
+</reflist>
+</generalization>
+<name>
+<val>Rovarász</val>
+</name>
+<owningPackage>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</owningPackage>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="499b2801-ec90-11ef-9ac4-9f5e68e7dea6"/>
+</reflist>
+</presentation>
+</UML:Actor>
+<UML:ActorItem id="499b2801-ec90-11ef-9ac4-9f5e68e7dea6">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 71.00000000000001, 302.8096414874029)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>38.0</val>
+</width>
+<height>
+<val>60.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="499af3ba-ec90-11ef-a00f-9f5e68e7dea6"/>
+</subject>
+</UML:ActorItem>
+<UML:GeneralizationItem id="952bdc6c-ec90-11ef-9bd5-9f5e68e7dea6">
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<subject>
+<ref refid="a4212f65-ec90-11ef-8b2c-9f5e68e7dea6"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -4.520661157024705, 406.52201743502405)</val>
+</matrix>
+<points>
+<val>[(94.52066115702473, -25.712375947621126), (94.52066115702479, 57.477982564975946)]</val>
+</points>
+<head-connection>
+<ref refid="499b2801-ec90-11ef-9ac4-9f5e68e7dea6"/>
+</head-connection>
+<tail-connection>
+<ref refid="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6"/>
+</tail-connection>
+</UML:GeneralizationItem>
+<UML:Generalization id="a4212f65-ec90-11ef-8b2c-9f5e68e7dea6">
+<general>
+<ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="952bdc6c-ec90-11ef-9bd5-9f5e68e7dea6"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="499af3ba-ec90-11ef-a00f-9f5e68e7dea6"/>
+</specific>
+</UML:Generalization>
+<UML:GeneralizationItem id="ab9ecb85-ec90-11ef-a79b-9f5e68e7dea6">
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<subject>
+<ref refid="aefb336c-ec90-11ef-897a-9f5e68e7dea6"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 183.909090909091, 639.5798686746934)</val>
+</matrix>
+<points>
+<val>[(-93.90909090909088, -13.62973131952208), (-93.90909090909099, -97.57986867469344)]</val>
+</points>
+<head-connection>
+<ref refid="3fc629c8-ec90-11ef-8b64-9f5e68e7dea6"/>
+</head-connection>
+<tail-connection>
+<ref refid="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6"/>
+</tail-connection>
+</UML:GeneralizationItem>
+<UML:Generalization id="aefb336c-ec90-11ef-897a-9f5e68e7dea6">
+<general>
+<ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="ab9ecb85-ec90-11ef-a79b-9f5e68e7dea6"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="3fc5ee6f-ec90-11ef-847f-9f5e68e7dea6"/>
+</specific>
+</UML:Generalization>
 </model>
 </gaphor>
