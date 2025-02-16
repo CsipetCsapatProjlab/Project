@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.0.0">
+<model>
+<Core:StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+<UML:Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+<name>
+<val>New model</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+<ownedType>
+<reflist>
+<ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
+</reflist>
+</ownedType>
+<packagedElement>
+<reflist>
+<ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
+</reflist>
+</packagedElement>
+</UML:Package>
+<UML:Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
+<element>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</element>
+<name>
+<val>New Diagram</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6"/>
+</reflist>
+</ownedPresentation>
+</UML:Diagram>
+<UML:Actor id="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6">
+<name>
+<val>Játékos</val>
+</name>
+<owningPackage>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</owningPackage>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6"/>
+</reflist>
+</presentation>
+</UML:Actor>
+<UML:ActorItem id="f7adb228-ec8b-11ef-b48c-9f5e68e7dea6">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 116.0, 130.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>38.0</val>
+</width>
+<height>
+<val>60.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="f7ad67fe-ec8b-11ef-b78a-9f5e68e7dea6"/>
+</subject>
+</UML:ActorItem>
+</model>
+</gaphor>
