@@ -1,3 +1,4 @@
+
 package terkep;
 
 import java.util.Random;
@@ -17,10 +18,12 @@ public class Maze {
                 test[i][j] = ' ';
             }
         }
+
+        this.generateMaze(rand.nextInt(x),rand.nextInt(y));
     }
 
     public void print() {
-        for (int i = 0; i <= this.y; i++) {
+        for (int i = 0; i <= this.y + 1; i++) {
             System.out.print("0");
         }
         System.out.println();
@@ -32,19 +35,30 @@ public class Maze {
             System.out.print("0");
             System.out.println();
         }
-        for (int i = 0; i <= this.y; i++) {
+        for (int i = 0; i <= this.y + 1; i++) {
             System.out.print("0");
         }
         System.out.println();
     }
 
     public void generateMaze(int x, int y) {
+        if (x < 0 || y < 0 || x >= this.x || y >= this.y || test[x][y] == '#') {
+            return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
+        }
+        int merre = -1;
+        int elozo = -1;
         if (fluidPlace(x, y)) {
             test[x][y] = '#';
+        }else{
+            return;
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
+            do{
+                merre = rand.nextInt(4);
+            }while(merre == elozo);
+            elozo = merre;
             if (x - 1 >= 0 && y - 1 >= 0 && x + 1 < this.x && y + 1 < this.y) {
-                switch (rand.nextInt(4)) {
+                switch (merre) {
                     case 0:
                         generateMaze(x - 1, y);
                         break;
