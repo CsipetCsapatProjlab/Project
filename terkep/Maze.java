@@ -5,21 +5,26 @@ import java.util.Random;
 
 public class Maze {
     char[][] test;
+    boolean[][] szigetekKeret;
     int x;
     int y;
+    int vizszam = 0;
     Random rand = new Random();
 
     public Maze(int x, int y) {
         this.x = x;
         this.y = y;
         test = new char[x][y];
+        szigetekKeret = new boolean[x][y];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 test[i][j] = ' ';
+                szigetekKeret[i][j] = false;
             }
         }
-
-        this.generateMaze(rand.nextInt(x),rand.nextInt(y));
+        while(vizszam <= (x*y/3)){
+            this.generateMaze(rand.nextInt(x),rand.nextInt(y));
+        }
     }
 
     public void print() {
@@ -42,6 +47,9 @@ public class Maze {
     }
 
     public void generateMaze(int x, int y) {
+        if(szigetekKeret[x][y]){
+            return;
+        }
         if (x < 0 || y < 0 || x >= this.x || y >= this.y || test[x][y] == '#') {
             return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
         }
@@ -49,6 +57,8 @@ public class Maze {
         int elozo = -1;
         if (fluidPlace(x, y)) {
             test[x][y] = '#';
+            szigetekKeret[x][y] = true;
+            this.vizszam++;
         }else{
             return;
         }
@@ -58,26 +68,29 @@ public class Maze {
             }while(merre == elozo);
             elozo = merre;
             if (x - 1 >= 0 && y - 1 >= 0 && x + 1 < this.x && y + 1 < this.y) {
-                switch (merre) {
-                    case 0:
-                        generateMaze(x - 1, y);
-                        break;
-                    case 1:
-                        generateMaze(x + 1, y);
-                        break;
-                    case 2:
-                        generateMaze(x, y - 1);
-                        break;
-                    case 3:
-                        generateMaze(x, y + 1);
-                        break;
-                    default:
-                        continue;
-                }
+                irany(merre ,x ,y);
             }
         }
     }
 
+    void irany(int merre, int x, int y){
+        switch (merre) {
+            case 0:
+                generateMaze(x - 1, y);
+                break;
+            case 1:
+                generateMaze(x + 1, y);
+                break;
+            case 2:
+                generateMaze(x, y - 1);
+                break;
+            case 3:
+                generateMaze(x, y + 1);
+                break;
+            default:
+                break;
+        }
+    }
     private boolean fluidPlace(int x, int y) {
         if (x > 0 && y > 0) {
             if (test[x - 1][y - 1] == '#' && test[x - 1][y - 1] == test[x - 1][y]
