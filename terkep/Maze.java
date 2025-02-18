@@ -47,7 +47,7 @@ public class Maze {
     }
 
     public void generateMaze(int x, int y) {
-        if(szigetekKeret[x][y]){
+        if(szigetekKeret[x][y]){ //ellenőrzi hogy voltunk-e már azon a mezőn
             return;
         }
         if (x < 0 || y < 0 || x >= this.x || y >= this.y || test[x][y] == '#') {
