@@ -9,6 +9,7 @@ public class Maze {
     int x;
     int y;
     int vizszam = 0;
+    public int szigetekSzama = 1;
     Random rand = new Random();
 
     public Maze(int x, int y) {
@@ -22,8 +23,17 @@ public class Maze {
                 szigetekKeret[i][j] = false;
             }
         }
-        while(vizszam <= (x*y/3)){
-            this.generateMaze(rand.nextInt(x),rand.nextInt(y));
+        boolean sikeres = false;
+        while(!sikeres){
+            while(vizszam <= (x*y/3)){
+                this.generateMaze(rand.nextInt(x),rand.nextInt(y));
+            }
+            findSziget();
+            if(szigetekSzama > 3){
+                sikeres = true;
+            }else{
+                reset();
+            }
         }
     }
 
@@ -62,7 +72,7 @@ public class Maze {
         }else{
             return;
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             do{
                 merre = rand.nextInt(4);
             }while(merre == elozo);
@@ -119,5 +129,50 @@ public class Maze {
         return true;
     }
     
+    void findSziget(){
+        for(int i = 0; i < this.x; i++){
+            for(int j = 0 ; j < this.y ;j++){
+                if(!szigetekKeret[i][j]){
+                    connectSziget(i,j);
+                    szigetekSzama++;
+                }
+            }
+        }
+    }
 
+    void connectSziget(int x, int y){
+        if(szigetekKeret[x][y]){ //ellenőrzi hogy voltunk-e már azon a mezőn
+            return;
+        }
+        if (x < 0 || y < 0 || x >= this.x || y >= this.y || test[x][y] == '#') {
+            return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
+        }
+
+        test[x][y] = (char)('0' + szigetekSzama);
+        szigetekKeret[x][y] = true;
+        
+        if (x - 1 >= 0) {
+            connectSziget(x-1, y);
+        }
+        if (x + 1 < this.x) {
+            connectSziget(x+1, y);
+        }
+        if (y - 1 >= 0) {
+            connectSziget(x, y-1);
+        }
+        if (y + 1 < this.y) {
+            connectSziget(x, y+1);
+        }
+    }
+
+    void reset(){
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                test[i][j] = ' ';
+                szigetekKeret[i][j] = false;
+            }
+        }
+        szigetekSzama = 1;
+        vizszam = 0;
+    }
 }
