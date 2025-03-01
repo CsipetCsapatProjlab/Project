@@ -1,6 +1,6 @@
-package Gombak;
+package Gombak.Gombak;
 
-import Rovarok.Rovar;
+import Rovarok.Rovarok.Rovar;
 
 public enum SporaType {
     LASSIT(3),
@@ -12,7 +12,6 @@ public enum SporaType {
     SporaType(int l) {
         lepesErtek = l;
     }
-
     public void alkalmaz(Rovar rovar) {
         rovar.setLepesek(lepesErtek);
     }

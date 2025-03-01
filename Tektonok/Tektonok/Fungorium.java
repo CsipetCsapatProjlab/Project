@@ -1,10 +1,10 @@
-﻿package Tektonok;
+﻿package Tektonok.Tektonok;
 
 import java.util.List;
 import java.util.Random;
 
-import Gombak.Gombasz;
-import Rovarok.Rovarasz;
+import Gombak.Gombak.Gombasz;
+import Rovarok.Rovarok.Rovarasz;
 
 public class Fungorium
 {

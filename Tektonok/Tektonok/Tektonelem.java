@@ -1,4 +1,4 @@
-﻿package Tektonok;
+﻿package Tektonok.Tektonok;
 
 public class Tektonelem {
     private boolean test;

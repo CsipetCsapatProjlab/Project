@@ -1,8 +1,8 @@
-﻿package Tektonok;
+﻿package Tektonok.Tektonok;
 
 import java.util.List;
 
-import Gombak.Spora;
+import Gombak.Gombak.Spora;
 
 public class Tekton {
     private List<Tektonelem> elemek;
