@@ -876,7 +876,7 @@
 </UML:MessageOccurrenceSpecification>
 <UML:Interaction id="da28bca7-f5ea-11ef-bcd1-38fc98f34ba6">
 <name>
-<val>Feltétel</val>
+<val>alt</val>
 </name>
 <owningPackage>
 <ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
