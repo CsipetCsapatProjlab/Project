@@ -124,7 +124,7 @@
 <ref refid="eb77d3dd-f671-11ef-a69d-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Fungorium</val>
+<val>f: Fungorium</val>
 </name>
 <presentation>
 <reflist>
@@ -208,7 +208,7 @@
 <ref refid="eb77d3dd-f671-11ef-a69d-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Tekton</val>
+<val>t: Tekton</val>
 </name>
 <presentation>
 <reflist>
@@ -257,7 +257,7 @@
 <ref refid="eb77d3dd-f671-11ef-a69d-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Gomba</val>
+<val>g: Gomba</val>
 </name>
 <presentation>
 <reflist>
@@ -594,7 +594,7 @@
 <ref refid="eb77d3dd-f671-11ef-a69d-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Gombatest</val>
+<val>gt: Gombatest</val>
 </name>
 <presentation>
 <reflist>
@@ -883,7 +883,7 @@
 <ref refid="eb77d3dd-f671-11ef-a69d-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Tekton elem</val>
+<val>te: Tektonelem</val>
 </name>
 <presentation>
 <reflist>

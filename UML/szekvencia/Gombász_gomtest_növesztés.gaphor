@@ -55,10 +55,10 @@
 <ref refid="73806c2f-f6c3-11ef-8ca2-38fc98f34ba3"/>
 <ref refid="c129da99-f677-11ef-8685-38fc98f34ba3"/>
 <ref refid="e954ea36-f677-11ef-8769-38fc98f34ba3"/>
-<ref refid="eb094901-f677-11ef-8e64-38fc98f34ba3"/>
 <ref refid="e07d2188-f676-11ef-856c-38fc98f34ba3"/>
 <ref refid="62e3ab3d-f677-11ef-9748-38fc98f34ba3"/>
 <ref refid="75ffe4c3-f677-11ef-9f20-38fc98f34ba3"/>
+<ref refid="eb094901-f677-11ef-8e64-38fc98f34ba3"/>
 <ref refid="9d61757f-f677-11ef-81f7-38fc98f34ba3"/>
 <ref refid="660b28ab-f678-11ef-8028-38fc98f34ba3"/>
 <ref refid="6e7e6c02-f678-11ef-8834-38fc98f34ba3"/>
@@ -141,7 +141,7 @@
 <ref refid="7130d8ac-f676-11ef-89e3-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Fungorium</val>
+<val>f: Fungorium</val>
 </name>
 <presentation>
 <reflist>
@@ -351,7 +351,7 @@
 <ref refid="7130d8ac-f676-11ef-89e3-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Tekton elem</val>
+<val>te: Tektonelem</val>
 </name>
 <presentation>
 <reflist>
@@ -413,7 +413,7 @@
 <ref refid="7130d8ac-f676-11ef-89e3-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Tekton</val>
+<val>t: Tekton</val>
 </name>
 <presentation>
 <reflist>
@@ -1520,7 +1520,7 @@
 <ref refid="7df868c0-f677-11ef-bd0d-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Gombatest</val>
+<val>gt: Gombatest</val>
 </name>
 <presentation>
 <reflist>

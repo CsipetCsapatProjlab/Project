@@ -118,7 +118,7 @@
 <ref refid="f521454f-f680-11ef-9d80-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Rovar</val>
+<val>r: Rovar</val>
 </name>
 <presentation>
 <reflist>
@@ -304,7 +304,7 @@
 <ref refid="f521454f-f680-11ef-9d80-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Fungorium</val>
+<val>f: Fungorium</val>
 </name>
 <presentation>
 <reflist>
@@ -656,7 +656,7 @@
 <ref refid="f521454f-f680-11ef-9d80-38fc98f34ba3"/>
 </interaction>
 <name>
-<val>Tektonelem</val>
+<val>t: Tektonelem</val>
 </name>
 <presentation>
 <reflist>
