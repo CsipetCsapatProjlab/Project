@@ -1,6 +1,6 @@
-﻿package Gombak;
+﻿package Gombak.Gombak;
 
-import Rovarok.Rovar;
+import Rovarok.Rovarok.Rovar;
 
 public class Spora {
     SporaType sporaType;

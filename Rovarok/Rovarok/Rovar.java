@@ -1,4 +1,4 @@
-﻿package Rovarok;
+﻿package Rovarok.Rovarok;
 
 public class Rovar {
     private int kaja;

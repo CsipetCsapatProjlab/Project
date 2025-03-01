@@ -1,4 +1,4 @@
-﻿package Gombak;
+﻿package Gombak.Gombak;
 
 public class Gombasz
 {
