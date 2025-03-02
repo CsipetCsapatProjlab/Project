@@ -71,7 +71,7 @@
         <mxCell id="CVm5r9nSp5FHEXivWLYl-32" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontFamily=Lucida Console;labelBackgroundColor=none;" parent="CVm5r9nSp5FHEXivWLYl-30" vertex="1">
           <mxGeometry y="70" width="240" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="gR0rm1tbDsfKvDMnP-O4-8" value="+ SporaLo()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontFamily=Lucida Console;labelBackgroundColor=none;" parent="CVm5r9nSp5FHEXivWLYl-30" vertex="1">
+        <mxCell id="gR0rm1tbDsfKvDMnP-O4-8" value="+ SporaLo(int x, int y)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontFamily=Lucida Console;labelBackgroundColor=none;" parent="CVm5r9nSp5FHEXivWLYl-30" vertex="1">
           <mxGeometry y="78" width="240" height="30" as="geometry" />
         </mxCell>
         <mxCell id="CVm5r9nSp5FHEXivWLYl-74" style="edgeStyle=orthogonalEdgeStyle;shape=connector;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=12;endArrow=diamond;endFill=1;endSize=12;" parent="1" source="CVm5r9nSp5FHEXivWLYl-34" target="CVm5r9nSp5FHEXivWLYl-30" edge="1">
