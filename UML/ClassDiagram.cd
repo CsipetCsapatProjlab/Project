@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ConsoleApp1.Fungorium">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAIAABAAAARIAAAEEACAAAAAAAACAAABggAAAAAA=</HashCode>
+      <FileName>Maze.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="gombaszok" />
+      <Field Name="rovaraszok" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ConsoleApp1.Program">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleApp1.Rovarasz">
+    <Position X="12.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAQACAAAAAAgAAAAAAAAAAAAAAAEAAAAAgA=</HashCode>
+      <FileName>Rovarasz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleApp1.Gombasz">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQBAAAAAAAAAAIgAAAAAAAACAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Gombasz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleApp1.Gomba">
+    <Position X="4.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAACAAAAIAAAEAACAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Gomba.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="fonalak" />
+      <Field Name="testek" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ConsoleApp1.Rovar">
+    <Position X="6.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAASIAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rovar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleApp1.Tekton">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Tekton.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="sporak" />
+      <Field Name="elemek" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ConsoleApp1.GombaTest">
+    <Position X="5.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAACAAAAAEAAAAAAAA=</HashCode>
+      <FileName>GombaTest.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="szomszedok" />
+      <Field Name="sporak" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ConsoleApp1.Spora">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Spora.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleApp1.Fonal">
+    <Position X="8" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Fonal.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="szomszedok" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ConsoleApp1.Tektonelem">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAIAAEEEAAAAAA=</HashCode>
+      <FileName>Tektonelem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ConsoleApp1.SporaType">
+    <Position X="2.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAQAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Spora.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
