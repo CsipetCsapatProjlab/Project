@@ -9,17 +9,19 @@ public class Spora extends GameObject {
     int tapertek;
     IGombasz gombaszObserver;
     Hatas hatas;
-
+    
+    public Spora(Grid g){super(g);}
     public Spora(Grid grid, int tapErtek, IGombasz gObserver, Hatas hatas) {
         super(grid);
         this.tapertek = tapErtek;
         this.gombaszObserver = gObserver;
         this.hatas = hatas;
     }
+    public int getTap(){return tapertek;}
 
     @Override
     public void remove() {
-        // TODO
+        //TODO
     }
 
     @Override

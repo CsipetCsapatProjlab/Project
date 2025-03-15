@@ -9,6 +9,7 @@ public class Rovarasz extends Jatekos implements IRovarasz {
     int szerzettTapanyag;
     Rovar rovar;
 
+    public Rovarasz(Rovar r){rovar = r;}
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) {
         // TODO

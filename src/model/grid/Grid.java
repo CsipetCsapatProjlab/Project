@@ -1,31 +1,41 @@
 package model.grid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import interfaces.IDiscoverLogic;
+import model.enums.Hatas;
 import model.gameobjects.GameObject;
-
-import java.util.List;
 
 public abstract class Grid {
     boolean zarolva;
     List<GameObject> gameObjects;
-
-    public Grid(List<GameObject> gameObjects) {
-        this.gameObjects = gameObjects;
+    protected Grid(){
+        zarolva = false;
+        gameObjects = new ArrayList<GameObject>();
     }
+    protected Grid(List<GameObject> g) {
+        this.gameObjects = g;
+    }
+    public List<GameObject> getGameObject(){return gameObjects;}
 
     public void clear() {
-        gameObjects.forEach(GameObject::remove);
-        gameObjects = null;
+        List<GameObject> tmp = new ArrayList<>();
+        tmp.addAll(gameObjects);
+        for (GameObject g : tmp) {
+            g.remove();
+        }
+        gameObjects.clear();
     }
 
     public void hozzaAd(GameObject gameObject) {
         gameObjects.add(gameObject);
     }
 
-    public void torol(GameObject gameObject) {
-        gameObjects.remove(gameObject);
+    public void torol(GameObject g) {
+        gameObjects.remove(g);
     }
 
     public void gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic) {
@@ -36,6 +46,7 @@ public abstract class Grid {
         // TODO
     }
 
+    public abstract Hatas getHatas();
     public abstract void accept(GameObjectVisitor visitor);
     public abstract void accept(GridVisitor visitor);
 }

@@ -1,9 +1,12 @@
 package model.gameobjects;
 
+import java.util.Scanner;
+
 import interfaces.GameObjectVisitor;
 import interfaces.IGombasz;
 import logic_classes.FonalGrowLogic;
 import logic_classes.GombaTestPlaceLogic;
+import model.enums.Hatas;
 import model.grid.Grid;
 
 public class Fonal extends GameObject {
@@ -20,7 +23,8 @@ public class Fonal extends GameObject {
 
     @Override
     public void remove() {
-        // TODO
+        grid.torol(this);
+        grid = null;
     }
 
     @Override
@@ -29,10 +33,26 @@ public class Fonal extends GameObject {
     }
 
     public void fonalNovesztes(Grid destination) {
-        // TODO
+        System.out.println("Ha van elérhető út: poz, ha nincs akkor 0");
+        Scanner scanner = new Scanner(System.in);
+        int b = scanner.nextInt();
+        System.out.println("Hany spora van, ha elegendo 1-nel nagyobb, ha nem akkor nem");
+        int a = scanner.nextInt();
+        if(b < 1) return;
+        if(a < 1) return;
+        Fonal f = new Fonal(destination, gombaszObserver, fonalGrowLogic, gombaTestPlaceLogic);
+        destination.hozzaAd(f);
+        //gombaszObserver.addFonal(this);
     }
 
     public void gombaTestNovesztes() {
-        // TODO
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Hany spora van, ha elegendo 1-nel nagyobb, ha nem akkor nem");
+        int a = scanner.nextInt();
+        if(a < 1) return;
+        if(grid.getHatas() == Hatas.NO_GOMBATEST) return;
+        GombaTest g = new GombaTest(grid, gombaszObserver, null);
+        grid.hozzaAd(g);
+        //gombaszObserver.addTest(g);
     }
 }
