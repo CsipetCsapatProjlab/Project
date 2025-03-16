@@ -89,6 +89,7 @@ public class Tests {
                 test11();
                 break;
             case 0:
+                scanner.close();
                 return;
             default:
                 System.out.println("Nincsen ilyen teszt, kerlek valassz ujra a tesztek kozul!");
