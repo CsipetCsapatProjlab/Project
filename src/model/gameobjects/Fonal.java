@@ -36,9 +36,9 @@ public class Fonal extends GameObject {
         System.out.println("Ha van elérhető út: poz, ha nincs akkor 0");
         Scanner scanner = new Scanner(System.in);
         int b = scanner.nextInt();
+        if(b < 1) return;
         System.out.println("Hany spora van, ha elegendo 1-nel nagyobb, ha nem akkor nem");
         int a = scanner.nextInt();
-        if(b < 1) return;
         if(a < 1) return;
         Fonal f = new Fonal(destination, gombaszObserver, fonalGrowLogic, gombaTestPlaceLogic);
         destination.hozzaAd(f);
