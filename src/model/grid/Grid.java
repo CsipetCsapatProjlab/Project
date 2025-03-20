@@ -10,6 +10,7 @@ import model.enums.Hatas;
 import model.gameobjects.GameObject;
 
 public abstract class Grid {
+    Grid[] neighbours;
     boolean zarolva;
     List<GameObject> gameObjects;
     protected Grid(){
@@ -46,6 +47,7 @@ public abstract class Grid {
         // TODO
     }
 
+    public Grid[] getNeighbours() {return neighbours;}
     public abstract Hatas getHatas();
     public abstract void accept(GameObjectVisitor visitor);
     public abstract void accept(GridVisitor visitor);
