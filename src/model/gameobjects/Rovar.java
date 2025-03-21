@@ -3,14 +3,14 @@ package model.gameobjects;
 import java.util.Scanner;
 
 import interfaces.GameObjectVisitor;
-import interfaces.IRovarasz;
 import logic_classes.RovarConsumeLogic;
 import logic_classes.RovarMoveLogic;
 import model.enums.Hatas;
 import model.grid.Grid;
+import model.players.Rovarasz;
 
 public class Rovar extends GameObject {
-    IRovarasz  rovarObserever;
+    Rovarasz rovarasz;
     RovarConsumeLogic rovarConsumeLogic;
     RovarMoveLogic rovarMoveLogic;
     int energia;
@@ -19,9 +19,9 @@ public class Rovar extends GameObject {
 
 
     public Rovar(Grid grid) {super(grid);}
-    public Rovar(Grid grid, IRovarasz rObserever, RovarConsumeLogic rcl, RovarMoveLogic rml, int energia, int hatasCooldown) {
+    public Rovar(Grid grid, Rovarasz rovarasz, RovarConsumeLogic rcl, RovarMoveLogic rml, int energia, int hatasCooldown) {
         super(grid);
-        this.rovarObserever = rObserever;
+        this.rovarasz = rovarasz;
         this.rovarConsumeLogic = rcl;
         this.rovarMoveLogic = rml;
         this.energia = energia;

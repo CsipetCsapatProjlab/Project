@@ -3,15 +3,13 @@ package model.players;
 import java.util.ArrayList;
 import java.util.List;
 
-import interfaces.IGombasz;
 import model.enums.Move;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
-import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
 
-public class Gombasz extends Jatekos implements IGombasz {
+public class Gombasz extends Jatekos {
     int kinottGombatest;
     List<Spora> sporak=new ArrayList<>();
     List<Fonal> fonalak=new ArrayList<>();
