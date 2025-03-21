@@ -3,19 +3,18 @@ package model.gameobjects;
 import java.util.Scanner;
 
 import interfaces.GameObjectVisitor;
-import interfaces.IGombasz;
 import logic_classes.SporaPlaceLogic;
 import model.grid.Grid;
 import model.players.Gombasz;
 
 public class GombaTest extends GameObject {
-    private Gombasz gombaszObserver;
+    private Gombasz gombasz;
     boolean fejlesztett = false;
     SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic();
 
     public GombaTest(Grid grid, Gombasz gombasz) {
         super(grid);
-        this.gombaszObserver = gombasz;
+        this.gombasz = gombasz;
     }
 
     @Override

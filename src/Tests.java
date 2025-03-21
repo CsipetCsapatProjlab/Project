@@ -1,10 +1,8 @@
 import java.util.*;
 
-import interfaces.IGombasz;
 import model.Fungorium;
 import model.JatekMotor;
 import model.Tekton;
-import model.enums.Hatas;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
@@ -18,7 +16,6 @@ import model.players.Rovarasz;
 
 public class Tests {
     private JatekMotor jm;
-    private IGombasz ig;
     private Gombasz g;
     private Rovarasz r;
     private Tekton t1;
