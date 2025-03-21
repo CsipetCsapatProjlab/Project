@@ -2,21 +2,22 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 import model.enums.Move;
 import model.grid.Grid;
 import model.players.Gombasz;
+import model.players.Jatekos;
 import model.players.Rovarasz;
 
 public class JatekMotor {
-    Fungorium fungorium;
-    List<Rovarasz> rovaraszok;
-    List<Gombasz>  gombaszok;
+    List<Jatekos> jatekosok=new ArrayList<>();
 
-    public JatekMotor(List<Rovarasz> r, List<Gombasz> g){
-        rovaraszok = r;
-        gombaszok = g;
+    public JatekMotor(){
+
     }
+
     public void jelenlegiJatekos() {
 
     }
@@ -31,19 +32,26 @@ public class JatekMotor {
         System.out.println("A jatek betoltese sikeres!");
     }
     public void start(){
-        rovaraszok = new ArrayList<>();
-        gombaszok = new ArrayList<>();
-        System.out.println("Uj jatek betoltese sikeres!\nPalya betoltese sikeres!\nTektonok letrehozasa sikeres!\nSporak lehejezese sikeres!");
-        valasztas(false);
-        valasztas(true);
+
     }
-    public void valasztas(boolean a){
-        if(a){
-            gombaszok.add(new Gombasz(null, null, null));
-            System.out.println("Gombasz kivalasztas sikeres!");
-        } else {
-            rovaraszok.add(new Rovarasz(null));
-            System.out.println("Rovarasz kivalasztas sikeres!");
+    public void getJatekosValasztas(Grid g){
+        String jatekosTipus; String jatekosNev; Grid kezdoPoz;
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("JatekosTipus (Rovarasz/Gombasz):");
+        jatekosTipus=scanner.nextLine();
+
+        System.out.println("JatekosNev:");
+        jatekosNev=scanner.nextLine();
+
+        System.out.println("KezdoPoz: (x,y)");
+        kezdoPoz=g;
+
+        switch (jatekosTipus){
+            case "Rovarasz":
+                jatekosok.add(new Rovarasz(g, jatekosNev));
+                break;
+            case "Gombasz":
+                jatekosok.add(new Gombasz(g,jatekosNev));
         }
     }
 }
