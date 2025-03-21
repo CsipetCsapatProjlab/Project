@@ -13,6 +13,7 @@ import model.players.Rovarasz;
 
 public class JatekMotor {
     List<Jatekos> jatekosok=new ArrayList<>();
+    int currentPlayer;
 
     public JatekMotor(){
 
@@ -23,7 +24,7 @@ public class JatekMotor {
     }
 
     public void kovetkezoJatekos(Grid kezdo, Grid cel, Move move) {
-        
+        jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
     }
     public void mentes(){
         System.out.println("A jatek mentese sikeres!");

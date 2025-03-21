@@ -27,9 +27,27 @@ public class Gombasz extends Jatekos {
         fonalak = f;
         gombaTestek = g;
     }
+
+    /**
+     *
+     * @param kezdo a grid ahonnan a move indul
+     * @param cel ahova érkezik
+     * @param move a move
+     */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) {
-        
+        switch (move) {
+            case Fonal_noveszt -> {
+                for(Fonal f : fonalak){
+                    if (f.isAt(kezdo)) {
+                        f.fonalNovesztes(cel);
+                        return;
+                    }
+                }
+                //később throw lesz
+                System.out.println("Innen nem lehet fonalat növeszteni");
+            }
+        }
     }
     public void addTest(GombaTest g){
         kinottGombatest++;
