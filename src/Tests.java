@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import interfaces.IGombasz;
+import model.Fungorium;
 import model.JatekMotor;
 import model.Tekton;
 import model.enums.Hatas;
@@ -10,10 +9,12 @@ import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
+import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;
 import model.players.Rovarasz;
+
 
 public class Tests {
     private JatekMotor jm;
@@ -38,6 +39,7 @@ public class Tests {
     private GombaTest gt;
     private Fonal f;
     private Rovar rovar;
+    /*
     public void start(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Teszt: Jatek mentese");
@@ -96,7 +98,103 @@ public class Tests {
                 start();
         }
     }
+
+     */
+    public static Map<String, Object> ObjectMap = new HashMap<>();
+
+    /**
+     * @return 2 Tektonból álló 2db 4*4-es sziget egy 4* lávával elválasztva vertikálisan, amit láva vesz körbe.
+     */
+    public static Fungorium genPalya() {
+        Tekton[] tektons = new Tekton[2];
+        tektons[0] = new Tekton(null);
+        tektons[1] = new Tekton(null);
+        ObjectMap.put("tekton0", tektons[0]);
+        ObjectMap.put("tekton1", tektons[1]);
+        Grid[][] grid = new Grid[11][6];
+        for (int i = 0; i < 11; i++) {
+            grid[i] = new Grid[6];
+        }
+
+        for (int x = 0; x < 11; x++) {
+            grid[x][0] = new Lava();
+            grid[x][5] = new Lava();
+            ObjectMap.put("lava" + x + "," + "0", grid[x][0]);
+            ObjectMap.put("lava" + x + "," + "5", grid[x][5]);
+        }
+
+        for (int y = 0; y < 6; y++) {
+            grid[0][y] = new Lava();
+            grid[10][y] = new Lava();
+            grid[5][y] = new Lava();
+            ObjectMap.put("lava" + "0" + "," + y, grid[0][y]);
+            ObjectMap.put("lava" + "10" + "," + y, grid[10][y]);
+            ObjectMap.put("lava" + "5" + "," + y, grid[5][y]);
+        }
+
+        int dx = 1, dy = 1;
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                grid[x + dx][y + dy] = new TektonElem(tektons[0]);
+                ObjectMap.put("tektonelem" + (x + dx) + "," + (x + dy), grid[x + dx][y + dy]);
+            }
+        }
+
+        dx = 6;
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                grid[x + dx][y + dy] = new TektonElem(tektons[1]);
+                ObjectMap.put("tektonelem" + (x + dx) + "," + (x + dy), grid[x + dx][y + dy]);
+            }
+        }
+        for (int x = 0; x < 11; x++) {
+            for (int y = 0; y < 6; y++) {
+                Grid[] neighbours = new Grid[4];
+                try {
+                    neighbours[0] = grid[x - 1][y];
+                } catch (Exception e) {
+                }
+
+                try {
+                    neighbours[1] = grid[x][y - 1];
+                } catch (Exception e) {
+                }
+
+                try {
+                    neighbours[2] = grid[x + 1][y];
+                } catch (Exception e) {
+                }
+
+                try {
+                    neighbours[3] = grid[x][y + 1];
+                } catch (Exception e) {
+                }
+
+                grid[x][y].setNeighbours(neighbours);
+            }
+        }
+
+
+        Fungorium fn = new Fungorium();
+        ObjectMap.put("fungorium0", fn);
+        fn.setMap(grid);
+        fn.setTektons(Arrays.stream(tektons).toList());
+
+
+        return fn;
+    }
+
+    public static void newsetup() {
+        Fungorium fungorium = genPalya();
+        JatekMotor motor = fungorium.getMotor();
+        motor.getJatekosValasztas((Grid) ObjectMap.get("tektonelem2,2"));
+        motor.getJatekosValasztas((Grid) ObjectMap.get("tektonelem7,2"));
+    }
+}
+
+/*
     void setup(){
+
         t1 = new Tekton(null);
         t2 = new Tekton(null);
         t3 = new Tekton(null);
@@ -223,3 +321,4 @@ public class Tests {
         start();
     }
 }
+*/

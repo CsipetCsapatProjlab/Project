@@ -51,7 +51,7 @@ public class Fonal extends GameObject {
         int a = scanner.nextInt();
         if(a < 1) return;
         if(grid.getHatas() == Hatas.NO_GOMBATEST) return;
-        GombaTest g = new GombaTest(grid, gombaszObserver, null);
+        GombaTest g = new GombaTest(grid, null);
         grid.hozzaAd(g);
         //gombaszObserver.addTest(g);
     }

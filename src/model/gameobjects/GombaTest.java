@@ -6,16 +6,16 @@ import interfaces.GameObjectVisitor;
 import interfaces.IGombasz;
 import logic_classes.SporaPlaceLogic;
 import model.grid.Grid;
+import model.players.Gombasz;
 
 public class GombaTest extends GameObject {
-    private IGombasz gombaszObserver;
+    private Gombasz gombaszObserver;
     boolean fejlesztett = false;
-    SporaPlaceLogic sporaPlaceLogic;
+    SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic();
 
-    public GombaTest(Grid grid, IGombasz gObserver,  SporaPlaceLogic spl) {
+    public GombaTest(Grid grid, Gombasz gombasz) {
         super(grid);
-        this.gombaszObserver = gObserver;
-        this.sporaPlaceLogic = spl;
+        this.gombaszObserver = gombasz;
     }
 
     @Override

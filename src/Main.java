@@ -12,8 +12,11 @@ public class Main {
         MyLogger.Return("asd3");
         MyLogger.Return("asd");
 
-        Tests t = new Tests();
+
+        Tests.newsetup();
+        Tests t = new Tests();/*
         t.setup();
         t.start();
+        */
     }
 }
