@@ -18,8 +18,8 @@ public class JatekMotor {
 
     }
 
-    public void jelenlegiJatekos() {
-
+    public Jatekos jelenlegiJatekos() {
+        return jatekosok.get(currentPlayer);
     }
 
     public void kovetkezoJatekos(Grid kezdo, Grid cel, Move move) {
@@ -34,7 +34,7 @@ public class JatekMotor {
     public void start(){
 
     }
-    public void getJatekosValasztas(Grid g){
+    public void jatekosValasztas(Grid[][] g){
         String jatekosTipus; String jatekosNev; Grid kezdoPoz;
         Scanner scanner=new Scanner(System.in);
         System.out.println("JatekosTipus (Rovarasz/Gombasz):");
@@ -44,14 +44,22 @@ public class JatekMotor {
         jatekosNev=scanner.nextLine();
 
         System.out.println("KezdoPoz: (x,y)");
-        kezdoPoz=g;
+        String tmp = scanner.nextLine();
+        String[] parts = tmp.split("\\s*,\\s*");
 
         switch (jatekosTipus){
             case "Rovarasz":
-                jatekosok.add(new Rovarasz(g, jatekosNev));
+                Rovarasz j = new Rovarasz(g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])], jatekosNev);
+                jatekosok.add(j);
+                g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])].hozzaAd(j.getRovar());
                 break;
             case "Gombasz":
-                jatekosok.add(new Gombasz(g,jatekosNev));
+                Gombasz jg = new Gombasz(g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])],jatekosNev);
+                jatekosok.add(jg);
+                g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])].hozzaAd(jg.getGombaTests().getFirst());
+            default:
+                System.out.println("Hibas JatekosTipust adott meg!");
+                jatekosValasztas(g);
         }
     }
 }

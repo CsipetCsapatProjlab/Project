@@ -28,6 +28,8 @@ public class Gombasz extends Jatekos {
         gombaTestek = g;
     }
 
+    public List<GombaTest> getGombaTests(){return gombaTestek;}
+
     /**
      *
      * @param kezdo a grid ahonnan a move indul

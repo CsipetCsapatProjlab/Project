@@ -1,4 +1,3 @@
-
 public class Main {
     public static void main(String[] args) {
 
@@ -13,8 +12,8 @@ public class Main {
         MyLogger.Return("asd");
 
 
-        Tests.newsetup();
-        Tests t = new Tests();/*
+        Tests t = new Tests();
+        t.newsetup();/*
         t.setup();
         t.start();
         */

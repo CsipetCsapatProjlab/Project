@@ -1,42 +1,23 @@
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 import model.Fungorium;
 import model.JatekMotor;
 import model.Tekton;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
-import model.gameobjects.Rovar;
-import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
-import model.players.Gombasz;
-import model.players.Rovarasz;
 
 
 public class Tests {
-    private JatekMotor jm;
-    private Gombasz g;
-    private Rovarasz r;
-    private Tekton t1;
-    private Tekton t2;
-    private Tekton t3;
-    private Tekton t4;
-    private ArrayList<Tekton> t = new ArrayList<Tekton>();
-    private TektonElem te1;
-    private TektonElem te2;
-    private TektonElem te3;
-    private TektonElem te4;
-    private Lava l;
-    private Spora s1;
-    private Spora s2;
-    private Spora s3;
-    private Spora s4;
-    private Spora s5;
-    private GombaTest gt;
-    private Fonal f;
-    private Rovar rovar;
-    /*
+    public static Map<String, Object> ObjectMap = new HashMap<>();
+    JatekMotor motor;
+    Grid[][] grid;
+    Tekton[] tektons;
     public void start(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Teszt: Jatek mentese");
@@ -96,19 +77,16 @@ public class Tests {
         }
     }
 
-     */
-    public static Map<String, Object> ObjectMap = new HashMap<>();
-
     /**
      * @return 2 Tektonból álló 2db 4*4-es sziget egy 4* lávával elválasztva vertikálisan, amit láva vesz körbe.
      */
-    public static Fungorium genPalya() {
-        Tekton[] tektons = new Tekton[2];
+    public Fungorium genPalya() {
+        tektons = new Tekton[2];
         tektons[0] = new Tekton(null);
         tektons[1] = new Tekton(null);
         ObjectMap.put("tekton0", tektons[0]);
         ObjectMap.put("tekton1", tektons[1]);
-        Grid[][] grid = new Grid[11][6];
+        grid = new Grid[11][6];
         for (int i = 0; i < 11; i++) {
             grid[i] = new Grid[6];
         }
@@ -181,69 +159,28 @@ public class Tests {
         return fn;
     }
 
-    public static void newsetup() {
+    public void newsetup() {
         Fungorium fungorium = genPalya();
-        JatekMotor motor = fungorium.getMotor();
-        motor.getJatekosValasztas((Grid) ObjectMap.get("tektonelem2,2"));
-        motor.getJatekosValasztas((Grid) ObjectMap.get("tektonelem7,2"));
+        motor = fungorium.getMotor();
+        motor.jatekosValasztas(grid);
+        motor.jatekosValasztas(grid);
     }
 }
-
-/*
-    void setup(){
-
-        t1 = new Tekton(null);
-        t2 = new Tekton(null);
-        t3 = new Tekton(null);
-        t4 = new Tekton(Hatas.NO_GOMBATEST);
-        t.add(t1);
-        t.add(t2);
-        t.add(t3);
-        te1 = new TektonElem(t1);
-        te2 = new TektonElem(t2);
-        te3 = new TektonElem(t1);
-        te4 = new TektonElem(t4);
-        l = new Lava();
-        s1 = new Spora(te1);
-        s2 = new Spora(te1);
-        s3 = new Spora(te1);
-        s4 = new Spora(te1);
-        s5 = new Spora(te1);
-        List<Spora> st = new ArrayList<>();
-        st.add(s1);
-        st.add(s2);
-        st.add(s3);
-        st.add(s4);
-        gt = new GombaTest(te1, null, null);
-        List<GombaTest> gtt = new ArrayList<>();
-        gtt.add(gt);
-        f = new Fonal(te1, null, null, null);
-        List<Fonal> ft = new ArrayList<>();
-        ft.add(f);
-        g = new Gombasz(st, ft, gtt);
-        rovar = new Rovar(te2);
-        r = new Rovarasz(rovar);
-        List<Gombasz> gat = new ArrayList<>();
-        gat.add(g);
-        List<Rovarasz> rt = new ArrayList<>();
-        rt.add(r);
-        jm = new JatekMotor(rt, gat);
-    }
     void test1(){
-        jm.mentes();
+        motor.mentes();
         start();
     }
     void test2(){
-        jm.betoltes();
+        motor.betoltes();
         start();
     }
     void test3(){
-        jm.start();
+        motor.start();
         start();
     }
     void test4(){
-        jm.valasztas(true);
-        jm.valasztas(false);
+        motor.jatekosValasztas(grid);
+        motor.jatekosValasztas(grid);
         start();
     }
     void test5(){

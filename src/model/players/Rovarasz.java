@@ -14,6 +14,8 @@ public class Rovarasz extends Jatekos {
         szerzettTapanyag=0;
     }
 
+    public Rovar getRovar(){return rovar;}
+
     public Rovarasz(Rovar r){
         super("");
         rovar = r;}
