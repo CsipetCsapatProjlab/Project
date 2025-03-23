@@ -16,9 +16,9 @@ public class Rovar extends GameObject {
     Hatas jelenlegiHatas;
 
 
-    public Rovar(Grid grid) {super(grid);}
+    public Rovar(Grid grid, Rovarasz rovarasz) {super(grid,rovarasz);}
     public Rovar(Grid grid, Rovarasz rovarasz, RovarConsumeLogic rcl, RovarMoveLogic rml, int energia, int hatasCooldown) {
-        super(grid);
+        super(grid,rovarasz);
         this.rovarasz = rovarasz;
         this.rovarConsumeLogic = rcl;
         this.rovarMoveLogic = rml;
