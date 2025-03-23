@@ -45,7 +45,10 @@ public class Gombasz extends Jatekos {
             case Fonal_noveszt -> {
                 for(Fonal f : fonalak){
                     if (f.isAt(kezdo)) {
-                        f.fonalNovesztes(cel);
+                        try{
+                            f.fonalNovesztes(cel);
+                        }
+                        catch (Exception e){}
                         return;
                     }
                 }
@@ -62,12 +65,18 @@ public class Gombasz extends Jatekos {
             }
         }
     }
-    public void addTest(GombaTest g){
+
+    public void add(GombaTest g){
         kinottGombatest++;
         gombaTestek.add(g);
     }
-    public void addFonal(Fonal f){
+
+    public void add(Fonal f){
         fonalak.add(f);
     }
+    public void add(Spora s){
+        sporak.add(s);
+    }
+
     public List<Spora> getSporas(){return sporak;}
 }

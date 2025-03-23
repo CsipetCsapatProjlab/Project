@@ -2,21 +2,31 @@ package model;
 
 import java.util.List;
 
+import interfaces.GameObjectVisitor;
 import model.enums.Hatas;
 import model.grid.Grid;
+import model.grid.TektonElem;
 
 public class Tekton {
-    Hatas hatas;
     List<Tekton> neighbours;
     int fonalAr;
-    public Tekton(Hatas h){
-        hatas = h;
+    List<TektonElem> elemek;
+
+    public Tekton(List<TektonElem> elemek){
+        this.elemek = elemek;
         neighbours = null;
         fonalAr = 0;
     }
     public void szakad() {
         // TODO
     }
+
+    public void visitElements(GameObjectVisitor visitor) {
+        for (TektonElem elem : elemek) {
+            elem.accept(visitor);
+        }
+    }
+
     public void setNeighbours(List<Tekton> l, int a){
         if(a == 0) return;
         neighbours = l;
@@ -27,7 +37,6 @@ public class Tekton {
             tekton.setNeighbours(tmp, --a);
         }
     }
-    public Hatas getHatas(){return hatas;}
     public int getFonalAr() {return  fonalAr;}
     public Grid[] getRandomPath() {
         // TODO

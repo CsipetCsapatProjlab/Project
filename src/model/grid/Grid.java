@@ -6,6 +6,7 @@ import java.util.List;
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import interfaces.IDiscoverLogic;
+import jdk.jshell.spi.ExecutionControl;
 import model.enums.Hatas;
 import model.gameobjects.GameObject;
 
@@ -43,12 +44,12 @@ public abstract class Grid {
         gameObjects.remove(g);
     }
 
-    public void gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic) {
-        // TODO
+    public List<Grid> gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic) {
+        return null;
     }
 
-    public void gridFindAll(Grid kezdo, int depth, IDiscoverLogic dLogic) {
-        // TODO
+    public List<Grid> gridFindAll(Grid kezdo, int depth, IDiscoverLogic dLogic) {
+        return null;
     }
 
     public Grid[] getNeighbours() {return neighbours;}

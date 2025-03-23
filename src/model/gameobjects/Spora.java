@@ -7,15 +7,17 @@ import model.players.Gombasz;
 
 public class Spora extends GameObject {
     int tapertek;
-    Gombasz gombasz;
+    Gombasz observer;
     Hatas hatas;
     
-    public Spora(Grid g){super(g);}
+    public Spora(Grid g, Gombasz gombasz){super(g, gombasz);}
     public Spora(Grid grid, int tapErtek, Gombasz gombasz, Hatas hatas) {
-        super(grid);
+        super(grid, gombasz);
         this.tapertek = tapErtek;
-        this.gombasz = gombasz;
+        this.observer = gombasz;
         this.hatas = hatas;
+
+        observer.add(this);
     }
     public int getTap(){return tapertek;}
 

@@ -2,6 +2,7 @@ package logic_classes;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
+import model.Tekton;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
@@ -9,19 +10,30 @@ import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
+import model.players.Gombasz;
+
+import java.util.List;
+import java.util.Objects;
+
+
 
 public class FonalGrowLogic extends DiscoverLogic{
-    Fonal fonal;
-    Lava lava;
-    GombaTest gombaTest;
+    Fonal fonalOrigin;
+    Lava lavaVisited;
+    GombaTest gombaTestVisited;
+    Tekton tektonVisited;
+    int sporaCount=0;
 
     @Override
     public void visit(Spora spora) {
+        if(Objects.equals(spora.getObserver().getNev(), fonalOrigin.getObserver().getNev())){
+            sporaCount++;
+        }
     }
 
     @Override
     public void visit(GombaTest gombaTest) {
-        this.gombaTest=gombaTest;
+        this.gombaTestVisited=gombaTest;
     }
 
     @Override
@@ -34,16 +46,43 @@ public class FonalGrowLogic extends DiscoverLogic{
 
     @Override
     public void visit(Lava lava) {
-        this.lava=lava;
+        this.lavaVisited=lava;
     }
 
     @Override
     public void visit(TektonElem elem) {
+        tektonVisited=elem.getTekton();
     }
 
     private void clearState(){
-        gombaTest=null;
-        lava=null;
+        gombaTestVisited=null;
+        lavaVisited=null;
+        sporaCount=0;
+        tektonVisited=null;
+    }
+
+    /**
+     * https://www.iit.bme.hu/file/11582/feladat
+     * "Ha egy tektonon spóra található, akkor az egy időre meggyorsítja a fonal növekedését."
+     * @param tekton Ahonnan fonalat akarunk növeszteni
+     * @return A játékos spóráinak száma az adott TektonElemen
+     */
+    private int getSporaOnTekton(Tekton tekton){
+        sporaCount=0;
+        tekton.visitElements(this);
+        return sporaCount;
+    }
+
+    /**
+     * TODO
+     * @param sporaszam
+     * @return
+     */
+    private double calculateWeight(int sporaszam){
+        if(sporaszam==0) return 1;
+        else{
+            return 1/(double)sporaszam;
+        }
     }
 
     /**
@@ -52,28 +91,73 @@ public class FonalGrowLogic extends DiscoverLogic{
      * neighbour-on nincs gombaTest
      * @param from
      * @param neighbour
-     * @return
+     * @return Nőhet oda?
      */
-    @Override
-    public boolean canMove(Grid from, Grid neighbour) {
+    private boolean possibleMove(Grid from, Grid neighbour){
         clearState();
+
         from.accept((GridVisitor) this);
-        if(lava!=null){
-            lava=null;
+        if(lavaVisited!=null){
+            lavaVisited=null;
             neighbour.accept((GridVisitor) this);
-            if (lava != null) {
+            if (lavaVisited != null) {
                 return false;
             }
         }
         neighbour.accept((GameObjectVisitor) this);
-        if(this.gombaTest!=null){
+        if(this.gombaTestVisited!=null){
             return false;
         }
         return true;
     }
 
+    /**
+     * Ha lehet oda növeszteni, akkor annak a súlya
+     * @param from ahonnan növesztünk
+     * @param neighbour ahová növesztünk
+     * @return Az élsúlya a from-neighbour élnek (Double.POSITIVE_INFINITY ha nem létezik!)
+     */
+    @Override
+    public double canMove(Grid from, Grid neighbour) {
+        if(!possibleMove(from,neighbour)) return Double.POSITIVE_INFINITY;
+
+        Tekton fromElem;
+        Tekton neighbourElem;
+
+        // Megnézi hogy ugyanazon a tektonon van-e
+        from.accept((GridVisitor) this);
+        fromElem=tektonVisited;
+        tektonVisited=null;
+        neighbour.accept((GridVisitor) this);
+        neighbourElem=tektonVisited;
+
+        //Visszaadja az élsúlyokat
+        if(neighbourElem==fromElem){
+            return calculateWeight(getSporaOnTekton(fromElem));
+        }
+        else return 1; // Valamelyik biztosan láva, oda nehéz növeszteni.
+    }
+
+    /**
+     * Csak akkor jó a növesztés, ha:
+     * Kiválasztott Tekton
+     * @param celGrid
+     */
+    public void noveszt(Grid celGrid) throws Exception {
+        List<Grid> path=celGrid.gridPathFind(fonalOrigin.getPosition(),celGrid,5,this);
+        if(path!=null){
+            for (Grid g : path) {
+                Spora sp=new Spora(g, (Gombasz)fonalOrigin.getObserver());
+            }
+        }
+        else{
+            throw new Exception("Nem tudtunk növeszteni!");
+        }
+
+    }
+
     FonalGrowLogic(Fonal fonal){
-        this.fonal = fonal;
+        this.fonalOrigin = fonal;
     }
 
 }

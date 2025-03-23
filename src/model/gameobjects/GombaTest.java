@@ -11,7 +11,7 @@ public class GombaTest extends GameObject {
     SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic();
 
     public GombaTest(Grid grid, Gombasz gombasz) {
-        super(grid);
+        super(grid, gombasz);
         this.gombasz = gombasz;
     }
 
