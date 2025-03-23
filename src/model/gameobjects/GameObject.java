@@ -17,13 +17,23 @@ public abstract class GameObject {
         grid.hozzaAd(this);
         this.observer = observer;
     }
+
+    /**
+     * A mezojet visszaadja
+     * @return A mezo
+     */
     public Grid getPosition(){
         return grid;
     }
+
+    /**
+     * Az obeservert visszaadja
+     * @return Az observer jatekos
+     */
     public Jatekos getObserver(){
         return observer;
     }
-    
+
     /**
      * Az objektum torli magat
      */
