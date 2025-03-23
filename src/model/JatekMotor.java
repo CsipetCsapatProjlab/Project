@@ -23,7 +23,11 @@ public class JatekMotor {
         return jatekosok.get(currentPlayer);
     }
 
-    public void kovetkezoJatekos(Grid kezdo, Grid cel, Move move) {
+    public void kovetkezoJatekos(){
+        currentPlayer=(currentPlayer+1)%jatekosok.size();
+    }
+
+    public void kovetkezoLepes(Grid kezdo, Grid cel, Move move) {
         jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
         currentPlayer++;
     }
