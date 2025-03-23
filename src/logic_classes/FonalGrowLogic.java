@@ -145,18 +145,18 @@ public class FonalGrowLogic extends DiscoverLogic{
      */
     public void noveszt(Grid celGrid) throws Exception {
         List<Grid> path=celGrid.gridPathFind(fonalOrigin.getPosition(),celGrid,5,this);
-        if(path!=null){
+        if(!path.isEmpty()){
+            path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {
-                Spora sp=new Spora(g, (Gombasz)fonalOrigin.getObserver());
+                Fonal sp=new Fonal(g, (Gombasz)fonalOrigin.getObserver());
             }
         }
         else{
             throw new Exception("Nem tudtunk növeszteni!");
         }
-
     }
 
-    FonalGrowLogic(Fonal fonal){
+    public FonalGrowLogic(Fonal fonal){
         this.fonalOrigin = fonal;
     }
 

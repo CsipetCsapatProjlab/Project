@@ -1,6 +1,8 @@
 package model.grid;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import interfaces.GameObjectVisitor;
@@ -44,8 +46,24 @@ public abstract class Grid {
         gameObjects.remove(g);
     }
 
-    public List<Grid> gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic) {
-        return null;
+    /**
+     * Csak a szomszédot nézi meg, mert még nem fogom implementálni a Dijkstrát.
+     * @param kezdo
+     * @param cel
+     * @param depth Mélység
+     * @param dLogic Func<double, Grid, Grid>, ami meghatározza az élsúlyt
+     * @return Utvonal lista, ami tartalmazza a kezdő és a végpontokat.
+     * @throws ExecutionControl.NotImplementedException
+     */
+    public List<Grid> gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic) throws ExecutionControl.NotImplementedException {
+        if(!Arrays.stream(kezdo.neighbours).toList().contains(cel)) throw new ExecutionControl.NotImplementedException("Celgrid nem szomszédja a kezdőgridnek");
+        if(dLogic.canMove(kezdo,cel)<=depth){
+            List<Grid> lista= new LinkedList<>();
+            lista.add(kezdo);
+            lista.add(cel);
+            return lista;
+        }
+        return new LinkedList<>();
     }
 
     public List<Grid> gridFindAll(Grid kezdo, int depth, IDiscoverLogic dLogic) {

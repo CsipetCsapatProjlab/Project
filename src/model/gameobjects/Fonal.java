@@ -12,11 +12,11 @@ public class Fonal extends GameObject {
     FonalGrowLogic fonalGrowLogic;
     GombaTestPlaceLogic gombaTestPlaceLogic;
 
-    public Fonal(Grid grid, Gombasz gombasz, FonalGrowLogic fgl, GombaTestPlaceLogic gtp) {
+    public Fonal(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
         this.gombasz = gombasz;
-        this.fonalGrowLogic = fgl;
-        this.gombaTestPlaceLogic = gtp;
+        this.fonalGrowLogic = new FonalGrowLogic(this);
+        this.gombaTestPlaceLogic = new GombaTestPlaceLogic();
 
         gombasz.add(this);
     }
@@ -32,15 +32,12 @@ public class Fonal extends GameObject {
         // TODO
     }
 
-    public void fonalNovesztes(Grid destination) {
+    public void fonalNovesztes(Grid destination) throws Exception {
         fonalGrowLogic.noveszt(destination);
     }
 
     public void gombaTestNovesztes(Grid grid) {
-        if(grid.getHatas() == Hatas.NO_GOMBATEST) return;
-        GombaTest g = new GombaTest(grid, gombasz);
-        grid.hozzaAd(g);
-        gombasz.addTest(g);
-        //gombaszObserver.addTest(g);
+
+
     }
 }

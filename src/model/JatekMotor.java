@@ -28,7 +28,9 @@ public class JatekMotor {
     }
 
     public void kovetkezoLepes(Grid kezdo, Grid cel, Move move) {
-        jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
+        try {
+            jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
+        }catch (Exception e) {}
         currentPlayer++;
     }
     public void mentes(){
