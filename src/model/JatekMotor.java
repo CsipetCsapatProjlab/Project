@@ -46,9 +46,8 @@ public class JatekMotor {
 
         System.out.println("JatekosNev:");
         jatekosNev=scanner.nextLine();
-        if(jatekosNev == "Rovarasz" || jatekosNev == "rovarasz") jT = 1;
-        else if(jatekosNev == "Gombasz" || jatekosNev == "gombasz") jT = 2;
-
+        if(jatekosTipus.equals("Rovarasz") || jatekosTipus.equals("rovarasz")) jT = 1;
+        else if(jatekosTipus.equals("Gombasz") || jatekosTipus.equals("gombasz")) jT = 2;
 
         System.out.println("KezdoPoz: (x,y)");
         String tmp = scanner.nextLine();
@@ -60,7 +59,6 @@ public class JatekMotor {
             jatekosValasztas(g);
         }
         TektonElem elem = (TektonElem) g[x][y];
-
         switch (jT){
             case 1:
                 Rovarasz j = new Rovarasz(elem, jatekosNev);
@@ -69,6 +67,7 @@ public class JatekMotor {
             case 2:
                 Gombasz jg = new Gombasz(elem, jatekosNev);
                 jatekosok.add(jg);
+                break;
             default:
                 System.out.println("Hibas JatekosTipust adott meg!");
                 jatekosValasztas(g);

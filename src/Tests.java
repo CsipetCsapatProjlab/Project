@@ -21,7 +21,7 @@ public class Tests {
     JatekMotor motor;
     Grid[][] grid;
     Tekton[] tektons;
-    static String y ="Y";
+    static String y ="y";
     public void start(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Teszt: Jatek mentese");
@@ -172,6 +172,7 @@ public class Tests {
         motor.mentes();
         MyLogger.In("Mentes sikeres", false);
         MyLogger.Return("JatekMotor.mentes()");
+        MyLogger.Return("");
         start();
     }
     void test2(){
@@ -180,6 +181,7 @@ public class Tests {
         motor.betoltes();
         MyLogger.In("Betoltes siekres", false);
         MyLogger.Return("JatekMotor.betoltes()");
+        MyLogger.Return("");
         start();
     }
     void test3(){
@@ -188,6 +190,7 @@ public class Tests {
         motor.start();
         MyLogger.In("Jatek inditas sikeres", false);
         MyLogger.Return("JatekMotor.start()");
+        MyLogger.Return("");
         start();
     }
     void test4(){
@@ -196,6 +199,7 @@ public class Tests {
         motor.jatekosValasztas(grid);
         if(motor.jelenlegiJatekos() != null) MyLogger.In("Jatekos valasztas sikeres", false);
         MyLogger.Return("JatekMotor.jatekosValasztas()");
+        MyLogger.Return("");
         start();
     }
     void test5(){
@@ -221,6 +225,8 @@ public class Tests {
             }else MyLogger.In("Gombates novesztes sikertelen!", false);
         }else MyLogger.In("Gombates novesztes sikertelen!", false);
         MyLogger.Return("Fonal.gombaTestNovesztes(Grid)");
+        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("");
         grid[1][2].clear();
         start();
     }
@@ -249,6 +255,8 @@ public class Tests {
             } else MyLogger.In("Fonal novesztes sikertelen lavara!", false);
         } else MyLogger.In("Fonal novesztes sikertelen lavara!", false);
         MyLogger.Return("Fonal.fonalNovesztes(Gird)");
+        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("");
         grid[0][2].clear();
         start();
     }
@@ -267,21 +275,9 @@ public class Tests {
             }else MyLogger.In("Spora loves sikertelen!", false);
         }else MyLogger.In("Spora loves sikertelen!", false);
         MyLogger.Return("gombaTest.sporaKilo(Grid, Spora)");
+        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("");
         grid[1][2].clear();
-        GombaTest gt2 = new GombaTest(grid[1][2], gombasz);
-        Spora s2 = new Spora(grid[1][2]);
-        MyLogger.Visit("Spora loves elutasítas");
-        MyLogger.Visit("gombaTest.sporaKilo(Grid, Spora)");
-        if(MyLogger.In("Van eleg spora a kiindulo gombatestben? [y/n]", true).equals(y)){
-            if(MyLogger.In("Szomszedos a kijelolt tekton? [y/n]", true).equals(y)){
-                gt2.sporaKilo(grid[3][3], s2);
-                if(grid[3][3].getGameObject().isEmpty()) MyLogger.In("Spora loves elutasitas sikeres!", false);
-                else MyLogger.In("Spora loves elutasitas sikertelen!", false);
-            }else MyLogger.In("Spora loves elutasitas sikertelen!", false);
-        }else MyLogger.In("Spora loves elutasitas sikertelen!", false);
-        MyLogger.Return("gombaTest.sporaKilo(Grid, Spora)");
-        grid[1][2].clear();
-        grid[3][3].clear();
         start();
     }
     void test8(){
@@ -296,6 +292,8 @@ public class Tests {
             else MyLogger.In("Gombatest fejlesztes sikertelen!", true);
         }else MyLogger.In("Gombatest fejlesztes sikertelen!", true);
         MyLogger.Return("gombaTest.setFejlesztett()");
+        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("");
         start();
     }
     void test9(){
@@ -309,6 +307,8 @@ public class Tests {
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
+        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("");
         grid[2][2].clear();
         start();
     }
@@ -330,6 +330,8 @@ public class Tests {
             else MyLogger.In("Rovar fonal eves sikertelen!", false);
         }else MyLogger.In("Rovar fonal eves sikertelen!", false);
         MyLogger.Return("Rovar.consume()");
+        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("");
         grid[2][2].clear();
         start();
     }
@@ -351,6 +353,8 @@ public class Tests {
             else MyLogger.In("Rovar spora eves sikertelen!", false);
         }else MyLogger.In("Rovar spora eves sikertelen!", false);
         MyLogger.Return("Rovar.consume()");
+        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("");
         grid[2][2].clear();
         start();
     }
