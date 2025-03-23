@@ -49,6 +49,14 @@ public class Gombasz extends Jatekos {
                 //később throw lesz
                 System.out.println("Innen nem lehet fonalat növeszteni");
             }
+            case GombaTest_noveszt -> {
+                for(Fonal f : fonalak){
+                    if (f.isAt(kezdo) /*&& kezdo.getTekton().getSporas().lentgh >= kezdo.getTekton().getFonalAr()*/) {
+                        f.gombaTestNovesztes(cel);
+                        return;
+                    }
+                }
+            }
         }
     }
     public void addTest(GombaTest g){

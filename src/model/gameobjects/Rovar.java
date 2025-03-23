@@ -1,7 +1,5 @@
 package model.gameobjects;
 
-import java.util.Scanner;
-
 import interfaces.GameObjectVisitor;
 import logic_classes.RovarConsumeLogic;
 import logic_classes.RovarMoveLogic;
@@ -39,19 +37,11 @@ public class Rovar extends GameObject {
     }
 
     public void consume() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Van ott enni valo, ha igen 1-nel nagyobb, ha nem akkor nem");
-        int a = scanner.nextInt();
-        if(a < 1) return;
         grid.clear();
         grid.hozzaAd(this);
     }
 
     public void move(Grid destination) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ha van oda ut 1-nel nagyobb, ha nem akkor nem");
-        int a = scanner.nextInt();
-        if(a < 1) return;
         grid.torol(this);
         grid = destination;
         destination.hozzaAd(this);

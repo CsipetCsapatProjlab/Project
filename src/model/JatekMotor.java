@@ -24,15 +24,17 @@ public class JatekMotor {
 
     public void kovetkezoJatekos(Grid kezdo, Grid cel, Move move) {
         jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
+        currentPlayer++;
     }
     public void mentes(){
-        System.out.println("A jatek mentese sikeres!");
+        
     }
     public void betoltes(){
         System.out.println("A jatek betoltese sikeres!");
     }
     public void start(){
-
+        currentPlayer = 0;
+        kovetkezoJatekos(null, null, null);
     }
     public void jatekosValasztas(Grid[][] g){
         String jatekosTipus; String jatekosNev; Grid kezdoPoz;
