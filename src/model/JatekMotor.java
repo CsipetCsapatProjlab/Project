@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import model.enums.Move;
 import model.grid.Grid;
+import model.grid.TektonElem;
 import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
@@ -46,17 +47,16 @@ public class JatekMotor {
         System.out.println("KezdoPoz: (x,y)");
         String tmp = scanner.nextLine();
         String[] parts = tmp.split("\\s*,\\s*");
+        TektonElem elem = (TektonElem) g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])];
 
         switch (jatekosTipus){
             case "Rovarasz":
-                Rovarasz j = new Rovarasz(g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])], jatekosNev);
+                Rovarasz j = new Rovarasz(elem, jatekosNev);
                 jatekosok.add(j);
-                g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])].hozzaAd(j.getRovar());
                 break;
             case "Gombasz":
-                Gombasz jg = new Gombasz(g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])],jatekosNev);
+                Gombasz jg = new Gombasz(elem,jatekosNev);
                 jatekosok.add(jg);
-                g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])].hozzaAd(jg.getGombaTests().getFirst());
             default:
                 System.out.println("Hibas JatekosTipust adott meg!");
                 jatekosValasztas(g);
