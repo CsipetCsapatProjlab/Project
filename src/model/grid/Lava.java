@@ -1,9 +1,8 @@
 package model.grid;
 
-import java.util.List;
-
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
+import java.util.List;
 import model.enums.Hatas;
 import model.gameobjects.GameObject;
 
@@ -14,14 +13,23 @@ public class Lava extends Grid {
         super(gameObjects);
     }
 
+    /**
+     * Megvalositja a Grid accept(GameObjectVisitor visitor) fv.-et a sajat modjan
+     */
     @Override
     public void accept(GameObjectVisitor visitor) {
 
     }
 
+    /**
+     * Megvalositja a Grid getHatas() fv.-et a sajat modjan
+     */
     @Override
     public Hatas getHatas(){return null;}
-
+    
+    /**
+     * Megvalositja a Grid accept(GridVisitor visitor) fv.-et a sajat modjan
+     */
     @Override
     public void accept(GridVisitor visitor) {
 

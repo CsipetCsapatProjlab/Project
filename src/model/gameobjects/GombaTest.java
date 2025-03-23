@@ -10,26 +10,50 @@ public class GombaTest extends GameObject {
     boolean fejlesztett = false;
     SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic();
 
+    /**
+     * Letrehozza a testet
+     * @param grid Melyik mezore
+     * @param gombasz Ki birtokolja
+     */
     public GombaTest(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
         this.gombasz = gombasz;
     }
 
+    /**
+     * Megvalositja a GameObject remove() fv.-et a sajat modjan
+     */
     @Override
     public void remove() {
         //TODO
     }
 
+    /**
+     * Megvalositja a GameObject accept() fv.-et a sajat modjan
+     */
     @Override
     public void accept(GameObjectVisitor visitor) {
         // TODO
     }
+
+    /**
+     * Visszaadja a test fejlesztesi szintjet
+     * @return Fejlesztett-e a test
+     */
     public boolean getFejlesztett(){return fejlesztett;}
 
+    /**
+     * Fejleszti a testet
+     */
     public void setFejlesztett() {
         fejlesztett = true;
     }
 
+    /**
+     * Kivalasztott sporat kilovi a kivalasztott mezore
+     * @param destination Hova lojje
+     * @param spora Melyik sporat
+     */
     public void sporaKilo(Grid destination, Spora spora) {
         /*int a = 0;
         for (int i = 0; i < gombasz.getSporas().size(); i++){

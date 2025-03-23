@@ -12,6 +12,13 @@ public class Fonal extends GameObject {
     FonalGrowLogic fonalGrowLogic;
     GombaTestPlaceLogic gombaTestPlaceLogic;
 
+    /**
+     * Letrehozza a Fonalat
+     * @param grid Melyik mezore
+     * @param gombasz Ki birtokolja
+     * @param fgl Milyen logika alapjan johet letre
+     * @param gtp Milyen logika alapjan kerulhet a palyara
+     */
     public Fonal(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
         this.gombasz = gombasz;
@@ -21,21 +28,35 @@ public class Fonal extends GameObject {
         gombasz.add(this);
     }
 
+    /**
+     * Az objektum torli magat
+     */
     @Override
     public void remove() {
         grid.torol(this);
         grid = null;
     }
 
+    /**
+     * Elfogadja a visitort
+     */
     @Override
     public void accept(GameObjectVisitor visitor) {
         // TODO
     }
 
+    /**
+     * Noveszt egy fonalat a kivant gridre
+     * @param destination Novesztes cel gridje
+     */
     public void fonalNovesztes(Grid destination) throws Exception {
         fonalGrowLogic.noveszt(destination);
     }
 
+    /**
+     * Noveszt egy testet a kivant gridre
+     * @param grid Novesztes cel gridje
+     */
     public void gombaTestNovesztes(Grid grid) {
 
 

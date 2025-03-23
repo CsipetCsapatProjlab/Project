@@ -21,16 +21,26 @@ public class Spora extends GameObject {
     }
     public int getTap(){return tapertek;}
 
+    /**
+     * Megvalositja a GameObject remove() fv.-et a sajat modjan
+     */
     @Override
     public void remove() {
         //TODO
     }
 
+    /**
+     * Megvalositja a GameObject accept(GameObjectVisitor visitor) fv.-et a sajat modjan
+     */
     @Override
     public void accept(GameObjectVisitor visitor) {
         // TODO
     }
 
+    /**
+     * Hatas aktivalasa az ot elfogyaszto rovaron
+     * @param rovar Elfogyaszto rovar
+     */
     public void effektAktival(Rovar rovar) {
         // TODO
     }
