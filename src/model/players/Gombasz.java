@@ -3,11 +3,13 @@ package model.players;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Tekton;
 import model.enums.Move;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Spora;
 import model.grid.Grid;
+import model.grid.TektonElem;
 
 public class Gombasz extends Jatekos {
     int kinottGombatest;
@@ -15,9 +17,10 @@ public class Gombasz extends Jatekos {
     List<Fonal> fonalak=new ArrayList<>();
     List<GombaTest> gombaTestek=new ArrayList<>();
 
-    public Gombasz(Grid grid, String nev) {
+    public Gombasz(TektonElem grid, String nev) {
         super(nev);
         gombaTestek.add(new GombaTest(grid, this));
+        grid.hozzaAd(gombaTestek.getFirst());
         kinottGombatest=0;
     }
 
