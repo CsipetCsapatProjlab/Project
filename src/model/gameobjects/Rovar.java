@@ -42,9 +42,11 @@ public class Rovar extends GameObject {
     }
 
     public void move(Grid destination) {
-        grid.torol(this);
-        grid = destination;
-        destination.hozzaAd(this);
+        //if(rovarMoveLogic.canMove(grid, destination)){
+            grid.torol(this);
+            grid = destination;
+            destination.hozzaAd(this);
+        //}
     }
 
     public void addHatas(Hatas hatas) {

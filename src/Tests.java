@@ -20,8 +20,8 @@ public class Tests {
     public static Map<String, Object> ObjectMap = new HashMap<>();
     JatekMotor motor;
     Grid[][] grid;
-    MyLogger ml = new MyLogger();
     Tekton[] tektons;
+    static String y ="Y";
     public void start(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Teszt: Jatek mentese");
@@ -167,88 +167,88 @@ public class Tests {
         motor.jatekosValasztas(grid);*/
     }
     void test1(){
-        ml.Visit("Mentes");
-        ml.Visit("JatekMotor.mentes()");
+        MyLogger.Visit("Mentes");
+        MyLogger.Visit("JatekMotor.mentes()");
         motor.mentes();
-        ml.In("Mentes sikeres", false);
-        ml.Return("JatekMotor.mentes()");
+        MyLogger.In("Mentes sikeres", false);
+        MyLogger.Return("JatekMotor.mentes()");
         start();
     }
     void test2(){
-        ml.Visit("Betoltes");
-        ml.Visit("JatekMotor.betoltes()");
+        MyLogger.Visit("Betoltes");
+        MyLogger.Visit("JatekMotor.betoltes()");
         motor.betoltes();
-        ml.In("Betoltes siekres", false);
-        ml.Return("JatekMotor.betoltes()");
+        MyLogger.In("Betoltes siekres", false);
+        MyLogger.Return("JatekMotor.betoltes()");
         start();
     }
     void test3(){
-        ml.Visit("Start");
-        ml.Visit("JatekMotor.start()");
+        MyLogger.Visit("Start");
+        MyLogger.Visit("JatekMotor.start()");
         motor.start();
-        ml.In("Jatek inditas sikeres", false);
-        ml.Return("JatekMotor.start()");
+        MyLogger.In("Jatek inditas sikeres", false);
+        MyLogger.Return("JatekMotor.start()");
         start();
     }
     void test4(){
-        ml.Visit("Jatekos valasztas");
-        ml.Visit("JatekMotor.jatekosValasztas()");
+        MyLogger.Visit("Jatekos valasztas");
+        MyLogger.Visit("JatekMotor.jatekosValasztas()");
         motor.jatekosValasztas(grid);
-        if(motor.jelenlegiJatekos() != null) ml.In("Jatekos valasztas sikeres", false);
-        ml.Return("JatekMotor.jatekosValasztas()");
+        if(motor.jelenlegiJatekos() != null) MyLogger.In("Jatekos valasztas sikeres", false);
+        MyLogger.Return("JatekMotor.jatekosValasztas()");
         start();
     }
     void test5(){
         Gombasz gombasz = new Gombasz(grid[1][1], null);
         Fonal f = new Fonal(grid[1][1], gombasz, null, null);
-        ml.Visit("GombaTest novesztes!");
-        ml.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
-        ml.Visit("Fonal.fonalNovesztes(Grid)");
-        if(ml.In("Van ut a kezdo gridhez? [y/n]", true) == "y") {
-            if(ml.In("Van eleg spora? [y/n]", true) == "y") {
+        MyLogger.Visit("GombaTest novesztes!");
+        MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Visit("Fonal.fonalNovesztes(Grid)");
+        if(MyLogger.In("Van ut a kezdo gridhez? [y/n]", true).equals(y)) {
+            if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
                 f.fonalNovesztes(grid[1][2]);
-                if(grid[1][2].getGameObject().isEmpty()) ml.In("Fonal novesztes sikertelen tektonra!", false);
-                else ml.In("Fonal novesztes sikeres tektonra!", false);
-            }else ml.In("Fonal novesztes sikertelen tektonra!", false);
-        }else ml.In("Fonal novesztes sikertelen tektonra!", false);
-        ml.Return("Fonal.fonalNovesztes(Gird)");
-        ml.Visit("Fonal.gombaTestNovesztes(Grid)");
-        if(ml.In("Van eleg spora a tektonon? [y/n]", true) == "y"){
-            if(ml.In("A tektonra lehet noveszteni testet (nincsen mas gombatest vagy olyan tipusu a tekton) [y/n]", true) == "y"){
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+                else MyLogger.In("Fonal novesztes sikeres tektonra!", false);
+            }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+        }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+        MyLogger.Return("Fonal.fonalNovesztes(Gird)");
+        MyLogger.Visit("Fonal.gombaTestNovesztes(Grid)");
+        if(MyLogger.In("Van eleg spora a tektonon? [y/n]", true).equals(y)){
+            if(MyLogger.In("A tektonra lehet noveszteni testet (nincsen mas gombatest vagy olyan tipusu a tekton) [y/n]", true).equals(y)){
                 f.gombaTestNovesztes(grid[1][2]);
-                if(grid[1][2].getGameObject().isEmpty()) ml.In("Gombates novesztes sikertelen!", false);
-                else ml.In("Gombatest novesztes sikeres!", false);
-            }else ml.In("Gombates novesztes sikertelen!", false);
-        }else ml.In("Gombates novesztes sikertelen!", false);
-        ml.Return("Fonal.gombaTestNovesztes(Grid)");
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Gombates novesztes sikertelen!", false);
+                else MyLogger.In("Gombatest novesztes sikeres!", false);
+            }else MyLogger.In("Gombates novesztes sikertelen!", false);
+        }else MyLogger.In("Gombates novesztes sikertelen!", false);
+        MyLogger.Return("Fonal.gombaTestNovesztes(Grid)");
         grid[1][2].clear();
         start();
     }
     void test6(){
         Gombasz gombasz = new Gombasz(grid[1][1], null);
-        ml.Visit("Fonal novesztes!");
-        ml.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
-        ml.Visit("Fonal.fonalNovesztes(Grid)");
-        if(ml.In("Van ut a kezdo gridhez? [y/n]", true) == "y") {
+        MyLogger.Visit("Fonal novesztes!");
+        MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Visit("Fonal.fonalNovesztes(Grid)");
+        if(MyLogger.In("Van ut a kezdo gridhez? [y/n]", true).equals(y)) {
             Fonal f = new Fonal(grid[1][1], gombasz, null, null);
-            if(ml.In("Van eleg spora? [y/n]", true) == "y") {
+            if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
                 f.fonalNovesztes(grid[1][2]);
-                if(grid[1][2].getGameObject().isEmpty()) ml.In("Fonal novesztes sikertelen tektonra!", false);
-                else ml.In("Fonal novesztes sikeres tektonra!", false);
-            }else ml.In("Fonal novesztes sikertelen tektonra!", false);
-        }else ml.In("Fonal novesztes sikertelen tektonra!", false);
-        ml.Return("Fonal.fonalNovesztes(Gird)");
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+                else MyLogger.In("Fonal novesztes sikeres tektonra!", false);
+            }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+        }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+        MyLogger.Return("Fonal.fonalNovesztes(Gird)");
         grid[1][2].clear();
-        ml.Visit("Fonal.fonalNovesztes(Grid)");
-        if(ml.In("Van ut a kezdo gridhez? [y/n]", true) == "y") {
+        MyLogger.Visit("Fonal.fonalNovesztes(Grid)");
+        if(MyLogger.In("Van ut a kezdo gridhez? [y/n]", true).equals(y)) {
             Fonal f2 = new Fonal(grid[1][1], gombasz, null, null);
-            if(ml.In("Van eleg spora? [y/n]", true) == "y") {
+            if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
                 f2.fonalNovesztes(grid[0][2]);
-                if(grid[0][2].getGameObject().isEmpty()) ml.In("Fonal novesztes sikertelen lavara!", false);
-                else ml.In("Fonal novesztes sikeres lavara!", false);
-            } else ml.In("Fonal novesztes sikertelen lavara!", false);
-        } else ml.In("Fonal novesztes sikertelen lavara!", false);
-        ml.Return("Fonal.fonalNovesztes(Gird)");
+                if(grid[0][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen lavara!", false);
+                else MyLogger.In("Fonal novesztes sikeres lavara!", false);
+            } else MyLogger.In("Fonal novesztes sikertelen lavara!", false);
+        } else MyLogger.In("Fonal novesztes sikertelen lavara!", false);
+        MyLogger.Return("Fonal.fonalNovesztes(Gird)");
         grid[0][2].clear();
         start();
     }
@@ -256,30 +256,30 @@ public class Tests {
         Gombasz gombasz = new Gombasz(grid[1][1], null);
         GombaTest gt = new GombaTest(grid[1][1], gombasz);
         Spora s1 = new Spora(grid[1][1]);
-        ml.Visit("Spora loves");
-        ml.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
-        ml.Visit("gombaTest.sporaKilo(Grid, Spora)");
-        if(ml.In("Van eleg spora a kiindulo gombatestben? [y/n]", true) == "y"){
-            if(ml.In("Szomszedos a kijelolt tekton? [y/n]", true) == "y"){
+        MyLogger.Visit("Spora loves");
+        MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Visit("gombaTest.sporaKilo(Grid, Spora)");
+        if(MyLogger.In("Van eleg spora a kiindulo gombatestben? [y/n]", true).equals(y)){
+            if(MyLogger.In("Szomszedos a kijelolt tekton? [y/n]", true).equals(y)){
                 gt.sporaKilo(grid[1][2], s1);
-                if(grid[1][2].getGameObject().isEmpty()) ml.In("Spora loves sikertelen!", false);
-                else ml.In("Spora loves sikeres!", false);
-            }else ml.In("Spora loves sikertelen!", false);
-        }else ml.In("Spora loves sikertelen!", false);
-        ml.Return("gombaTest.sporaKilo(Grid, Spora)");
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Spora loves sikertelen!", false);
+                else MyLogger.In("Spora loves sikeres!", false);
+            }else MyLogger.In("Spora loves sikertelen!", false);
+        }else MyLogger.In("Spora loves sikertelen!", false);
+        MyLogger.Return("gombaTest.sporaKilo(Grid, Spora)");
         grid[1][2].clear();
         GombaTest gt2 = new GombaTest(grid[1][2], gombasz);
         Spora s2 = new Spora(grid[1][2]);
-        ml.Visit("Spora loves elutasítas");
-        ml.Visit("gombaTest.sporaKilo(Grid, Spora)");
-        if(ml.In("Van eleg spora a kiindulo gombatestben? [y/n]", true) == "y"){
-            if(ml.In("Szomszedos a kijelolt tekton? [y/n]", true) == "y"){
+        MyLogger.Visit("Spora loves elutasítas");
+        MyLogger.Visit("gombaTest.sporaKilo(Grid, Spora)");
+        if(MyLogger.In("Van eleg spora a kiindulo gombatestben? [y/n]", true).equals(y)){
+            if(MyLogger.In("Szomszedos a kijelolt tekton? [y/n]", true).equals(y)){
                 gt2.sporaKilo(grid[3][3], s2);
-                if(grid[3][3].getGameObject().isEmpty()) ml.In("Spora loves elutasitas sikeres!", false);
-                else ml.In("Spora loves elutasitas sikertelen!", false);
-            }else ml.In("Spora loves elutasitas sikertelen!", false);
-        }else ml.In("Spora loves elutasitas sikertelen!", false);
-        ml.Return("gombaTest.sporaKilo(Grid, Spora)");
+                if(grid[3][3].getGameObject().isEmpty()) MyLogger.In("Spora loves elutasitas sikeres!", false);
+                else MyLogger.In("Spora loves elutasitas sikertelen!", false);
+            }else MyLogger.In("Spora loves elutasitas sikertelen!", false);
+        }else MyLogger.In("Spora loves elutasitas sikertelen!", false);
+        MyLogger.Return("gombaTest.sporaKilo(Grid, Spora)");
         grid[1][2].clear();
         grid[3][3].clear();
         start();
@@ -287,72 +287,70 @@ public class Tests {
     void test8(){
         Gombasz gombasz = new Gombasz(grid[1][1], null);
         GombaTest gt = new GombaTest(grid[1][1], gombasz);
-        ml.Visit("Gombatest fejlesztes");
-        ml.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
-        ml.Visit("gombaTest.setFejlesztett()");
-        if(ml.In("Van eleg spora a fejleszteshez? [y/n]", true) == "Y"){
+        MyLogger.Visit("Gombatest fejlesztes");
+        MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Visit("gombaTest.setFejlesztett()");
+        if(MyLogger.In("Van eleg spora a fejleszteshez? [y/n]", true).equals(y)){
             gt.setFejlesztett();
-            if(gt.getFejlesztett()) ml.In("Gombatest fejlesztes sikeres!", false);
-            else ml.In("Gombatest fejlesztes sikertelen!", true);
-        }else ml.In("Gombatest fejlesztes sikertelen!", true);
-        ml.Return("gombaTest.setFejlesztett()");
+            if(gt.getFejlesztett()) MyLogger.In("Gombatest fejlesztes sikeres!", false);
+            else MyLogger.In("Gombatest fejlesztes sikertelen!", true);
+        }else MyLogger.In("Gombatest fejlesztes sikertelen!", true);
+        MyLogger.Return("gombaTest.setFejlesztett()");
         start();
     }
     void test9(){
         Rovar rovar = new Rovar(grid[2][1]);
-        ml.Visit("Rovar mozgas");
-        ml.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
-        ml.Visit("Rovar.move(Grid)");
-        if(ml.In("Van odavezeto ut? [y/n]", true) == "y"){
+        MyLogger.Visit("Rovar mozgas");
+        MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Visit("Rovar.move(Grid)");
+        if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
             rovar.move(grid[2][2]);
-            if(grid[2][2].getGameObject().isEmpty()) ml.In("Rovar mozgas sikertelen!", false);
-            else ml.In("Rovar mozgas sikeres!", false);
-        }else ml.In("Rovar mozgas sikertelen!", false);
-        ml.Return("Rovar.move(Grid)");
+            if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
+            else MyLogger.In("Rovar mozgas sikeres!", false);
+        }else MyLogger.In("Rovar mozgas sikertelen!", false);
+        MyLogger.Return("Rovar.move(Grid)");
         grid[2][2].clear();
         start();
     }
     void test10(){
         Rovar rovar = new Rovar(grid[2][1]);
-        ml.Visit("Rovar fonal eves");
-        ml.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
-        ml.Visit("Rovar.move(Grid)");
-        if(ml.In("Van odavezeto ut? [y/n]", true) == "y"){
+        MyLogger.Visit("Rovar fonal eves");
+        MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Visit("Rovar.move(Grid)");
+        if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
             rovar.move(grid[2][2]);
-            if(grid[2][2].getGameObject().isEmpty()) ml.In("Rovar mozgas sikertelen!", false);
-            else ml.In("Rovar mozgas sikeres!", false);
-        }else ml.In("Rovar mozgas sikertelen!", false);
-        ml.Return("Rovar.move(Grid)");
-        Fonal f = new Fonal(grid[2][2], null, null, null);
-        ml.Visit("Rovar.consume()");
-        if(ml.In("Van ott fonal? [y/n]", true) == "y"){
+            if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
+            else MyLogger.In("Rovar mozgas sikeres!", false);
+        }else MyLogger.In("Rovar mozgas sikertelen!", false);
+        MyLogger.Return("Rovar.move(Grid)");
+        MyLogger.Visit("Rovar.consume()");
+        if(MyLogger.In("Van ott fonal? [y/n]", true).equals(y)){
             rovar.consume();
-            if(grid[2][2].getGameObject().size() == 1) ml.In("Rovar fonal eves sikeres!", false);
-            else ml.In("Rovar fonal eves sikertelen!", false);
-        }else ml.In("Rovar fonal eves sikertelen!", false);
-        ml.Return("Rovar.consume()");
+            if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar fonal eves sikeres!", false);
+            else MyLogger.In("Rovar fonal eves sikertelen!", false);
+        }else MyLogger.In("Rovar fonal eves sikertelen!", false);
+        MyLogger.Return("Rovar.consume()");
         grid[2][2].clear();
         start();
     }
     void test11(){
         Rovar rovar = new Rovar(grid[2][1]);
-        ml.Visit("Rovar spora eves");
-        ml.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
-        ml.Visit("Rovar.move(Grid)");
-        if(ml.In("Van odavezeto ut? [y/n]", true) == "y"){
+        MyLogger.Visit("Rovar spora eves");
+        MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Visit("Rovar.move(Grid)");
+        if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
             rovar.move(grid[2][2]);
-            if(grid[2][2].getGameObject().isEmpty()) ml.In("Rovar mozgas sikertelen!", false);
-            else ml.In("Rovar mozgas sikeres!", false);
-        }else ml.In("Rovar mozgas sikertelen!", false);
-        ml.Return("Rovar.move(Grid)");
-        Spora s = new Spora(grid[2][2]);
-        ml.Visit("Rovar.consume()");
-        if(ml.In("Van ott spora? [y/n]", true) == "y"){
+            if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
+            else MyLogger.In("Rovar mozgas sikeres!", false);
+        }else MyLogger.In("Rovar mozgas sikertelen!", false);
+        MyLogger.Return("Rovar.move(Grid)");
+        MyLogger.Visit("Rovar.consume()");
+        if(MyLogger.In("Van ott spora? [y/n]", true).equals(y)){
             rovar.consume();
-            if(grid[2][2].getGameObject().size() == 1) ml.In("Rovar spora eves sikeres!", false);
-            else ml.In("Rovar spora eves sikertelen!", false);
-        }else ml.In("Rovar spora eves sikertelen!", false);
-        ml.Return("Rovar.consume()");
+            if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar spora eves sikeres!", false);
+            else MyLogger.In("Rovar spora eves sikertelen!", false);
+        }else MyLogger.In("Rovar spora eves sikertelen!", false);
+        MyLogger.Return("Rovar.consume()");
         grid[2][2].clear();
         start();
     }
