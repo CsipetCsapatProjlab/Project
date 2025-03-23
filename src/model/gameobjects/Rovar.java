@@ -16,8 +16,9 @@ public class Rovar extends GameObject {
     Hatas jelenlegiHatas;
 
 
+    public Rovar(Grid grid) {super(grid);}
     public Rovar(Grid grid, Rovarasz rovarasz, RovarConsumeLogic rcl, RovarMoveLogic rml, int energia, int hatasCooldown) {
-        super(grid, rovarasz);
+        super(grid);
         this.rovarasz = rovarasz;
         this.rovarConsumeLogic = rcl;
         this.rovarMoveLogic = rml;
@@ -25,17 +26,11 @@ public class Rovar extends GameObject {
         this.hatasCooldown = hatasCooldown;
     }
 
-    /**
-     * Megvalositja a GameObject remove() fv.-et a sajat modjan
-     */
     @Override
     public void remove() {
         // TODO
     }
 
-    /**
-     * Megvalositja a GameObject accept() fv.-et a sajat modjan
-     */
     @Override
     public void accept(GameObjectVisitor visitor) {
         // TODO
@@ -46,10 +41,6 @@ public class Rovar extends GameObject {
         grid.hozzaAd(this);
     }
 
-    /**
-     * Rovar mozgatasa a megadott mezore
-     * @param destination Melyik mezora mozogjon
-     */
     public void move(Grid destination) {
         //if(rovarMoveLogic.canMove(grid, destination)){
             grid.torol(this);
@@ -58,10 +49,6 @@ public class Rovar extends GameObject {
         //}
     }
 
-    /**
-     * Rovar ellatasa a kapott hatassal
-     * @param hatas Milyen hatas hasson ra
-     */
     public void addHatas(Hatas hatas) {
         // TODO
     }

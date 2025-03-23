@@ -14,6 +14,7 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;
+import model.players.Rovarasz;
 
 
 public class Tests {
@@ -203,14 +204,16 @@ public class Tests {
         start();
     }
     void test5(){
-        Gombasz gombasz = new Gombasz(grid[1][1], null);
-        Fonal f = new Fonal(grid[1][1], gombasz, null, null);
+        Gombasz gombasz = new Gombasz((TektonElem) grid[1][1], null);
+        Fonal f = new Fonal(grid[1][1], gombasz);
         MyLogger.Visit("GombaTest novesztes!");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Fonal.fonalNovesztes(Grid)");
         if(MyLogger.In("Van ut a kezdo gridhez? [y/n]", true).equals(y)) {
             if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
-                f.fonalNovesztes(grid[1][2]);
+                try{
+                    f.fonalNovesztes(grid[1][2]);
+                }catch(Exception e){}
                 if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
                 else MyLogger.In("Fonal novesztes sikeres tektonra!", false);
             }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
@@ -231,14 +234,18 @@ public class Tests {
         start();
     }
     void test6(){
-        Gombasz gombasz = new Gombasz(grid[1][1], null);
+        Gombasz gombasz = new Gombasz((TektonElem) grid[1][1], null);
         MyLogger.Visit("Fonal novesztes!");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Fonal.fonalNovesztes(Grid)");
         if(MyLogger.In("Van ut a kezdo gridhez? [y/n]", true).equals(y)) {
-            Fonal f = new Fonal(grid[1][1], gombasz, null, null);
+            Fonal f = new Fonal(grid[1][1], gombasz);
             if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
-                f.fonalNovesztes(grid[1][2]);
+                try{
+                    f.fonalNovesztes(grid[1][2]);
+                } catch (Exception e) {
+                }
+
                 if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
                 else MyLogger.In("Fonal novesztes sikeres tektonra!", false);
             }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
@@ -247,9 +254,12 @@ public class Tests {
         grid[1][2].clear();
         MyLogger.Visit("Fonal.fonalNovesztes(Grid)");
         if(MyLogger.In("Van ut a kezdo gridhez? [y/n]", true).equals(y)) {
-            Fonal f2 = new Fonal(grid[1][1], gombasz, null, null);
+            Fonal f2 = new Fonal(grid[1][1], gombasz);
             if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
-                f2.fonalNovesztes(grid[0][2]);
+                try{
+                    f2.fonalNovesztes(grid[0][2]);
+                } catch (Exception e) {
+                }
                 if(grid[0][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen lavara!", false);
                 else MyLogger.In("Fonal novesztes sikeres lavara!", false);
             } else MyLogger.In("Fonal novesztes sikertelen lavara!", false);
@@ -261,9 +271,9 @@ public class Tests {
         start();
     }
     void test7(){
-        Gombasz gombasz = new Gombasz(grid[1][1], null);
+        Gombasz gombasz = new Gombasz((TektonElem) grid[1][1], null);
         GombaTest gt = new GombaTest(grid[1][1], gombasz);
-        Spora s1 = new Spora(grid[1][1]);
+        Spora s1 = new Spora(grid[1][1],gombasz);
         MyLogger.Visit("Spora loves");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("gombaTest.sporaKilo(Grid, Spora)");
@@ -281,7 +291,7 @@ public class Tests {
         start();
     }
     void test8(){
-        Gombasz gombasz = new Gombasz(grid[1][1], null);
+        Gombasz gombasz = new Gombasz((TektonElem) grid[1][1],"null");
         GombaTest gt = new GombaTest(grid[1][1], gombasz);
         MyLogger.Visit("Gombatest fejlesztes");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
@@ -297,7 +307,8 @@ public class Tests {
         start();
     }
     void test9(){
-        Rovar rovar = new Rovar(grid[2][1]);
+        Rovarasz r = new Rovarasz((TektonElem)grid[2][1], "jefa");
+        Rovar rovar = new Rovar((TektonElem)grid[2][1],r);
         MyLogger.Visit("Rovar mozgas");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
@@ -313,7 +324,8 @@ public class Tests {
         start();
     }
     void test10(){
-        Rovar rovar = new Rovar(grid[2][1]);
+        Rovarasz r = new Rovarasz((TektonElem)grid[2][1], "jefa");
+        Rovar rovar = new Rovar((TektonElem)grid[2][1],r);
         MyLogger.Visit("Rovar fonal eves");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
@@ -336,7 +348,8 @@ public class Tests {
         start();
     }
     void test11(){
-        Rovar rovar = new Rovar(grid[2][1]);
+        Rovarasz r = new Rovarasz((TektonElem)grid[2][1], "jefa");
+        Rovar rovar = new Rovar((TektonElem)grid[2][1],r);
         MyLogger.Visit("Rovar spora eves");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");

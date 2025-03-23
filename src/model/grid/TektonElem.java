@@ -23,12 +23,15 @@ public class TektonElem extends Grid {
     public Tekton getTekton(){return tekton;}
 
     @Override
+    public Hatas getHatas() {
+        return null;
+    }
+
+    @Override
     public void accept(GameObjectVisitor visitor) {
 
     }
 
-    @Override
-    public Hatas getHatas(){return tekton.getHatas();}
 
     @Override
     public void accept(GridVisitor visitor) {

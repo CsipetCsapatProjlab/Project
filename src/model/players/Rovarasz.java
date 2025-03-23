@@ -11,7 +11,7 @@ public class Rovarasz extends Jatekos {
 
     public Rovarasz(TektonElem grid, String nev) {
         super(nev);
-        rovar=new Rovar(grid);
+        rovar=new Rovar(grid,this);
         grid.hozzaAd(rovar);
         szerzettTapanyag=0;
     }
