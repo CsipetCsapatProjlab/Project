@@ -31,13 +31,14 @@ public class JatekMotor {
         
     }
     public void betoltes(){
-        System.out.println("A jatek betoltese sikeres!");
+        
     }
     public void start(){
         currentPlayer = 0;
-        kovetkezoJatekos(null, null, null);
+        //kovetkezoJatekos(null, null, null);
     }
     public void jatekosValasztas(Grid[][] g){
+        int jT = 0;
         String jatekosTipus; String jatekosNev; Grid kezdoPoz;
         Scanner scanner=new Scanner(System.in);
         System.out.println("JatekosTipus (Rovarasz/Gombasz):");
@@ -45,19 +46,28 @@ public class JatekMotor {
 
         System.out.println("JatekosNev:");
         jatekosNev=scanner.nextLine();
+        if(jatekosNev == "Rovarasz" || jatekosNev == "rovarasz") jT = 1;
+        else if(jatekosNev == "Gombasz" || jatekosNev == "gombasz") jT = 2;
+
 
         System.out.println("KezdoPoz: (x,y)");
         String tmp = scanner.nextLine();
         String[] parts = tmp.split("\\s*,\\s*");
-        TektonElem elem = (TektonElem) g[Integer.parseInt(parts[0])][Integer.parseInt(parts[1])];
+        int x = Integer.parseInt(parts[0]);
+        int y = Integer.parseInt(parts[1]);
+        if(x > g.length || y > g[0].length){
+            System.out.println("Hibas koordinatakat adott meg!");
+            jatekosValasztas(g);
+        }
+        TektonElem elem = (TektonElem) g[x][y];
 
-        switch (jatekosTipus){
-            case "Rovarasz":
+        switch (jT){
+            case 1:
                 Rovarasz j = new Rovarasz(elem, jatekosNev);
                 jatekosok.add(j);
                 break;
-            case "Gombasz":
-                Gombasz jg = new Gombasz(elem,jatekosNev);
+            case 2:
+                Gombasz jg = new Gombasz(elem, jatekosNev);
                 jatekosok.add(jg);
             default:
                 System.out.println("Hibas JatekosTipust adott meg!");

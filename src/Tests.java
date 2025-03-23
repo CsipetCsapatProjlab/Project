@@ -20,8 +20,8 @@ public class Tests {
     public static Map<String, Object> ObjectMap = new HashMap<>();
     JatekMotor motor;
     Grid[][] grid;
+    MyLogger ml = new MyLogger();
     Tekton[] tektons;
-    static MyLogger ml;
     public void start(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Teszt: Jatek mentese");
@@ -153,13 +153,10 @@ public class Tests {
             }
         }
 
-
         Fungorium fn = new Fungorium();
         ObjectMap.put("fungorium0", fn);
         fn.setMap(grid);
         fn.setTektons(Arrays.stream(tektons).toList());
-
-
         return fn;
     }
 
@@ -174,7 +171,7 @@ public class Tests {
         ml.Visit("JatekMotor.mentes()");
         motor.mentes();
         ml.In("Mentes sikeres", false);
-        ml.Return("");
+        ml.Return("JatekMotor.mentes()");
         start();
     }
     void test2(){
@@ -182,7 +179,7 @@ public class Tests {
         ml.Visit("JatekMotor.betoltes()");
         motor.betoltes();
         ml.In("Betoltes siekres", false);
-        ml.Return("");
+        ml.Return("JatekMotor.betoltes()");
         start();
     }
     void test3(){
@@ -190,7 +187,7 @@ public class Tests {
         ml.Visit("JatekMotor.start()");
         motor.start();
         ml.In("Jatek inditas sikeres", false);
-        ml.Return("");
+        ml.Return("JatekMotor.start()");
         start();
     }
     void test4(){
@@ -198,7 +195,7 @@ public class Tests {
         ml.Visit("JatekMotor.jatekosValasztas()");
         motor.jatekosValasztas(grid);
         if(motor.jelenlegiJatekos() != null) ml.In("Jatekos valasztas sikeres", false);
-        ml.Return("");
+        ml.Return("JatekMotor.jatekosValasztas()");
         start();
     }
     void test5(){
