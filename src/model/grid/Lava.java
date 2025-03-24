@@ -9,6 +9,10 @@ import model.gameobjects.GameObject;
 public class Lava extends Grid {
     public Lava(){super();}
 
+    /**
+     * Letrehozza a lavat a rajta levo jatek objektumokkal
+     * @param gameObjects
+     */
     public Lava(List<GameObject> gameObjects) {
         super(gameObjects);
     }
