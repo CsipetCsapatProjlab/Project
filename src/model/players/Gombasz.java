@@ -2,8 +2,6 @@ package model.players;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Tekton;
 import model.enums.Move;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
@@ -17,6 +15,11 @@ public class Gombasz extends Jatekos {
     List<Fonal> fonalak=new ArrayList<>();
     List<GombaTest> gombaTestek=new ArrayList<>();
 
+    /**
+     * Letrehozza a gombaszt
+     * @param grid Kezdo test helye
+     * @param nev Identifikacios nev
+     */
     public Gombasz(TektonElem grid, String nev) {
         super(nev);
         gombaTestek.add(new GombaTest(grid, this));
@@ -24,6 +27,12 @@ public class Gombasz extends Jatekos {
         kinottGombatest=0;
     }
 
+    /**
+     * 
+     * @param s
+     * @param f
+     * @param g
+     */
     public Gombasz(List<Spora> s, List<Fonal> f, List<GombaTest> g){
         super("");
         sporak = s;
@@ -31,13 +40,17 @@ public class Gombasz extends Jatekos {
         gombaTestek = g;
     }
 
+    /**
+     * Visszaadja a gombasz testeit
+     * @return
+     */
     public List<GombaTest> getGombaTests(){return gombaTestek;}
 
     /**
-     *
+     * Fonal novesztes kezdo mezorol cel mezore, megadott modon
      * @param kezdo a grid ahonnan a move indul
      * @param cel ahova érkezik
-     * @param move a move
+     * @param move milyen modon
      */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) {
@@ -66,17 +79,33 @@ public class Gombasz extends Jatekos {
         }
     }
 
+    /**
+     * Gombatest regisztralasa
+     * @param g
+     */
     public void add(GombaTest g){
         kinottGombatest++;
         gombaTestek.add(g);
     }
 
+    /**
+     * Fonal regisztralasa
+     * @param f
+     */
     public void add(Fonal f){
         fonalak.add(f);
     }
+
+    /**
+     * Spora regisztralasa
+     * @param s
+     */
     public void add(Spora s){
         sporak.add(s);
     }
 
+    /**
+     * Spora lista lekerdezese
+     */
     public List<Spora> getSporas(){return sporak;}
 }

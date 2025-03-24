@@ -11,6 +11,14 @@ public class Spora extends GameObject {
     Hatas hatas;
     
     public Spora(Grid g, Gombasz gombasz){super(g, gombasz);}
+
+    /**
+     * Letrehozza a sporat
+     * @param grid Melyik mezore
+     * @param tapErtek Milyen taperteke van
+     * @param gombasz Ki birtokolja
+     * @param hatas Mi a hatasa
+     */
     public Spora(Grid grid, int tapErtek, Gombasz gombasz, Hatas hatas) {
         super(grid, gombasz);
         this.tapertek = tapErtek;
@@ -19,6 +27,11 @@ public class Spora extends GameObject {
 
         observer.add(this);
     }
+
+    /**
+     * Visszaadja a taperteket
+     * @return Tapertek
+     */
     public int getTap(){return tapertek;}
 
     /**
