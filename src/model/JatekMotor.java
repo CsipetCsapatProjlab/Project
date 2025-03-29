@@ -11,11 +11,15 @@ import model.players.Jatekos;
 import model.players.Rovarasz;
 
 public class JatekMotor {
-    List<Jatekos> jatekosok=new ArrayList<>();
-    int currentPlayer;
+    private List<Jatekos> jatekosok;
+    int currentPlayer = 0;
 
     public JatekMotor(){
+        jatekosok = new ArrayList<>();
+    }
 
+    public void jatekosHozzaAd(Jatekos jatekos){
+        jatekosok.add(jatekos);
     }
 
     /**

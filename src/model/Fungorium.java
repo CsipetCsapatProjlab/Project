@@ -1,7 +1,10 @@
 package model;
 
 import java.util.List;
+
+import model.enums.Move;
 import model.grid.Grid;
+import model.players.Jatekos;
 
 public class Fungorium {
     JatekMotor motor;
@@ -23,11 +26,32 @@ public class Fungorium {
         motor = new JatekMotor();
     }
 
+    public void addJatekos(Jatekos jatekos){
+        motor.jatekosHozzaAd(jatekos);
+    }
+
     /**
      * Uj kort indit
      */
     public void ujKor() {
         // TODO
+    }
+
+    /**
+     * Átadja a megfelelő gridet a játékmotornak
+     */
+    public void makeMove(int startGridX, int startGridY, int endGridX, int endGridY, Move move) {
+        motor.kovetkezoLepes(map[startGridY][startGridX], map[endGridY][endGridX], move);
+    }
+
+    /**
+     *
+     * @param gridX a grid x koordinátája
+     * @param gridY a grid y koordinátája
+     * @return megfelelő  grid
+     */
+    public Grid getGrid(int gridX, int gridY){
+        return map[gridY][gridX];
     }
 
     /**

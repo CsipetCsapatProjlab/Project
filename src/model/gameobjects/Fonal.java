@@ -16,8 +16,6 @@ public class Fonal extends GameObject {
      * Letrehozza a Fonalat
      * @param grid Melyik mezore
      * @param gombasz Ki birtokolja
-     * @param fgl Milyen logika alapjan johet letre
-     * @param gtp Milyen logika alapjan kerulhet a palyara
      */
     public Fonal(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);

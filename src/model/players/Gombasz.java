@@ -2,6 +2,7 @@ package model.players;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import model.enums.Move;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
@@ -28,7 +29,7 @@ public class Gombasz extends Jatekos {
     }
 
     /**
-     * 
+     *
      * @param s
      * @param f
      * @param g
@@ -50,7 +51,7 @@ public class Gombasz extends Jatekos {
      * Fonal novesztes kezdo mezorol cel mezore, megadott modon
      * @param kezdo a grid ahonnan a move indul
      * @param cel ahova érkezik
-     * @param move milyen modon
+     * @param move a move
      */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) {

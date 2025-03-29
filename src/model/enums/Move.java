@@ -3,7 +3,7 @@ package model.enums;
 /**
  * Mozgasi formak
  */
-public enum Move {
+public enum Move{
     Fonal_noveszt,
     GombaTest_noveszt,
     Spora_lo,
