@@ -9,6 +9,7 @@ public class Tekton {
     Hatas hatas;
     List<Tekton> neighbours;
     int fonalAr;
+    
     public Tekton(Hatas h){
         hatas = h;
         neighbours = null;

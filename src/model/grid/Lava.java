@@ -14,6 +14,15 @@ public class Lava extends Grid {
         super(gameObjects);
     }
 
+    public String toString(){ //kiírja a pályára hogy mi van rajta
+        if(gameObjects.size() == 1){
+            return "~";
+        }else if(gameObjects.size() == 2){
+            return "R";
+        }
+        return "#";
+    }
+
     @Override
     public void accept(GameObjectVisitor visitor) {
 

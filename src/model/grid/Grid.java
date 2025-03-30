@@ -51,6 +51,9 @@ public abstract class Grid {
         // TODO
     }
 
+    public String toString(){
+        return " ";
+    }
     public Grid[] getNeighbours() {return neighbours;}
     public abstract Hatas getHatas();
     public abstract void accept(GameObjectVisitor visitor);
