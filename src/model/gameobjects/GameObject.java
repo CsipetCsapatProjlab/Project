@@ -14,4 +14,7 @@ public abstract class GameObject {
     public abstract void remove();
 
     public abstract void accept(GameObjectVisitor visitor);
+    public boolean isAt(Grid other) {
+        return grid == other;
+    }
 }

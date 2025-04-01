@@ -15,7 +15,7 @@ public abstract class Grid {
     List<GameObject> gameObjects;
     protected Grid(){
         zarolva = false;
-        gameObjects = new ArrayList<GameObject>();
+        gameObjects = new ArrayList<>();
     }
     protected Grid(List<GameObject> g) {
         this.gameObjects = g;
@@ -29,6 +29,10 @@ public abstract class Grid {
             g.remove();
         }
         gameObjects.clear();
+    }
+
+    public void setNeighbours(Grid[] arr){
+        neighbours = arr;
     }
 
     public void hozzaAd(GameObject gameObject) {
@@ -47,6 +51,9 @@ public abstract class Grid {
         // TODO
     }
 
+    public String toString(){
+        return " ";
+    }
     public Grid[] getNeighbours() {return neighbours;}
     public abstract Hatas getHatas();
     public abstract void accept(GameObjectVisitor visitor);

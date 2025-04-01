@@ -3,20 +3,20 @@ package model.gameobjects;
 import java.util.Scanner;
 
 import interfaces.GameObjectVisitor;
-import interfaces.IGombasz;
 import logic_classes.FonalGrowLogic;
 import logic_classes.GombaTestPlaceLogic;
 import model.enums.Hatas;
 import model.grid.Grid;
+import model.players.Gombasz;
 
 public class Fonal extends GameObject {
-    IGombasz gombaszObserver;
+    Gombasz gombasz;
     FonalGrowLogic fonalGrowLogic;
     GombaTestPlaceLogic gombaTestPlaceLogic;
 
-    public Fonal(Grid grid, IGombasz gObserver, FonalGrowLogic fgl, GombaTestPlaceLogic gtp) {
+    public Fonal(Grid grid, Gombasz gombasz, FonalGrowLogic fgl, GombaTestPlaceLogic gtp) {
         super(grid);
-        this.gombaszObserver = gObserver;
+        this.gombasz = gombasz;
         this.fonalGrowLogic = fgl;
         this.gombaTestPlaceLogic = gtp;
     }
@@ -40,7 +40,7 @@ public class Fonal extends GameObject {
         System.out.println("Hany spora van, ha elegendo 1-nel nagyobb, ha nem akkor nem");
         int a = scanner.nextInt();
         if(a < 1) return;
-        Fonal f = new Fonal(destination, gombaszObserver, fonalGrowLogic, gombaTestPlaceLogic);
+        Fonal f = new Fonal(destination, gombasz, fonalGrowLogic, gombaTestPlaceLogic);
         destination.hozzaAd(f);
         //gombaszObserver.addFonal(this);
     }
@@ -51,7 +51,7 @@ public class Fonal extends GameObject {
         int a = scanner.nextInt();
         if(a < 1) return;
         if(grid.getHatas() == Hatas.NO_GOMBATEST) return;
-        GombaTest g = new GombaTest(grid, gombaszObserver, null);
+        GombaTest g = new GombaTest(grid, null);
         grid.hozzaAd(g);
         //gombaszObserver.addTest(g);
     }
