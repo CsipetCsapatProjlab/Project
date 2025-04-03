@@ -18,7 +18,7 @@ public class CommandLine {
         addCommand(new Command(
                 "/help",
                 "Prints the available commands",
-                _ -> {
+                (str) -> {
                     System.out.println("System commands:");
                     systemCommands.values().stream()
                         .map(Command::getDescription)
