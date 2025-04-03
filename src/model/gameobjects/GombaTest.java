@@ -8,7 +8,7 @@ import model.players.Gombasz;
 public class GombaTest extends GameObject {
     private Gombasz gombasz;
     boolean fejlesztett = false;
-    SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic();
+    SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic(this);
 
     /**
      * Letrehozza a testet

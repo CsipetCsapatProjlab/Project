@@ -13,12 +13,14 @@ import model.grid.TektonElem;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
     boolean vanGombaTest;
     Fonal fonal;
     List<Spora> sporas;
     TektonElem tektonelem;
+    static Random rand = new Random();
 
     @Override
     public void visit(Spora spora) {
@@ -65,7 +67,7 @@ public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
         clearState();
     }
 
-    public boolean placeGombaTest(Grid celgrid, List<Spora> sporas){
+    public boolean placeGombaTest(Grid celgrid, int num){
         celgrid.accept((GridVisitor) this);
         if(tektonelem != null){
             tektonelem.getTekton().visitElements(this);
@@ -73,9 +75,11 @@ public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
                 return false;
             }
             else{
-                for (int i = 0; i < sporas.size(); i++) {
-                    Spora act=sporas.get(i);
+                if(sporas.size()<num) return false;
+                for (int i = 0; i < num; i++) {
+                    Spora act=sporas.get(rand.nextInt(sporas.size()));
                     act.remove();
+                    sporas.remove(act);
                 }
                 return true;
             }

@@ -11,6 +11,7 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -27,14 +28,13 @@ public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
         return __GridContainsSpora;
     }
 
-    SporaPlaceLogic(GombaTest gt, List<Spora> toPlace) {
+    public SporaPlaceLogic(GombaTest gt) {
         this.gt = gt;
-        this.fromGombatest = toPlace;
+        fromGombatest = new ArrayList<>();
     }
 
     void clearState(){
         fromGombatest.clear();
-        fromGombatest=null;
         tekton=null;
         __GridContainsSpora=false;
     }
@@ -78,6 +78,7 @@ public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
 
 
     public boolean placeSpora(Grid celGrid){
+    clearState();
 
         Tekton origin = null;
         Tekton destination = null;

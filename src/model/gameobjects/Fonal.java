@@ -68,7 +68,7 @@ public class Fonal extends GameObject {
      * @param grid Novesztes cel gridje
      */
     public void gombaTestNovesztes(Grid grid) {
-        if(gombaTestPlaceLogic.placeGombaTest(grid, )){
+        if(gombaTestPlaceLogic.placeGombaTest(grid, 5)){
             GombaTest gt=new GombaTest(grid, observer);
         }
     }
