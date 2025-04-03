@@ -5,9 +5,12 @@ import model.gameobjects.Rovar;
 import model.grid.Grid;
 import model.grid.TektonElem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rovarasz extends Jatekos {
     int szerzettTapanyag;
-    Rovar rovar;
+    List<Rovar> rovarok;
 
     /**
      * Letrehozza a rovaraszt
@@ -16,8 +19,8 @@ public class Rovarasz extends Jatekos {
      */
     public Rovarasz(TektonElem grid, String nev) {
         super(nev);
-        rovar=new Rovar(grid, this);
-        grid.hozzaAd(rovar);
+        rovarok=new ArrayList<>();
+        rovarok.add(new Rovar(grid,this));
         szerzettTapanyag=0;
     }
 
@@ -25,11 +28,11 @@ public class Rovarasz extends Jatekos {
      * Visszaadja a rovarjat
      * @return
      */
-    public Rovar getRovar(){return rovar;}
+    public List<Rovar> getRovarok(){return rovarok;}
 
-    public Rovarasz(Rovar r){
+    public Rovarasz(List<Rovar> r){
         super("");
-        rovar = r;}
+        rovarok= r;}
 
     /**
      * Lepes a rovarral kezdo mezorol cel mezore, megadott modon
