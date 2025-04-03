@@ -1,6 +1,7 @@
 package model.gameobjects;
 
 import interfaces.GameObjectVisitor;
+import model.exceptions.IncompatibleGameObjectException;
 import model.grid.Grid;
 import model.players.Jatekos;
 
@@ -53,7 +54,7 @@ public abstract class GameObject {
     /**
      * Az objektum torli magat
      */
-    public abstract void remove();
+    public abstract void remove() throws IncompatibleGameObjectException;
 
     /**
      * Elfogadja a visitort

@@ -4,6 +4,7 @@ import interfaces.GameObjectVisitor;
 import logic_classes.FonalGrowLogic;
 import logic_classes.GombaTestPlaceLogic;
 import model.enums.Hatas;
+import model.exceptions.IncompatibleGameObjectException;
 import model.grid.Grid;
 import model.players.Gombasz;
 
@@ -32,7 +33,7 @@ public class Fonal extends GameObject {
      * Az objektum torli magat
      */
     @Override
-    public void remove() {
+    public void remove() throws IncompatibleGameObjectException {
         grid.torol(this);
         grid = null;
     }

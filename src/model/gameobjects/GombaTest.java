@@ -2,6 +2,7 @@ package model.gameobjects;
 
 import interfaces.GameObjectVisitor;
 import logic_classes.SporaPlaceLogic;
+import model.exceptions.IncompatibleGameObjectException;
 import model.grid.Grid;
 import model.players.Gombasz;
 
@@ -54,7 +55,7 @@ public class GombaTest extends GameObject {
      * @param destination Hova lojje
      * @param spora Melyik sporat
      */
-    public void sporaKilo(Grid destination, Spora spora) {
+    public void sporaKilo(Grid destination, Spora spora) throws IncompatibleGameObjectException {
         /*int a = 0;
         for (int i = 0; i < gombasz.getSporas().size(); i++){
             if(gombasz.getSporas() == spora) a++;

@@ -2,6 +2,7 @@ package logic_classes;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
+import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
@@ -62,7 +63,7 @@ public class RovarConsumeLogic implements GameObjectVisitor, GridVisitor {
         rovar=r;
     }
 
-    public boolean eszik(Grid from){
+    public boolean eszik(Grid from) throws IncompatibleGameObjectException {
         clearState();
         from.accept((GridVisitor) this);
         from.accept((GameObjectVisitor) this);

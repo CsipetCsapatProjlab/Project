@@ -5,6 +5,7 @@ import interfaces.GridVisitor;
 import java.util.List;
 import model.Tekton;
 import model.enums.Hatas;
+import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.GameObject;
 
 public class TektonElem extends Grid {
@@ -37,6 +38,11 @@ public class TektonElem extends Grid {
     @Override
     public void accept(GameObjectVisitor visitor) {
 
+    }
+
+    @Override
+    public boolean elfogadGameObject(GameObject gameObject){
+        return true;
     }
 
     /**

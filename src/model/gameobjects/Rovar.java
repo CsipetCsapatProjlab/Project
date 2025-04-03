@@ -4,6 +4,8 @@ import interfaces.GameObjectVisitor;
 import logic_classes.RovarConsumeLogic;
 import logic_classes.RovarMoveLogic;
 import model.enums.Hatas;
+import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.players.Rovarasz;
 
@@ -45,9 +47,15 @@ public class Rovar extends GameObject {
         return energia;
     }
 
-    public void consume() {
-        if(rovarConsumeLogic.eszik(grid)){
-            energia--;
+    public void consume() throws InvalidMoveException {
+        try {
+            if (rovarConsumeLogic.eszik(grid)) {
+                energia--;
+            }
+        }catch (IncompatibleGameObjectException e) {
+            InvalidMoveException ime=new InvalidMoveException("Nem sikerült az evés.");
+            ime.initCause(e);
+            throw ime;
         }
     }
 

@@ -1,6 +1,8 @@
 package model.players;
 
 import model.enums.Move;
+import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.gameobjects.Rovar;
 import model.grid.Grid;
 import model.grid.TektonElem;
@@ -38,16 +40,25 @@ public class Rovarasz extends Jatekos {
      * Lepes a rovarral kezdo mezorol cel mezore, megadott modon
      */
     @Override
-    public void lepes(Grid kezdo, Grid cel, Move move) {
+    public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
+        boolean OK=false;
         for (Rovar r : rovarok) {
             if(r.getPosition()==kezdo){
                 switch (move){
-                    case Rovar_vag -> r.consume();
-                    case Rovar_eszik -> r.consume();
-                    case Rovar_mozog -> r.move(cel);
+                    case Rovar_vag, Rovar_eszik -> {
+                        r.consume();
+                        OK=true;
+                    }
+                    case Rovar_mozog -> {
+                        r.move(cel);
+                        OK=true;
+                    }
                     default->{}
                 }
             }
+        }
+        if(!OK){
+            throw new InvalidMoveException("Nincs olyan rovar a kezdő griden.",kezdo,cel,move);
         }
     }
 }

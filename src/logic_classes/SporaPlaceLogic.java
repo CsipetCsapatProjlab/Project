@@ -3,6 +3,7 @@ package logic_classes;
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import model.Tekton;
+import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
@@ -77,7 +78,7 @@ public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
 
 
 
-    public boolean placeSpora(Grid celGrid){
+    public boolean placeSpora(Grid celGrid) throws IncompatibleGameObjectException {
     clearState();
 
         Tekton origin = null;

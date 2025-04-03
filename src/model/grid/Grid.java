@@ -9,12 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 import jdk.jshell.spi.ExecutionControl;
 import model.enums.Hatas;
+import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.GameObject;
 
 public abstract class Grid {
     Grid[] neighbours;
     boolean zarolva;
-    List<GameObject> gameObjects;
+    protected List<GameObject> gameObjects;
     protected Grid(){
         zarolva = false;
         gameObjects = new ArrayList<>();
@@ -27,13 +28,18 @@ public abstract class Grid {
     /**
      * Megtisztitja a mezot minden rajta elhelyezheto GameObject-tol
      */
-    public void clear() {
+    public int clear(){
         List<GameObject> tmp = new ArrayList<>();
+        int numsdeleted=0;
         tmp.addAll(gameObjects);
         for (GameObject g : tmp) {
-            g.remove();
+            numsdeleted++;
+            try {
+                g.remove();
+            } catch (IncompatibleGameObjectException e) {numsdeleted--;}
         }
         gameObjects.clear();
+        return numsdeleted;
     }
 
     /**
@@ -48,16 +54,21 @@ public abstract class Grid {
      * GameObject hozzaadasa a mezohoz
      * @param gameObject Mit adjon hozza
      */
-    public void hozzaAd(GameObject gameObject) {
-        gameObjects.add(gameObject);
+    public boolean hozzaAd(GameObject gameObject){
+        if(elfogadGameObject(gameObject)){
+            return gameObjects.add(gameObject);
+        }
+        return false;
     }
+
+    public abstract boolean elfogadGameObject(GameObject gameObject);
 
     /**
      * GameObject torlese a mezorol
      * @param g Mit toroljon
      */
-    public void torol(GameObject g) {
-        gameObjects.remove(g);
+    public boolean torol(GameObject g)  {
+        return gameObjects.remove(g);
     }
 
     /**
@@ -96,6 +107,8 @@ public abstract class Grid {
      */
     public Grid[] getNeighbours() {return neighbours;}
     public abstract Hatas getHatas();
+
+    void forduloUtan(){}
 
     /**
      * Fogadja a jatekobjektum visitort a mezon
