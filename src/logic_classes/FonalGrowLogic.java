@@ -143,12 +143,14 @@ public class FonalGrowLogic extends DiscoverLogic{
      * Kiválasztott Tekton
      * @param celGrid
      */
-    public void noveszt(Grid celGrid) throws Exception {
-        List<Grid> path=celGrid.gridPathFind(fonalOrigin.getPosition(),celGrid,5,this);
+
+    public void noveszt(Grid celGrid, int depth) throws Exception {
+        List<Grid> path=celGrid.gridPathFind(fonalOrigin.getPosition(),celGrid,depth,this);
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {
                 Fonal sp=new Fonal(g, (Gombasz)fonalOrigin.getObserver());
+                g.hozzaAd(sp);
             }
         }
         else{

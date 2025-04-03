@@ -69,8 +69,8 @@ public abstract class Grid {
      * @return Utvonal lista, ami tartalmazza a kezdő és a végpontokat.
      * @throws ExecutionControl.NotImplementedException
      */
-    public List<Grid> gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic) throws ExecutionControl.NotImplementedException {
-        if(!Arrays.stream(kezdo.neighbours).toList().contains(cel)) throw new ExecutionControl.NotImplementedException("Celgrid nem szomszédja a kezdőgridnek");
+    public List<Grid> gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic){
+        if(!Arrays.stream(kezdo.neighbours).toList().contains(cel)) return null;
         if(dLogic.canMove(kezdo,cel)<=depth){
             List<Grid> lista= new LinkedList<>();
             lista.add(kezdo);

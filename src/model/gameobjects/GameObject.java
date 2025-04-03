@@ -14,7 +14,6 @@ public abstract class GameObject {
      */
     public GameObject(Grid grid, Jatekos observer) {
         this.grid = grid;
-        grid.hozzaAd(this);
         this.observer = observer;
     }
 
@@ -24,6 +23,22 @@ public abstract class GameObject {
      */
     public Grid getPosition(){
         return grid;
+    }
+
+    protected void atmozog(Grid other){
+        if(other==grid) return;
+        else{
+            grid.torol(this);
+            other.hozzaAd(this);
+            grid=other;
+        }
+    }
+    /**
+     * Beállítja a mezőjét
+     * @param grid
+     */
+    protected void setPosition(Grid grid){
+        this.grid = grid;
     }
 
     /**

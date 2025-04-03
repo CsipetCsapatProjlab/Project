@@ -7,8 +7,10 @@ import model.enums.Hatas;
 import model.grid.Grid;
 import model.players.Gombasz;
 
+import java.util.List;
+
 public class Fonal extends GameObject {
-    Gombasz gombasz;
+    Gombasz observer;
     FonalGrowLogic fonalGrowLogic;
     GombaTestPlaceLogic gombaTestPlaceLogic;
 
@@ -19,9 +21,9 @@ public class Fonal extends GameObject {
      */
     public Fonal(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
-        this.gombasz = gombasz;
+        this.observer = gombasz;
         this.fonalGrowLogic = new FonalGrowLogic(this);
-        this.gombaTestPlaceLogic = new GombaTestPlaceLogic();
+        this.gombaTestPlaceLogic = new GombaTestPlaceLogic(this);
 
         gombasz.add(this);
     }
@@ -48,7 +50,17 @@ public class Fonal extends GameObject {
      * @param destination Novesztes cel gridje
      */
     public void fonalNovesztes(Grid destination) throws Exception {
-        fonalGrowLogic.noveszt(destination);
+        List<Grid> path=destination.gridPathFind(this.getPosition(),destination,10,fonalGrowLogic);
+        if(!path.isEmpty()){
+            path.removeFirst(); // Az első elem maga a kezdő fonál
+            for (Grid g : path) {
+                Fonal sp=new Fonal(g, observer);
+                g.hozzaAd(sp);
+            }
+        }
+        else{
+            throw new Exception("Nem tudtunk növeszteni!");
+        }
     }
 
     /**
@@ -56,7 +68,6 @@ public class Fonal extends GameObject {
      * @param grid Novesztes cel gridje
      */
     public void gombaTestNovesztes(Grid grid) {
-
 
     }
 }

@@ -16,11 +16,11 @@ public class Rovar extends GameObject {
     Hatas jelenlegiHatas;
 
     public Rovar(Grid grid, Rovarasz r){super(grid, r);}
-    public Rovar(Grid grid, Rovarasz rovarasz, RovarConsumeLogic rcl, RovarMoveLogic rml, int energia, int hatasCooldown) {
+    public Rovar(Grid grid, Rovarasz rovarasz, int energia, int hatasCooldown) {
         super(grid, rovarasz);
         this.rovarasz = rovarasz;
-        this.rovarConsumeLogic = rcl;
-        this.rovarMoveLogic = rml;
+        this.rovarConsumeLogic = new RovarConsumeLogic(this);
+        this.rovarMoveLogic = new RovarMoveLogic(this);
         this.energia = energia;
         this.hatasCooldown = hatasCooldown;
     }
@@ -41,21 +41,24 @@ public class Rovar extends GameObject {
         // TODO
     }
 
+    public int getEnergia() {
+        return energia;
+    }
+
     public void consume() {
-        grid.clear();
-        grid.hozzaAd(this);
+        if(rovarConsumeLogic.eszik(grid)){
+            energia--;
+        }
     }
 
     /**
      * Rovar mozgatasa a megadott mezore
      * @param destination Melyik mezora mozogjon
      */
-    public void move(Grid destination) {
-        //if(rovarMoveLogic.canMove(grid, destination)){
-            grid.torol(this);
-            grid = destination;
-            destination.hozzaAd(this);
-        //}
+    public void move(Grid destination){
+        if(rovarMoveLogic.mozog(destination)){
+            atmozog(destination);
+        }
     }
 
     /**
