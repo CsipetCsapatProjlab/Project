@@ -15,6 +15,7 @@ public abstract class GameObject {
     public GameObject(Grid grid, Jatekos observer) {
         this.grid = grid;
         this.observer = observer;
+        grid.hozzaAd(this);
     }
 
     /**
@@ -25,7 +26,7 @@ public abstract class GameObject {
         return grid;
     }
 
-    protected void atmozog(Grid other){
+    public void atmozog(Grid other){
         if(other==grid) return;
         else{
             grid.torol(this);

@@ -2,6 +2,8 @@ package model;
 
 import interfaces.GameObjectVisitor;
 import java.util.List;
+import java.util.Random;
+
 import model.enums.Hatas;
 import model.grid.Grid;
 import model.grid.TektonElem;
@@ -10,6 +12,7 @@ public class Tekton {
     List<Tekton> neighbours;
     int fonalAr;
     List<TektonElem> elemek;
+    static Random rnd = new Random();
 
     /**
      * Letrehoz egy tektont
@@ -53,7 +56,13 @@ public class Tekton {
             tekton.setNeighbours(tmp, --a);
         }
     }
+    public List<Tekton> getNeighbours(){
+        return neighbours;
+    }
 
+    public TektonElem getRandomElement(){
+        return elemek.get(rnd.nextInt(elemek.size()));
+    }
     /**
      * Mennyibe kerul a fonal novesztese a tektonon
      * @return Fonal novesztes ara

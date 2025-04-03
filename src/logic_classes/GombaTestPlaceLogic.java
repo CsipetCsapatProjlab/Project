@@ -65,7 +65,7 @@ public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
         clearState();
     }
 
-    public boolean placeGombaTest(Grid celgrid){
+    public boolean placeGombaTest(Grid celgrid, List<Spora> sporas){
         celgrid.accept((GridVisitor) this);
         if(tektonelem != null){
             tektonelem.getTekton().visitElements(this);
@@ -73,9 +73,14 @@ public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
                 return false;
             }
             else{
-
+                for (int i = 0; i < sporas.size(); i++) {
+                    Spora act=sporas.get(i);
+                    act.remove();
+                }
+                return true;
             }
         }
+        return false;
     }
 
 
