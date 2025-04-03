@@ -39,6 +39,15 @@ public class Rovarasz extends Jatekos {
      */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) {
-        // TODO
+        for (Rovar r : rovarok) {
+            if(r.getPosition()==kezdo){
+                switch (move){
+                    case Rovar_vag -> r.consume();
+                    case Rovar_eszik -> r.consume();
+                    case Rovar_mozog -> r.move(cel);
+                    default->{}
+                }
+            }
+        }
     }
 }

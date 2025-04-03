@@ -8,6 +8,7 @@ import java.util.Scanner;
 import model.Fungorium;
 import model.JatekMotor;
 import model.Tekton;
+import model.enums.Move;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
@@ -16,6 +17,7 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;
+import model.players.Rovarasz;
 
 
 public class Tests {
@@ -302,12 +304,12 @@ public class Tests {
         start();
     }
     void test9(){
-        Rovar rovar = new Rovar(grid[2][1], null, null, null, 0, 0);
+        Rovarasz rv=new Rovarasz((TektonElem) grid[2][1],"Helo");
         MyLogger.Visit("Rovar mozgas");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
-            rovar.move(grid[2][2]);
+            rv.lepes(grid[2][1],grid[2][2], Move.Rovar_mozog);
             if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
@@ -318,19 +320,19 @@ public class Tests {
         start();
     }
     void test10(){
-        Rovar rovar = new Rovar(grid[2][1], null, null, null, 0, 0);
+        Rovarasz rv=new Rovarasz((TektonElem) grid[2][1],"Helo");
         MyLogger.Visit("Rovar fonal eves");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
-            rovar.move(grid[2][2]);
+            rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
             if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
         MyLogger.Visit("Rovar.consume()");
         if(MyLogger.In("Van ott fonal? [y/n]", true).equals(y)){
-            rovar.consume();
+            rv.lepes(grid[2][2],grid[2][2],Move.Rovar_vag);
             if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar fonal eves sikeres!", false);
             else MyLogger.In("Rovar fonal eves sikertelen!", false);
         }else MyLogger.In("Rovar fonal eves sikertelen!", false);
@@ -341,19 +343,19 @@ public class Tests {
         start();
     }
     void test11(){
-        Rovar rovar = new Rovar(grid[2][1], null, null, null, 0, 0);
+        Rovarasz rv=new Rovarasz((TektonElem) grid[2][1],"Helo");
         MyLogger.Visit("Rovar spora eves");
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
-            rovar.move(grid[2][2]);
+            rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
             if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
         MyLogger.Visit("Rovar.consume()");
         if(MyLogger.In("Van ott spora? [y/n]", true).equals(y)){
-            rovar.consume();
+            rv.lepes(grid[2][2],grid[2][2],Move.Rovar_eszik);
             if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar spora eves sikeres!", false);
             else MyLogger.In("Rovar spora eves sikertelen!", false);
         }else MyLogger.In("Rovar spora eves sikertelen!", false);
