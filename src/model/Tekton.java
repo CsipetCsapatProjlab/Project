@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.enums.Hatas;
+import model.enums.TektonelemTypes;
 import model.grid.Grid;
 import model.grid.TektonElem;
 
 public class Tekton {
-    Hatas hatas;
+    TektonelemTypes hatas;
     List<Tekton> neighbours;
     int fonalAr;
     int tektonszam;
     List<TektonElem> elemek;
 
-    public Tekton(Hatas h){
+    public Tekton(TektonelemTypes h){
         hatas = h;
         neighbours = new ArrayList<>();
         fonalAr = 0;
@@ -41,7 +42,7 @@ public class Tekton {
             neighbours.add(t);
         }
     }
-    public Hatas getHatas(){return hatas;}
+    public TektonelemTypes getHatas(){return hatas;}
     public int getFonalAr() {return  fonalAr;}
     public Grid[] getRandomPath() {
         // TODO

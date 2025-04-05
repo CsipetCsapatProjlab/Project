@@ -6,6 +6,7 @@ import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import model.Tekton;
 import model.enums.Hatas;
+import model.enums.TektonelemTypes;
 import model.gameobjects.GameObject;
 
 public class TektonElem extends Grid {
@@ -32,7 +33,7 @@ public class TektonElem extends Grid {
     }
 
     @Override
-    public Hatas getHatas(){return tekton.getHatas();}
+    public TektonelemTypes getHatas(){return tekton.getHatas();}
 
     @Override
     public void accept(GridVisitor visitor) {

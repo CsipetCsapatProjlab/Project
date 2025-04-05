@@ -6,6 +6,11 @@ import java.util.Map;
 import java.util.Random;
 
 import model.enums.Hatas;
+import model.enums.TektonelemTypes;
+import model.grid.EgyFonal;
+import model.grid.FonalEvo;
+import model.grid.FonalTarto;
+import model.grid.GombatestEvo;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
@@ -158,7 +163,7 @@ public class Fungorium {
         for(int i = 0; i < this.sor; i++){
             for(int j = 0 ; j < this.oszlop ;j++){
                 if(!szigetekKeret[i][j]){
-                    Hatas[] hatasok = Hatas.values();
+                    TektonelemTypes[] hatasok = TektonelemTypes.values();
                     Tekton t = new Tekton(hatasok[rand.nextInt(hatasok.length)]);
                     connectSziget(i,j, t);
                     szigetekSzama++;
@@ -176,8 +181,28 @@ public class Fungorium {
             return;
         }
         szigetekKeret[x][y] = true;
-        map[x][y] = new TektonElem(t);
-        t.addelem((TektonElem)map[x][y]);
+        switch (t.getHatas()) {
+            case    GOMBATESTEVO:
+                map[x][y] = new GombatestEvo(t);
+                t.addelem((TektonElem)map[x][y]);
+                break;
+            case    FONALTARTO:
+                map[x][y] = new FonalTarto(t);
+                t.addelem((TektonElem)map[x][y]);
+                break;
+            case    FONALEVO:
+                map[x][y] = new FonalEvo(t);
+                t.addelem((TektonElem)map[x][y]);
+                break;
+            case    EGYFONAL:
+                map[x][y] = new EgyFonal(t);
+                t.addelem((TektonElem)map[x][y]);
+                break;
+        
+            default:
+                System.err.println("Nem kezelt tektonfalyta");
+                break;
+        }
         if (x - 1 >= 0) {
             connectSziget(x-1, y,t);
         }
