@@ -14,6 +14,8 @@ public abstract class Grid {
     Grid[] neighbours;
     boolean zarolva;
     List<GameObject> gameObjects;
+    int szomszedokSzama;
+    
     protected Grid(){
         zarolva = false;
         gameObjects = new ArrayList<>();
@@ -32,10 +34,11 @@ public abstract class Grid {
         gameObjects.clear();
     }
 
-    public void setNeighbours(Grid[] arr){
+    public void setNeighbours(Grid[] arr, int hany){
         neighbours = arr;
+        szomszedokSzama = hany;
     }
-
+    public int getSzomszedokSzama(){return szomszedokSzama;}
     public void hozzaAd(GameObject gameObject) {
         gameObjects.add(gameObject);
     }

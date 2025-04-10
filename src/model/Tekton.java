@@ -12,7 +12,7 @@ public class Tekton {
     TektonelemTypes hatas;
     List<Tekton> neighbours;
     int fonalAr;
-    int tektonszam;
+    int tektonszam = 0;
     List<TektonElem> elemek;
 
     public Tekton(TektonelemTypes h){
@@ -20,9 +20,6 @@ public class Tekton {
         neighbours = new ArrayList<>();
         fonalAr = 0;
         elemek = new ArrayList<>();
-    }
-    public void szakad() {
-        // TODO
     }
     public void setNeighbours(List<Tekton> l, int a){
         if(a == 0) return;
@@ -36,6 +33,7 @@ public class Tekton {
     }
     public void addelem(TektonElem e){
         elemek.add(e);
+        tektonszam++;
     }
     public void addNeigbour(Tekton t){
         if(!neighbours.contains(t)){
@@ -44,6 +42,9 @@ public class Tekton {
     }
     public TektonelemTypes getHatas(){return hatas;}
     public int getFonalAr() {return  fonalAr;}
+    public int getTektonszam(){return tektonszam;}
+    public List<TektonElem> getTektonElems(){return elemek;}
+    public void resetTektonelemek(){elemek.clear();}
     public Grid[] getRandomPath() {
         // TODO
         return null;

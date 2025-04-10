@@ -16,10 +16,10 @@ import model.grid.Lava;
 import model.grid.TektonElem;
 
 public class Fungorium {
-    JatekMotor motor;
-    Grid[][] map;
-    boolean[][] szigetekKeret;
-    char[][] test;
+    JatekMotor motor;// A játék motorja 
+    Grid[][] map; //A pálya amin a játék játszódij
+    boolean[][] szigetekKeret; // Segéd tömb ami a genrálást segíti
+    char[][] test;  // Segéd tömb ami a genrálást segíti és 
     List<Tekton> tektons;
     int sor;
     int oszlop;
@@ -151,6 +151,7 @@ public class Fungorium {
     }
 
     void findSziget(){
+        szigetekSzama = 0;
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
                 if(test[i][j] == '#'){
@@ -185,18 +186,22 @@ public class Fungorium {
             case    GOMBATESTEVO:
                 map[x][y] = new GombatestEvo(t);
                 t.addelem((TektonElem)map[x][y]);
+                test[x][y] = '1';
                 break;
             case    FONALTARTO:
                 map[x][y] = new FonalTarto(t);
                 t.addelem((TektonElem)map[x][y]);
+                test[x][y] = '2';
                 break;
             case    FONALEVO:
                 map[x][y] = new FonalEvo(t);
                 t.addelem((TektonElem)map[x][y]);
+                test[x][y] = '3';
                 break;
             case    EGYFONAL:
                 map[x][y] = new EgyFonal(t);
                 t.addelem((TektonElem)map[x][y]);
+                test[x][y] = '4';
                 break;
         
             default:
@@ -253,8 +258,9 @@ public class Fungorium {
                 }
                 if(j - 1 > 0){ //ball
                     szomszedok[hany] = map[i][j-1];
+                    hany++;
                 }
-                map[i][j].setNeighbours(szomszedok);
+                map[i][j].setNeighbours(szomszedok, hany);
             }
         }
     }
@@ -307,8 +313,150 @@ public class Fungorium {
         return motor;
     }
 
+    public void szakad() {
+        for(int i = 0; i < 10; i++){
+            Tekton valasztott = tektons.get(rand.nextInt(tektons.size()));
+            if(valasztott.getTektonszam() > 6 && valasztott.getTektonszam() > valasztott.getTektonszam()/2){
+                List<TektonElem> elemek = valasztott.getTektonElems();
+                TektonElem valasz = elemek.get(rand.nextInt(elemek.size()));
+                int mezosor = -1;
+                int mezooszlop = -1;
+                for(int x = 0; x < sor; x++){
+                    for(int y = 0; y < oszlop; y++){
+                        if(valasz.equals(map[x][y])){
+                            mezosor = x;
+                            mezooszlop = y;
+                        }
+                    }
+                }
+                if(mezooszlop != -1 && mezosor != -1 && map[mezosor][mezooszlop].getSzomszedokSzama() == 4){
+                    szakadjon(mezosor, mezooszlop);
+                }
+                parosit();
+                keresTekton();
+                findszomszed();
+            }
+        }
+    }
+
+    private void szakadjon(int kezdosor, int kezdooszlop){
+        if(lavaPlace(kezdosor, kezdooszlop)){
+            test[kezdosor][kezdooszlop] = '#';
+            map[kezdosor][kezdooszlop] = new Lava();
+        }
+        System.out.println(kezdosor + " " + kezdooszlop);
+        if(kezdosor-1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2){
+            if(test[kezdosor-1][kezdooszlop] != '#'){
+                szakadjon(kezdosor-1, kezdooszlop);
+            }
+        }
+        if(kezdosor+1 < this.sor && szomszedLava(kezdosor, kezdooszlop) <= 2){
+            if(test[kezdosor+1][kezdooszlop] != '#'){
+                szakadjon(kezdosor+1, kezdooszlop);
+            }
+        }
+        if(kezdooszlop-1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2){
+            if(test[kezdosor-1][kezdooszlop] != '#'){
+                szakadjon(kezdosor, kezdooszlop-1);
+            }
+        }
+        if(kezdooszlop+1 < this.oszlop && szomszedLava(kezdosor, kezdooszlop) <= 2){
+            if(test[kezdosor-1][kezdooszlop] != '#'){
+                szakadjon(kezdosor, kezdooszlop-1);
+            }
+        }
+    }
+    private int szomszedLava(int x,int y){
+        int mennyi = 0;
+        if(x-1 >= 0){
+            if(test[x-1][y] == '#'){
+                mennyi++;
+            }
+        }else{
+            mennyi++;
+        }
+        if(x+1 < this.sor){
+            if(test[x+1][y] == '#'){
+                mennyi++;
+            }
+        }else{
+            mennyi++;
+        }
+        if(y-1 >= 0){
+            if(test[x][y-1] == '#'){
+                mennyi++;
+            }
+        }else{
+            mennyi++;
+        }
+        if(y+1 > this.oszlop){
+            if(test[x][y+1] == '#'){
+                mennyi++;
+            }
+        }else{
+            mennyi++;
+        }
+        return mennyi;
+    }
+
+    void keresTekton(){
+        szigetekSzama = 0;
+        for (int i = 0; i < sor; i++) {
+            for (int j = 0; j < oszlop; j++) {
+                if(test[i][j] == '#'){
+                    szigetekKeret[i][j] = true;
+                }else{
+                    szigetekKeret[i][j] = false;
+                }
+            }
+        }
+        for(int i = 0; i < this.sor; i++){
+            for(int j = 0 ; j < this.oszlop ;j++){
+                if(!szigetekKeret[i][j]){
+                    Tekton t = null;
+                    if(test[i][j] == '1'){
+                        t = new Tekton(TektonelemTypes.GOMBATESTEVO);
+                    }else if(test[i][j] == '2'){
+                        t = new Tekton(TektonelemTypes.FONALTARTO);
+                    }else if(test[i][j] == '3'){
+                        t = new Tekton(TektonelemTypes.FONALEVO);
+                    }else if(test[i][j] == '4'){
+                        t = new Tekton(TektonelemTypes.EGYFONAL);
+                    }
+                    connectSziget(i,j, t);
+                    szigetekSzama++;
+                    tektons.add(t);
+                }
+            }
+        }
+    }
+
+    void szakadKeresTekton(int x, int y, Tekton t){//Összeköti a tektonelemeket a tektonokhoz
+        if (x < 0 || y < 0 || x >= this.sor || y >= this.oszlop || test[x][y] == '#') {
+            return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
+        }
+        if(szigetekKeret[x][y]){ //ellenőrzi hogy voltunk-e már azon a mezőn
+            return;
+        }
+        szigetekKeret[x][y] = true;
+        t.addelem((TektonElem)map[x][y]);
+        if (x - 1 >= 0) {
+            connectSziget(x-1, y,t);
+        }
+        if (x + 1 < this.sor) {
+            connectSziget(x+1, y,t);
+        }
+        if (y - 1 >= 0) {
+            connectSziget(x, y-1,t);
+        }
+        if (y + 1 < this.oszlop) {
+            connectSziget(x, y+1,t);
+        }
+    }
+
     public void ujKor() {
-        // TODO
+        szakad();
+        System.out.println(this);
     }
     public void setMap(Grid[][] g){map = g;}
     public void setTektons(List<Tekton> t){tektons = t;}
