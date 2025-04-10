@@ -9,18 +9,21 @@ import model.grid.Grid;
 import model.grid.TektonElem;
 
 public class Tekton {
-    TektonelemTypes hatas;
-    List<Tekton> neighbours;
-    int fonalAr;
-    int tektonszam = 0;
+    TektonelemTypes hatas; //Tekton hatása a rajta lévő elemkre
+    List<Tekton> neighbours; //Tekton szomszédjai
+    int fonalAr; //A fonal ára a tektonon
+    int tektonszam = 0; //a tekton elemeinek a száma
     List<TektonElem> elemek;
 
+    //típus alapján konstruktor
     public Tekton(TektonelemTypes h){
         hatas = h;
         neighbours = new ArrayList<>();
         fonalAr = 0;
         elemek = new ArrayList<>();
     }
+
+    //Beállítja a szomszédokat
     public void setNeighbours(List<Tekton> l, int a){
         if(a == 0) return;
         neighbours = l;
@@ -30,11 +33,16 @@ public class Tekton {
             tmp.add(this);
             tekton.setNeighbours(tmp, --a);
         }
+
     }
+
+    //hozzáad egy új tektonelemet
     public void addelem(TektonElem e){
         elemek.add(e);
         tektonszam++;
     }
+
+    //új szomszédot add hozzá
     public void addNeigbour(Tekton t){
         if(!neighbours.contains(t)){
             neighbours.add(t);

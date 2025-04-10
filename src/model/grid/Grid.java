@@ -11,20 +11,24 @@ import model.enums.TektonelemTypes;
 import model.gameobjects.GameObject;
 
 public abstract class Grid {
-    Grid[] neighbours;
-    boolean zarolva;
-    List<GameObject> gameObjects;
-    int szomszedokSzama;
+    Grid[] neighbours; // a griddel szomszédos gridek
+    boolean zarolva; //azt mutatja lehet e rajta gameObject vagy sem
+    List<GameObject> gameObjects; //a tektonon lévő objectek listálya
+    int szomszedokSzama; //Szomszédok száma
     
+    //alap konstruktor
     protected Grid(){
         zarolva = false;
         gameObjects = new ArrayList<>();
     }
+
+    //gamelista alapján törénő konstruktor
     protected Grid(List<GameObject> g) {
         this.gameObjects = g;
     }
     public List<GameObject> getGameObject(){return gameObjects;}
 
+    //Törli a gameobjecteket a gridről
     public void clear() {
         List<GameObject> tmp = new ArrayList<>();
         tmp.addAll(gameObjects);
