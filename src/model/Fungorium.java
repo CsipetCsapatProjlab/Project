@@ -20,12 +20,12 @@ public class Fungorium {
     Grid[][] map; //A pálya amin a játék játszódij
     boolean[][] szigetekKeret; // Segéd tömb ami a genrálást segíti
     char[][] test;  // Segéd tömb ami a genrálást segíti és 
-    List<Tekton> tektons;
-    int sor;
-    int oszlop;
-    int lavaszam = 0;
+    List<Tekton> tektons; //Tektonok listálya
+    int sor; //A pálya sorainak a száma
+    int oszlop; //A pálya oszlopainak a száma
+    int lavaszam = 0; //Azt tartja számon hány láva van a pályán
     Random rand = new Random();
-    int szigetekSzama = 0;
+    int szigetekSzama = 0;// Tektonok száma
     
     public Fungorium(int ujsor,int ujoszlop){ //A pályát létrehozó konstruktor meghív minden fügvényt ami ahoz kell hogy a pálya létrejöjjön
         sor = ujsor;
@@ -42,6 +42,7 @@ public class Fungorium {
             }
         }
         boolean sikeres = false;
+        //Itt generálódik a pálya először a lávák majd megkeresi a tektonokat és ha a végeradmény nem felel meg újra kezdi
         while(!sikeres){
             while(lavaszam <= (sor*oszlop/3)){
                 this.generateMaze(rand.nextInt(sor),rand.nextInt(oszlop)); 
@@ -56,6 +57,7 @@ public class Fungorium {
         this.parosit();
         this.findszomszed();
     }
+    //Stringé allakítja a pályát
     public String toString() {
         for (int i = 0; i <= this.oszlop + 1; i++) {
             System.out.print("0");
@@ -93,6 +95,7 @@ public class Fungorium {
         }else{
             return;
         }
+        //Random kiválasztja merre akar menni és azt hogy hányszor próbálkozik
         for (int i = 0; i < 2; i++) {
             do{
                 merre = rand.nextInt(4);
@@ -103,7 +106,7 @@ public class Fungorium {
             }
         }
     }
-
+    //Egy ellenőrző hogy ne alakulhasson ki 2x2 es láva rész
     private boolean lavaPlace(int x, int y) {
         if (x > 0 && y > 0) {
             if (test[x - 1][y - 1] == '#' && test[x - 1][y - 1] == test[x - 1][y]
@@ -131,6 +134,7 @@ public class Fungorium {
         }
         return true;
     }
+    //A generálásnál a generálás irányába folytatja a rekurziót 
     private void irany(int merre, int x, int y){
         switch (merre) {
             case 0:
@@ -149,9 +153,10 @@ public class Fungorium {
                 break;
         }
     }
-
+    //Megtaláljuk a tektonokat és hozzájuk tesszük a tekton elemeket
     void findSziget(){
         szigetekSzama = 0;
+        //Beállítjuk a tömböt a keresés segítéséhez
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
                 if(test[i][j] == '#'){
@@ -182,6 +187,7 @@ public class Fungorium {
             return;
         }
         szigetekKeret[x][y] = true;
+        //Megfelelő tektoneleme létrehozása
         switch (t.getHatas()) {
             case    GOMBATESTEVO:
                 map[x][y] = new GombatestEvo(t);
@@ -221,7 +227,7 @@ public class Fungorium {
             connectSziget(x, y+1,t);
         }
     }
-
+    //reseteli a pályát egy rossz generálás esetén
     void reset(){
         // Törlés minden pályával kapcsolatos adatot
         for (int i = 0; i < sor; i++) {
@@ -264,7 +270,7 @@ public class Fungorium {
             }
         }
     }
-
+    //Tekton szomszéd keresés része
     void findszomszed(){
         for(int i = 0; i < this.sor; i++){
             for(int j = 0 ; j < this.oszlop ;j++){
@@ -279,6 +285,7 @@ public class Fungorium {
         if (x < 0 || y < 0 || x >= this.sor || y >= this.oszlop || test[x][y] == '#') {
             return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
         }
+        //hozzárendeleés feltételei
         if (x - 2 >= 0 && test[x-1][y] == '#' && test[x-2][y] != '#') {
             ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x-2][y]).getTekton());
         }
@@ -312,9 +319,10 @@ public class Fungorium {
     public JatekMotor getMotor() {
         return motor;
     }
-
+    //szakadás előkészítő fügvény
     public void szakad() {
         for(int i = 0; i < 10; i++){
+            //kiválasztjuk a pontott amiből indulunk
             Tekton valasztott = tektons.get(rand.nextInt(tektons.size()));
             if(valasztott.getTektonszam() > 6 && valasztott.getTektonszam() > valasztott.getTektonszam()/2){
                 List<TektonElem> elemek = valasztott.getTektonElems();
@@ -329,6 +337,7 @@ public class Fungorium {
                         }
                     }
                 }
+                //Szakadunk
                 if(mezooszlop != -1 && mezosor != -1 && map[mezosor][mezooszlop].getSzomszedokSzama() == 4){
                     szakadjon(mezosor, mezooszlop);
                 }
@@ -338,7 +347,7 @@ public class Fungorium {
             }
         }
     }
-
+    //a szakadást végző fügvény
     private void szakadjon(int kezdosor, int kezdooszlop){
         if(lavaPlace(kezdosor, kezdooszlop)){
             test[kezdosor][kezdooszlop] = '#';
@@ -366,6 +375,7 @@ public class Fungorium {
             }
         }
     }
+    //Ellenőrizzük hány szomszéd van aki láva
     private int szomszedLava(int x,int y){
         int mennyi = 0;
         if(x-1 >= 0){
@@ -398,7 +408,7 @@ public class Fungorium {
         }
         return mennyi;
     }
-
+    //Szakadás után újra rendelni a tektonokhoz a tektonelemeket
     void keresTekton(){
         szigetekSzama = 0;
         for (int i = 0; i < sor; i++) {
