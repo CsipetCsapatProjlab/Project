@@ -3,28 +3,39 @@ package model.gameobjects;
 import interfaces.GameObjectVisitor;
 import logic_classes.RovarConsumeLogic;
 import logic_classes.RovarMoveLogic;
+import model.CONSTANTS;
 import model.enums.Hatas;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.players.Rovarasz;
 
-public class Rovar extends GameObject {
+public class Rovar extends GameObject{
     Rovarasz rovarasz;
     RovarConsumeLogic rovarConsumeLogic;
     RovarMoveLogic rovarMoveLogic;
-    int energia;
-    int hatasCooldown;
-    Hatas jelenlegiHatas;
+    double energia;
+
+    public Rovar(Rovar other) {
+        super(other.grid,other.rovarasz);
+        energia = CONSTANTS.ROVARENERGIA;
+        rovarConsumeLogic = new RovarConsumeLogic(this);
+        rovarMoveLogic = new RovarMoveLogic(this);
+    }
 
     public Rovar(Grid grid, Rovarasz r){super(grid, r);}
-    public Rovar(Grid grid, Rovarasz rovarasz, int energia, int hatasCooldown) {
+    public Rovar(Grid grid, Rovarasz rovarasz, int energia) {
         super(grid, rovarasz);
         this.rovarasz = rovarasz;
         this.rovarConsumeLogic = new RovarConsumeLogic(this);
         this.rovarMoveLogic = new RovarMoveLogic(this);
         this.energia = energia;
-        this.hatasCooldown = hatasCooldown;
+
+        rovarasz.hozzaAd(this);
+    }
+
+    public static void CloneRovar(Rovar r){
+        Rovar ro=new Rovar(r);
     }
 
     /**
@@ -43,7 +54,7 @@ public class Rovar extends GameObject {
         // TODO
     }
 
-    public int getEnergia() {
+    public double getEnergia() {
         return energia;
     }
 

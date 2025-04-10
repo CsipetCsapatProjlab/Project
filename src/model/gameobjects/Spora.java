@@ -7,7 +7,7 @@ import model.players.Gombasz;
 
 public class Spora extends GameObject {
     int tapertek;
-    Gombasz observer;
+    Gombasz gombasz;
     Hatas hatas;
     
     public Spora(Grid g, Gombasz gombasz){super(g, gombasz);}
@@ -25,7 +25,7 @@ public class Spora extends GameObject {
         this.observer = gombasz;
         this.hatas = hatas;
 
-        observer.add(this);
+        gombasz.add(this);
     }
 
     /**
