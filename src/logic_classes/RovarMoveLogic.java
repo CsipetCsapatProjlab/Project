@@ -52,7 +52,7 @@ public class RovarMoveLogic extends DiscoverLogic {
     @Override
     public double canMove(Grid from, Grid neighbour) {
         if(from==neighbour) return 0;
-        if(Arrays.stream(from.getNeighbours()).noneMatch((x)->x==neighbour)){
+        if(Arrays.stream(from.getNeighbors()).noneMatch((x)->x==neighbour)){
             return Double.POSITIVE_INFINITY;
         }
         from.accept((GridVisitor) this);

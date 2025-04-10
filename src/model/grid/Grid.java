@@ -3,10 +3,9 @@ package model.grid;
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import interfaces.IDiscoverLogic;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
+
 import jdk.jshell.spi.ExecutionControl;
 import model.enums.Hatas;
 import model.exceptions.IncompatibleGameObjectException;
@@ -71,24 +70,71 @@ public abstract class Grid {
         return gameObjects.remove(g);
     }
 
-    /**
-     * Csak a szomszédot nézi meg, mert még nem fogom implementálni a Dijkstrát.
-     * @param kezdo
-     * @param cel
-     * @param depth Mélység
-     * @param dLogic Func<double, Grid, Grid>, ami meghatározza az élsúlyt
-     * @return Utvonal lista, ami tartalmazza a kezdő és a végpontokat.
-     * @throws ExecutionControl.NotImplementedException
-     */
-    public List<Grid> gridPathFind(Grid kezdo, Grid cel, int depth, IDiscoverLogic dLogic){
-        if(!Arrays.stream(kezdo.neighbours).toList().contains(cel)) return null;
-        if(dLogic.canMove(kezdo,cel)<=depth){
-            List<Grid> lista= new LinkedList<>();
-            lista.add(kezdo);
-            lista.add(cel);
-            return lista;
+    public List<Grid> gridPathFind(Grid kezdo, Grid cel, double maxCumulativeWeight, IDiscoverLogic dLogic){
+        return gridPathFind(kezdo, cel, maxCumulativeWeight, dLogic);
+    }
+
+    private class GridPathFinder {
+
+        /**
+         * Dijkstra féle legrövidebb út implementáció
+         * @param kezdo innen jön
+         * @param cel ide érkezik
+         * @param maxCumulativeWeight Ennél tovább nem mehet
+         * @param dLogic Func<double, Grid, Grid>, ami meghatározza az élsúlyt
+         * @return Utvonal lista, ami tartalmazza a kezdő és a végpontokat. Ha nincs ilyen, egy üres listát ad vissza.
+         */
+        public List<Grid> gridPathFind(Grid kezdo, Grid cel, double maxCumulativeWeight, IDiscoverLogic dLogic) {
+            PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.weight));
+            Map<Grid, Double> distances = new HashMap<>();
+            Map<Grid, Grid> previous = new HashMap<>();
+
+            distances.put(kezdo, 0.0);
+            queue.add(new Node(kezdo, 0.0));
+
+            while (!queue.isEmpty()) {
+                Node current = queue.poll();
+
+                if (current.grid.equals(cel)) {
+                    return reconstructPath(previous, cel);
+                }
+
+                for (Grid neighbor : current.grid.getNeighbors()) {
+                    if (neighbor == null) continue;
+
+                    double moveCost = dLogic.canMove(current.grid, neighbor);
+                    if (moveCost == Double.POSITIVE_INFINITY) continue; // Skip if movement is not possible
+
+                    double newWeight = current.weight + moveCost;
+
+                    if (newWeight <= maxCumulativeWeight && (!distances.containsKey(neighbor) || newWeight < distances.get(neighbor))) {
+                        distances.put(neighbor, newWeight);
+                        previous.put(neighbor, current.grid);
+                        queue.add(new Node(neighbor, newWeight));
+                    }
+                }
+            }
+
+            return new ArrayList<>(); // No path found
         }
-        return new LinkedList<>();
+
+        private List<Grid> reconstructPath(Map<Grid, Grid> previous, Grid cel) {
+            List<Grid> path = new LinkedList<>();
+            for (Grid at = cel; at != null; at = previous.get(at)) {
+                path.add(0, at);
+            }
+            return path;
+        }
+
+        private static class Node {
+            Grid grid;
+            double weight;
+
+            Node(Grid grid, double weight) {
+                this.grid = grid;
+                this.weight = weight;
+            }
+        }
     }
 
     /**
@@ -105,7 +151,7 @@ public abstract class Grid {
      * A mezo szomszedait lekerdezi
      * @return Mezo tomb a szomszedokkal
      */
-    public Grid[] getNeighbours() {return neighbours;}
+    public Grid[] getNeighbors() {return neighbours;}
     public abstract Hatas getHatas();
 
     void forduloUtan(){}
