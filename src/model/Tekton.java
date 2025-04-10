@@ -1,19 +1,25 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.enums.Hatas;
+import model.enums.TektonelemTypes;
 import model.grid.Grid;
+import model.grid.TektonElem;
 
 public class Tekton {
-    Hatas hatas;
+    TektonelemTypes hatas;
     List<Tekton> neighbours;
     int fonalAr;
-    
-    public Tekton(Hatas h){
+    int tektonszam;
+    List<TektonElem> elemek;
+
+    public Tekton(TektonelemTypes h){
         hatas = h;
-        neighbours = null;
+        neighbours = new ArrayList<>();
         fonalAr = 0;
+        elemek = new ArrayList<>();
     }
     public void szakad() {
         // TODO
@@ -28,7 +34,15 @@ public class Tekton {
             tekton.setNeighbours(tmp, --a);
         }
     }
-    public Hatas getHatas(){return hatas;}
+    public void addelem(TektonElem e){
+        elemek.add(e);
+    }
+    public void addNeigbour(Tekton t){
+        if(!neighbours.contains(t)){
+            neighbours.add(t);
+        }
+    }
+    public TektonelemTypes getHatas(){return hatas;}
     public int getFonalAr() {return  fonalAr;}
     public Grid[] getRandomPath() {
         // TODO

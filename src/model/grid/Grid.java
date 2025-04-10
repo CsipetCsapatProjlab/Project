@@ -7,6 +7,7 @@ import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import interfaces.IDiscoverLogic;
 import model.enums.Hatas;
+import model.enums.TektonelemTypes;
 import model.gameobjects.GameObject;
 
 public abstract class Grid {
@@ -55,7 +56,7 @@ public abstract class Grid {
         return " ";
     }
     public Grid[] getNeighbours() {return neighbours;}
-    public abstract Hatas getHatas();
+    public abstract TektonelemTypes getHatas();
     public abstract void accept(GameObjectVisitor visitor);
     public abstract void accept(GridVisitor visitor);
 }
