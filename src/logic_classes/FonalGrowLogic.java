@@ -8,6 +8,7 @@ import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
+import model.grid.GridUtils;
 import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;
@@ -145,7 +146,7 @@ public class FonalGrowLogic extends DiscoverLogic{
      */
 
     public void noveszt(Grid celGrid, int depth) throws Exception {
-        List<Grid> path=celGrid.gridPathFind(fonalOrigin.getPosition(),celGrid,depth,this);
+        List<Grid> path= GridUtils.GridPathFinder.gridPathFind(fonalOrigin.getPosition(),celGrid,depth,this);
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {

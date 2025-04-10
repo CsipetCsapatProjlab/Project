@@ -27,7 +27,7 @@ public class GridUtils {
          * Az elérhetetlen csomópontokat (amelyek mozgási költsége Double.POSITIVE_INFINITY) kihagyja.
          * Az út csak akkor épül fel, ha az összsúly nem haladja meg a megadott maximumot.
          */
-        public List<Grid> gridPathFind(Grid kezdo, Grid cel, double maxCumulativeWeight, IDiscoverLogic dLogic) {
+        public static List<Grid> gridPathFind(Grid kezdo, Grid cel, double maxCumulativeWeight, IDiscoverLogic dLogic) {
             PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.weight));
             Map<Grid, Double> distances = new HashMap<>();
             Map<Grid, Grid> previous = new HashMap<>();
@@ -74,7 +74,7 @@ public class GridUtils {
          * Az elérhetetlen csomópontokat (amelyek mozgási költsége Double.POSITIVE_INFINITY) kihagyja.
          * A metódus biztosítja, hogy minden csomópontot csak egyszer látogasson meg, hogy elkerülje a végtelen ciklusokat.
          */
-        public List<Grid> gridFindAll(Grid kezdo, int depth, IDiscoverLogic dLogic) {
+        public static List<Grid> gridFindAll(Grid kezdo, int depth, IDiscoverLogic dLogic) {
             List<Grid> result = new ArrayList<>();
             Queue<Node> queue = new LinkedList<>();
             Set<Grid> visited = new HashSet<>();
@@ -105,7 +105,7 @@ public class GridUtils {
         }
 
 
-        private List<Grid> reconstructPath(Map<Grid, Grid> previous, Grid cel) {
+        private static List<Grid> reconstructPath(Map<Grid, Grid> previous, Grid cel) {
             List<Grid> path = new LinkedList<>();
             for (Grid at = cel; at != null; at = previous.get(at)) {
                 path.add(0, at);

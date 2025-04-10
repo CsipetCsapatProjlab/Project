@@ -8,6 +8,7 @@ import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
+import model.grid.GridUtils;
 import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;
@@ -68,7 +69,7 @@ public class RovarMoveLogic extends DiscoverLogic {
 
 
     public boolean mozog(Grid celGrid){
-        List<Grid> path=celGrid.gridPathFind(rovar.getPosition(),celGrid,rovar.getEnergia(),this);
+        List<Grid> path= GridUtils.GridPathFinder.gridPathFind(rovar.getPosition(),celGrid,rovar.getEnergia(),this);
         if(!path.isEmpty()){
             return true;
         }
