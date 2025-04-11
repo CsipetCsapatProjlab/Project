@@ -1,0 +1,17 @@
+->Beolvasas sikeres
+->Fonal novesztes sikeres lavara
+->Fonal novesztes sikeres lavara
+->Rovar mozgas sikeres
+->Rovar fonal eves sikeres
+->Kovetkezo jatekos sikeres
+->Kovetkezo jatekos sikeres
+->Kovetkezo jatekos sikeres
+->Rovar mozgas sikeres
+->Rovar spora eves sikeres->Rovar blokkolva
+->Fonal rovar eves sikeres
+->Tekton szakadas sikeres
+->Spora loves sikeres
+->GombaTest: m1; fejletlen; sporak: 3db; 3x2
+  Spora: m1; dupla_rovar; 5 tapertek; 1x2
+  Fonal: m1; 1x3
+->GAME OVER
