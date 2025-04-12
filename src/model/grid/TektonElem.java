@@ -26,6 +26,7 @@ public class TektonElem extends Grid {
     }
 
     public Tekton getTekton(){return tekton;}
+    public void setTekton(Tekton t){tekton = t;}
 
     @Override
     public void accept(GameObjectVisitor visitor) {

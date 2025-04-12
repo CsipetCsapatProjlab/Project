@@ -1,5 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -408,6 +414,7 @@ public class Fungorium {
         }
         return mennyi;
     }
+
     //Szakadás után újra rendelni a tektonokhoz a tektonelemeket
     void keresTekton(){
         szigetekSzama = 0;
@@ -450,6 +457,7 @@ public class Fungorium {
         }
         szigetekKeret[x][y] = true;
         t.addelem((TektonElem)map[x][y]);
+        ((TektonElem) map[x][y]).setTekton(t);
         if (x - 1 >= 0) {
             connectSziget(x-1, y,t);
         }
@@ -466,7 +474,109 @@ public class Fungorium {
 
     public void ujKor() {
         szakad();
+        mentes();
         System.out.println(this);
+    }
+
+    public void mentes(){
+        String filePath = "mentes/tekton/palya_tektonelemek.txt";
+        File file = new File(filePath);
+        file.getParentFile().mkdirs(); // Létrehozza a mappastruktúrát, ha még nem létezik
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < sor; i++) {
+                for (int j = 0; j < oszlop; j++) {
+                    writer.write(test[i][j]);
+                }
+                writer.newLine();
+            }
+            System.out.println("Pálya mentése sikeres: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Hiba történt a pálya mentésekor: " + e.getMessage());
+        }
+
+        saveMapSize("mentes/tekton/valtozok.txt");
+    }
+
+    public void saveMapSize(String path) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+            writer.write(sor + "," + oszlop);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void loadMapSize(String path) {
+        int[] values = new int[2]; // [sor, oszlop]
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String line = reader.readLine();
+            String[] parts = line.split(",");
+            values[0] = Integer.parseInt(parts[0]);
+            values[1] = Integer.parseInt(parts[1]);
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+            values[0] = 10; // default fallback érték
+            values[1] = 10;
+        }
+        this.sor = values[0];
+        this.oszlop = values[1];
+    }
+    
+    public Fungorium() {
+        loadMapSize("mentes/tekton/valtozok.txt");
+        tektons = new ArrayList<>();
+        map = new Grid[sor][oszlop];
+        szigetekKeret = new boolean[sor][oszlop];
+        test = new char[sor][oszlop];
+
+        String filePath = "mentes/Tekton/palya_tektonelemek.txt";
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            System.err.println("A fájl nem található: " + file.getAbsolutePath());
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            int i = 0;
+
+            while ((line = reader.readLine()) != null && i < sor) {
+                for (int j = 0; j < Math.min(line.length(), oszlop); j++) {
+                    test[i][j] = line.charAt(j);
+                }
+                i++;
+            }
+
+            System.out.println("Pálya betöltve: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Hiba történt a pálya betöltésekor: " + e.getMessage());
+        }
+
+        Tekton ideiglenes = new Tekton(null);
+        for(int i = 0; i < sor; i++){
+            for(int j = 0; j < oszlop; j++){
+                if(test[i][j] == '1'){
+                    map[i][j] = new GombatestEvo(ideiglenes); 
+                }else if(test[i][j] == '2'){
+                    map[i][j] = new FonalTarto(ideiglenes); 
+                }else if(test[i][j] == '3'){
+                    map[i][j] = new FonalEvo(ideiglenes); 
+                }else if(test[i][j] == '4'){
+                    map[i][j] = new EgyFonal(ideiglenes); 
+                }else if(test[i][j] == '#'){
+                    map[i][j] = new Lava();
+                }
+            }
+        }
+
+        palyabetoltes();
+    }
+
+    private void palyabetoltes(){
+        keresTekton();
+        findszomszed();
+        parosit();
     }
     public void setMap(Grid[][] g){map = g;}
     public void setTektons(List<Tekton> t){tektons = t;}

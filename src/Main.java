@@ -7,5 +7,9 @@ public class Main {
         System.out.println(f.getSzigetSzam());
         f.ujKor();
         System.out.println(f.getSzigetSzam());
+
+        Fungorium ujf = new Fungorium();
+        System.out.println(ujf);
+        System.out.println(ujf.getSzigetSzam());
     }
 }
