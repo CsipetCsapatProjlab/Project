@@ -1,9 +1,6 @@
 package testing;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import model.Fungorium;
 import model.JatekMotor;
@@ -88,10 +85,11 @@ public class Tests {
     /**
      * @return 2 Tektonból álló 2db 4*4-es sziget egy 4* lávával elválasztva vertikálisan, amit láva vesz körbe.
      */
+    /*
     public Fungorium genPalya() {
         tektons = new Tekton[2];
-        tektons[0] = new Tekton(null);
-        tektons[1] = new Tekton(null);
+        tektons[0] = new Tekton((List<TektonElem>)null);
+        tektons[1] = new Tekton((List<TektonElem>)null);
         ObjectMap.put("tekton0", tektons[0]);
         ObjectMap.put("tekton1", tektons[1]);
         grid = new Grid[11][6];
@@ -163,12 +161,10 @@ public class Tests {
         fn.setTektons(Arrays.stream(tektons).toList());
         return fn;
     }
+    */
+
 
     public void newsetup() {
-        Fungorium fungorium = genPalya();
-        motor = fungorium.getMotor();/*
-        motor.jatekosValasztas(grid);
-        motor.jatekosValasztas(grid);*/
     }
     void test1(){
         MyLogger.Visit("Mentes");

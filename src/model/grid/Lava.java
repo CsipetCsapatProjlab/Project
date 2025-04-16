@@ -47,12 +47,6 @@ public class Lava extends Grid {
     }
 
     /**
-     * Megvalositja a Grid getHatas() fv.-et a sajat modjan
-     */
-    @Override
-    public Hatas getHatas(){return null;}
-    
-    /**
      * Megvalositja a Grid accept(GridVisitor visitor) fv.-et a sajat modjan
      */
     @Override

@@ -13,24 +13,22 @@ public class FonalTarto extends TektonElem{
     }
 
     @Override
-    public boolean hozzaAd(GameObject gameObject){
+    public boolean hozzaAd(GameObject gameObject) {
         return super.hozzaAd(gameObject);
     }
+
     public FonalTarto(List<GameObject> gameObjects, Tekton tekton) {
         super(gameObjects, tekton);
     }
 
     @Override
-    public boolean torol(GameObject go){
-        if(go instanceof Fonal){
+    public boolean torol(GameObject go) {
+        if (go instanceof Fonal) {
             return false;
-        }else{
+        } else {
             return super.torol(go);
         }
     }
 
-    public FonalTarto(Tekton tekton) {
-        super(tekton);
-    }
 
 }

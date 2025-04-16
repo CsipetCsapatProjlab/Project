@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 import model.enums.Hatas;
+import model.enums.Move;
 import model.enums.TektonelemTypes;
 import model.grid.EgyFonal;
 import model.grid.FonalEvo;
@@ -14,6 +15,7 @@ import model.grid.GombatestEvo;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
+import model.players.Jatekos;
 
 public class Fungorium {
     JatekMotor motor;
@@ -274,16 +276,16 @@ public class Fungorium {
             return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
         }
         if (x - 2 >= 0 && test[x-1][y] == '#' && test[x-2][y] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x-2][y]).getTekton());
+            ((TektonElem) map[x][y]).getTekton().addNeighbour(((TektonElem) map[x-2][y]).getTekton());
         }
         if (x + 2 < this.sor && test[x+1][y] == '#' && test[x+2][y] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x+2][y]).getTekton());
+            ((TektonElem) map[x][y]).getTekton().addNeighbour(((TektonElem) map[x+2][y]).getTekton());
         }
         if (y - 2 >= 0 && test[x][y-1] == '#' && test[x][y-2] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x][y-2]).getTekton());
+            ((TektonElem) map[x][y]).getTekton().addNeighbour(((TektonElem) map[x][y-2]).getTekton());
         }
         if (y + 2 < this.oszlop && test[x][y+1] == '#' && test[x][y+2] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x][y+2]).getTekton());
+            ((TektonElem) map[x][y]).getTekton().addNeighbour(((TektonElem) map[x][y+2]).getTekton());
         }
 
         if (x - 1 >= 0) {
@@ -312,5 +314,17 @@ public class Fungorium {
     }
     public void setMap(Grid[][] g){map = g;}
     public void setTektons(List<Tekton> t){tektons = t;}
-    
+
+    public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) {
+        motor.kovetkezoLepes(map[startCoordinate][startCoordinate1],map[endCoordinate][endCoordinate1],move);
+    }
+
+    public Grid getGrid(int i, int i1) {
+        return map[i][i1];
+
+    }
+
+    public void addJatekos(Jatekos j) {
+        motor.
+    }
 }

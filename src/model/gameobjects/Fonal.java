@@ -6,6 +6,7 @@ import logic_classes.GombaTestPlaceLogic;
 import model.enums.Hatas;
 import model.exceptions.IncompatibleGameObjectException;
 import model.grid.Grid;
+import model.grid.GridUtils;
 import model.players.Gombasz;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class Fonal extends GameObject {
      * @param destination Novesztes cel gridje
      */
     public void fonalNovesztes(Grid destination) throws Exception {
-        List<Grid> path=destination.gridPathFind(this.getPosition(),destination,10,fonalGrowLogic);
+        List<Grid> path=GridUtils.GridPathFinder.gridPathFind(this.getPosition(),destination,10,fonalGrowLogic);
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {

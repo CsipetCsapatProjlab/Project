@@ -22,7 +22,7 @@ public class Main {
         t.start();
          */
 
-        Fungorium fg = new Fungorium();
+        Fungorium fg = new Fungorium(20,100);
         CommandLine cl = new CommandLine(fg);
         Scanner scanner = new Scanner(System.in);
         boolean quit = false;
@@ -35,8 +35,7 @@ public class Main {
                 cl.executeCommand(command);
             }
         }
-        Fungorium f = new Fungorium(20,100);
-        System.out.println(f);
-        System.out.println(f.getSzigetSzam());
+        System.out.println(fg);
+        System.out.println(fg.getSzigetSzam());
     }
 }

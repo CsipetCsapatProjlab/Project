@@ -17,12 +17,11 @@ public class Tekton {
     int tektonszam;
     List<TektonElem> elemek;
 
-    public Tekton(TektonelemTypes h){
+    public Tekton(TektonelemTypes h) {
         hatas = h;
         neighbours = new ArrayList<>();
-    List<TektonElem> elemek;
-    static Random rnd = new Random();
-
+        List<TektonElem> elemek;
+    }
     /**
      * Letrehoz egy tektont
      * @param elemek TektonElemek amikbol felepul
@@ -66,10 +65,14 @@ public class Tekton {
             tekton.setNeighbours(tmp, --a);
         }
     }
+    public List<Tekton> getNeighbours() {
+        return neighbours;
+    }
+
     public void addelem(TektonElem e){
         elemek.add(e);
     }
-    public void addNeigbour(Tekton t){
+    public void addNeighbour(Tekton t){
         if(!neighbours.contains(t)){
             neighbours.add(t);
         }
@@ -79,5 +82,9 @@ public class Tekton {
     public Grid[] getRandomPath() {
         // TODO
         return null;
+    }
+
+    public TektonElem getRandomElement() {
+        return elemek.get(CONSTANTS.rnd.nextInt(elemek.size()));
     }
 }

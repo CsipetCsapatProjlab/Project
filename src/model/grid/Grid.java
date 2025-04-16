@@ -74,13 +74,11 @@ public abstract class Grid {
     public String toString(){
         return " ";
     }
-    public abstract TektonelemTypes getHatas();
     /**
      * A mezo szomszedait lekerdezi
      * @return Mezo tomb a szomszedokkal
      */
     public Grid[] getNeighbors() {return neighbours;}
-    public abstract Hatas getHatas();
 
     void forduloUtan(){}
 

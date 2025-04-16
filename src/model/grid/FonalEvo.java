@@ -16,12 +16,12 @@ public class FonalEvo extends TektonElem{
 
     @Override
     void forduloUtan() {
-        if(felszivodasigFordulo>0){
+        if (felszivodasigFordulo > 0) {
             felszivodasigFordulo--;
         }
-        if(felszivodasigFordulo==0){
+        if (felszivodasigFordulo == 0) {
 
-                this.torol(fonals.peek());
+            this.torol(fonals.peek());
 
         }
         super.forduloUtan();
@@ -51,12 +51,12 @@ public class FonalEvo extends TektonElem{
     }
 
     @Override
-    public boolean torol(GameObject g){
-        if(g instanceof Fonal){
-            if(fonals.isEmpty()){
-                felszivodasigFordulo=-1;
+    public boolean torol(GameObject g) {
+        if (g instanceof Fonal) {
+            if (fonals.isEmpty()) {
+                felszivodasigFordulo = -1;
             }
-            Fonal f=(Fonal) g;
+            Fonal f = (Fonal) g;
             fonals.pop();
         }
         super.torol(g);

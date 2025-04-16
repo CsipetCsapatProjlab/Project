@@ -49,12 +49,6 @@ public class TektonElem extends Grid {
     }
 
     /**
-     * Megvalositja a Grid getHatas() fv.-et a sajat modjan
-     */
-    @Override
-    public TektonelemTypes getHatas(){return tekton.getHatas();}
-
-    /**
      * Megvalositja a Grid accept(GridVisitor visitor) fv.-et a sajat modjan
      */
     @Override
