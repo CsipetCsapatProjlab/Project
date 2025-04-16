@@ -43,7 +43,8 @@ public class Rovar extends GameObject{
      */
     @Override
     public void remove() {
-        // TODO
+        rovarasz.torol(this);
+        super.remove();
     }
 
     /**

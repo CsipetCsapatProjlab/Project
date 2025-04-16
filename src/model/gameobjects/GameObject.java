@@ -35,6 +35,7 @@ public abstract class GameObject {
             grid=other;
         }
     }
+
     /**
      * Beállítja a mezőjét
      * @param grid
@@ -54,7 +55,9 @@ public abstract class GameObject {
     /**
      * Az objektum torli magat
      */
-    public abstract void remove() throws IncompatibleGameObjectException;
+    public void remove(){
+        grid.torol(this);
+    }
 
     /**
      * Elfogadja a visitort

@@ -1,6 +1,7 @@
 package model.gameobjects;
 
 import interfaces.GameObjectVisitor;
+import logic_classes.FonalConsumeLogic;
 import logic_classes.FonalGrowLogic;
 import logic_classes.GombaTestPlaceLogic;
 import model.enums.Hatas;
@@ -15,6 +16,7 @@ public class Fonal extends GameObject {
     Gombasz observer;
     FonalGrowLogic fonalGrowLogic;
     GombaTestPlaceLogic gombaTestPlaceLogic;
+    FonalConsumeLogic fonalConsumeLogic;
 
     /**
      * Letrehozza a Fonalat
@@ -26,6 +28,7 @@ public class Fonal extends GameObject {
         this.observer = gombasz;
         this.fonalGrowLogic = new FonalGrowLogic(this);
         this.gombaTestPlaceLogic = new GombaTestPlaceLogic(this);
+        this.fonalConsumeLogic = new FonalConsumeLogic(this);
 
         gombasz.add(this);
     }
@@ -34,7 +37,7 @@ public class Fonal extends GameObject {
      * Az objektum torli magat
      */
     @Override
-    public void remove() throws IncompatibleGameObjectException {
+    public void remove(){
         grid.torol(this);
         grid = null;
     }
@@ -73,5 +76,8 @@ public class Fonal extends GameObject {
         if(gombaTestPlaceLogic.placeGombaTest(grid, 5)){
             GombaTest gt=new GombaTest(grid, observer);
         }
+    }
+    public void rovarEves(Grid grid){
+        fonalConsumeLogic.egyel(grid);
     }
 }

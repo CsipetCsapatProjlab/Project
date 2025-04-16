@@ -34,9 +34,7 @@ public abstract class Grid {
         tmp.addAll(gameObjects);
         for (GameObject g : tmp) {
             numsdeleted++;
-            try {
-                g.remove();
-            } catch (IncompatibleGameObjectException e) {numsdeleted--;}
+            g.remove();
         }
         gameObjects.clear();
         return numsdeleted;
