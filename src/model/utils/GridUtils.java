@@ -1,6 +1,7 @@
-package model.grid;
+package model.utils;
 
 import interfaces.IDiscoverLogic;
+import model.grid.Grid;
 
 import java.util.*;
 

@@ -3,12 +3,11 @@ package model;
 import interfaces.GameObjectVisitor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import model.enums.Hatas;
 import model.enums.TektonelemTypes;
 import model.grid.Grid;
 import model.grid.TektonElem;
+import model.utils.CONSTANTS;
 
 public class Tekton {
     TektonelemTypes hatas;

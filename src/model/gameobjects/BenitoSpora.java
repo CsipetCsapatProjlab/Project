@@ -1,11 +1,9 @@
 package model.gameobjects;
 
-import model.CONSTANTS;
+import model.utils.CONSTANTS;
 import model.enums.Hatas;
 import model.grid.Grid;
 import model.players.Gombasz;
-
-import java.util.Random;
 
 public class BenitoSpora extends Spora {
 

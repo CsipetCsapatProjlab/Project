@@ -2,16 +2,14 @@ package logic_classes;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
-import jdk.jshell.spi.ExecutionControl;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
-import model.grid.GridUtils;
+import model.utils.GridUtils;
 import model.grid.Lava;
 import model.grid.TektonElem;
-import model.players.Gombasz;
 
 import java.util.Arrays;
 import java.util.List;

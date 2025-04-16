@@ -4,10 +4,8 @@ import interfaces.GameObjectVisitor;
 import logic_classes.FonalConsumeLogic;
 import logic_classes.FonalGrowLogic;
 import logic_classes.GombaTestPlaceLogic;
-import model.enums.Hatas;
-import model.exceptions.IncompatibleGameObjectException;
 import model.grid.Grid;
-import model.grid.GridUtils;
+import model.utils.GridUtils;
 import model.players.Gombasz;
 
 import java.util.List;

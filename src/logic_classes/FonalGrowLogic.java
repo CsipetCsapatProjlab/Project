@@ -8,7 +8,7 @@ import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
-import model.grid.GridUtils;
+import model.utils.GridUtils;
 import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;

@@ -3,7 +3,7 @@ package model.gameobjects;
 import interfaces.GameObjectVisitor;
 import logic_classes.RovarConsumeLogic;
 import logic_classes.RovarMoveLogic;
-import model.CONSTANTS;
+import model.utils.CONSTANTS;
 import model.enums.Hatas;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
