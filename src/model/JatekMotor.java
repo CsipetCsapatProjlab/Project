@@ -74,22 +74,20 @@ public class JatekMotor {
 
     /**
      * Kiosztja a szerepeket a felhasznaloknak es meghatarozza a kezdohelyuket
-     * @param g A jatek palyaja
      */
     public void jatekosValasztas(Grid kezdoPoz, String jatekosNev, String jatekostype){
            try{
-            switch (jT){
-                case 1:
-                    Rovarasz j = new Rovarasz(kezdoPoz, jatekosNev);
+            switch (jatekostype){
+                case "Rovarasz":
+                    Rovarasz j = new Rovarasz((TektonElem) kezdoPoz, jatekosNev);
                     jatekosok.add(j);
                     break;
-                case 2:
-                    Gombasz jg = new Gombasz(kezdoPoz, jatekosNev);
+                case "Gombasz":
+                    Gombasz jg = new Gombasz((TektonElem) kezdoPoz, jatekosNev);
                     jatekosok.add(jg);
                     break;
                 default:
-                    System.out.println("Hibas JatekosTipust adott meg!");
-                    jatekosValasztas(g);
+                    throw new IllegalArgumentException("Rossz jatekostipus!");
             }
         } catch (NumberFormatException e) {
             // TODO Auto-generated catch block

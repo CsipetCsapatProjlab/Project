@@ -325,6 +325,6 @@ public class Fungorium {
     }
 
     public void addJatekos(Jatekos j) {
-        motor.
+        motor.jatekosHozzaAd(j);
     }
 }

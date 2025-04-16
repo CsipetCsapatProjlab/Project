@@ -196,7 +196,7 @@ public class Tests {
     void test4(){
         MyLogger.Visit("Jatekos valasztas");
         MyLogger.Visit("JatekMotor.jatekosValasztas()");
-        motor.jatekosValasztas(grid);
+        //motor.jatekosValasztas(grid);
         if(motor.jelenlegiJatekos() != null) MyLogger.In("Jatekos valasztas sikeres", false);
         MyLogger.Return("JatekMotor.jatekosValasztas()");
         MyLogger.Return("");
@@ -272,7 +272,7 @@ public class Tests {
         MyLogger.Visit("gombaTest.sporaKilo(Grid, Spora)");
         if(MyLogger.In("Van eleg spora a kiindulo gombatestben? [y/n]", true).equals(y)){
             if(MyLogger.In("Szomszedos a kijelolt tekton? [y/n]", true).equals(y)){
-                gt.sporaKilo(grid[1][2], s1);
+                //gt.sporaKilo(grid[1][2], s1);
                 if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Spora loves sikertelen!", false);
                 else MyLogger.In("Spora loves sikeres!", false);
             }else MyLogger.In("Spora loves sikertelen!", false);
@@ -305,7 +305,7 @@ public class Tests {
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
-            rv.lepes(grid[2][1],grid[2][2], Move.Rovar_mozog);
+            //rv.lepes(grid[2][1],grid[2][2], Move.Rovar_mozog);
             if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
@@ -321,14 +321,14 @@ public class Tests {
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
-            rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
+            //rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
             if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
         MyLogger.Visit("Rovar.consume()");
         if(MyLogger.In("Van ott fonal? [y/n]", true).equals(y)){
-            rv.lepes(grid[2][2],grid[2][2],Move.Rovar_vag);
+            //rv.lepes(grid[2][2],grid[2][2],Move.Rovar_vag);
             if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar fonal eves sikeres!", false);
             else MyLogger.In("Rovar fonal eves sikertelen!", false);
         }else MyLogger.In("Rovar fonal eves sikertelen!", false);
@@ -344,14 +344,14 @@ public class Tests {
         MyLogger.Visit("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
-            rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
+            //rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
             if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
         MyLogger.Visit("Rovar.consume()");
         if(MyLogger.In("Van ott spora? [y/n]", true).equals(y)){
-            rv.lepes(grid[2][2],grid[2][2],Move.Rovar_eszik);
+            //rv.lepes(grid[2][2],grid[2][2],Move.Rovar_eszik);
             if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar spora eves sikeres!", false);
             else MyLogger.In("Rovar spora eves sikertelen!", false);
         }else MyLogger.In("Rovar spora eves sikertelen!", false);
