@@ -1,7 +1,10 @@
+package testing;
+
 import java.util.Scanner;
 
 public class MyLogger{
     private static int depth = 0;
+    private static final Scanner scanner = new Scanner(System.in);
 
     /**
      * Fv.-be valo belepeskor hivando
@@ -39,11 +42,8 @@ public class MyLogger{
             for (int i = 1; i < depth; ++i){
                 System.out.printf("%10s", " ");
             }
-
-            try (Scanner scanner = new Scanner(System.in)) {
                 System.out.printf("%4s ", s0);
                 input = scanner.nextLine();
-            }
         }
         else{
             for (int i = 0; i < depth; ++i){

@@ -1,7 +1,9 @@
 package model;
 
+import interfaces.GameObjectVisitor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import model.enums.Hatas;
 import model.enums.TektonelemTypes;
@@ -18,12 +20,42 @@ public class Tekton {
     public Tekton(TektonelemTypes h){
         hatas = h;
         neighbours = new ArrayList<>();
+    List<TektonElem> elemek;
+    static Random rnd = new Random();
+
+    /**
+     * Letrehoz egy tektont
+     * @param elemek TektonElemek amikbol felepul
+     */
+    public Tekton(List<TektonElem> elemek){
+        this.elemek = elemek;
+        neighbours = null;
         fonalAr = 0;
         elemek = new ArrayList<>();
     }
+
+    /**
+     * Eltori a tektont
+     */
     public void szakad() {
         // TODO
     }
+
+    /**
+     * Minden, a tektonon levo elemet regisztral
+     * @param visitor
+     */
+    public void visitElements(GameObjectVisitor visitor) {
+        for (TektonElem elem : elemek) {
+            elem.accept(visitor);
+        }
+    }
+
+    /**
+     * Beallitja a szomszedos tektonjait
+     * @param l Szomszedos tektonok listaja
+     * @param a Hany szomszedja van
+     */
     public void setNeighbours(List<Tekton> l, int a){
         if(a == 0) return;
         neighbours = l;
