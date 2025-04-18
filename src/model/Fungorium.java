@@ -325,6 +325,7 @@ public class Fungorium {
     public JatekMotor getMotor() {
         return motor;
     }
+
     //szakadás előkészítő fügvény
     public void szakad() {
         for(int i = 0; i < 10; i++){
@@ -417,6 +418,7 @@ public class Fungorium {
 
     //Szakadás után újra rendelni a tektonokhoz a tektonelemeket
     void keresTekton(){
+        tektons.clear();
         szigetekSzama = 0;
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
