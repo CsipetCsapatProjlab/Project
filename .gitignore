@@ -26,3 +26,9 @@ src/model/players/Rovarasz.class
 src/model/players/Jatekos.class
 /*.class
 src/Main.class
+src/model/Fungorium$1.class
+src/model/enums/TektonelemTypes.class
+src/model/grid/EgyFonal.class
+src/model/grid/FonalEvo.class
+src/model/grid/FonalTarto.class
+src/model/grid/GombatestEvo.class

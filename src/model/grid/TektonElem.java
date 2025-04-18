@@ -34,6 +34,7 @@ public class TektonElem extends Grid {
     }
 
     public Tekton getTekton(){return tekton;}
+    public void setTekton(Tekton t){tekton = t;}
 
     /**
      * Megvalositja a Grid accept(GameObjectVisitor visitor) fv.-et a sajat modjan

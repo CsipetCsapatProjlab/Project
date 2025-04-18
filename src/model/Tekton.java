@@ -10,16 +10,23 @@ import model.grid.TektonElem;
 import model.utils.CONSTANTS;
 
 public class Tekton {
-    TektonelemTypes hatas;
-    List<Tekton> neighbours;
-    int fonalAr;
-    int tektonszam;
+    TektonelemTypes hatas; //Tekton hatása a rajta lévő elemkre
+    List<Tekton> neighbours; //Tekton szomszédjai
+    int fonalAr; //A fonal ára a tektonon
+    int tektonszam = 0; //a tekton elemeinek a száma
     List<TektonElem> elemek;
 
-    public Tekton(TektonelemTypes h) {
+    public Tekton(){
+        neighbours = new ArrayList<>();
+        fonalAr = 0;
+        elemek = new ArrayList<>();
+    }
+    
+    public Tekton(TektonelemTypes h){
         hatas = h;
         neighbours = new ArrayList<>();
-        List<TektonElem> elemek;
+        fonalAr = 0;
+        elemek = new ArrayList<>();
     }
     /**
      * Letrehoz egy tektont
@@ -29,31 +36,15 @@ public class Tekton {
         this.elemek = elemek;
         neighbours = null;
         fonalAr = 0;
+        int tektonszam = 0; //a tekton elemeinek a száma
         elemek = new ArrayList<>();
     }
 
-    /**
-     * Eltori a tektont
-     */
-    public void szakad() {
-        // TODO
-    }
-
-    /**
-     * Minden, a tektonon levo elemet regisztral
-     * @param visitor
-     */
     public void visitElements(GameObjectVisitor visitor) {
         for (TektonElem elem : elemek) {
             elem.accept(visitor);
         }
     }
-
-    /**
-     * Beallitja a szomszedos tektonjait
-     * @param l Szomszedos tektonok listaja
-     * @param a Hany szomszedja van
-     */
     public void setNeighbours(List<Tekton> l, int a){
         if(a == 0) return;
         neighbours = l;
@@ -63,21 +54,25 @@ public class Tekton {
             tmp.add(this);
             tekton.setNeighbours(tmp, --a);
         }
-    }
-    public List<Tekton> getNeighbours() {
-        return neighbours;
-    }
 
+    }
     public void addelem(TektonElem e){
         elemek.add(e);
+        tektonszam++;
     }
-    public void addNeighbour(Tekton t){
-        if(!neighbours.contains(t)){
+    public void addNeigbour(Tekton t){
+        if(!neighbours.contains(t) && t != this){
             neighbours.add(t);
         }
     }
+    public List<Tekton> getNeighbours(){
+        return neighbours;
+    }
     public TektonelemTypes getHatas(){return hatas;}
     public int getFonalAr() {return  fonalAr;}
+    public int getTektonszam(){return tektonszam;}
+    public List<TektonElem> getTektonElems(){return elemek;}
+    public void resetTektonelemek(){elemek.clear();}
     public Grid[] getRandomPath() {
         // TODO
         return null;
