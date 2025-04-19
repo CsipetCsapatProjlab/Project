@@ -23,6 +23,7 @@ import model.gameobjects.LassitoSpora;
 import model.gameobjects.OsztodoRovarSpora;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
+<<<<<<< HEAD
 import model.grid.EgyFonal;
 import model.grid.FonalEvo;
 import model.grid.FonalTarto;
@@ -30,6 +31,10 @@ import model.grid.GombaTestEvo;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
+=======
+import model.grid.*;
+import model.grid.GombaTestEvo;
+>>>>>>> 84c92a1cf047b78f2e3496b42e08bc9518127e4a
 import model.players.Jatekos;
 
 public class Fungorium {
@@ -37,7 +42,7 @@ public class Fungorium {
     Grid[][] map; //A pálya amin a játék játszódij
     boolean[][] szigetekKeret; // Segéd tömb ami a genrálást segíti
     char[][] test;  // Segéd tömb ami a genrálást segíti és 
-    List<Tekton> tektons; //Tektonok listálya
+    List<Tekton> tektons; //Tektonok listája
     int sor; //A pálya sorainak a száma
     int oszlop; //A pálya oszlopainak a száma
     int lavaszam = 0; //Azt tartja számon hány láva van a pályán
@@ -52,14 +57,17 @@ public class Fungorium {
         szigetekKeret = new boolean[sor][oszlop];
         test = new char[sor][oszlop];
         motor = new JatekMotor();
+
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
                 test[i][j] = ' ';
                 szigetekKeret[i][j] = false;
             }
         }
-        boolean sikeres = false;
+
+
         //Itt generálódik a pálya először a lávák majd megkeresi a tektonokat és ha a végeradmény nem felel meg újra kezdi
+        boolean sikeres = false;
         while(!sikeres){
             while(lavaszam <= (sor*oszlop/3)){
                 this.generateMaze(rand.nextInt(sor),rand.nextInt(oszlop)); 
@@ -74,6 +82,7 @@ public class Fungorium {
         this.parosit();
         this.findszomszed();
     }
+
     //Stringé allakítja a pályát
     public String toString() {
         for (int i = 0; i <= this.oszlop + 1; i++) {
@@ -112,7 +121,11 @@ public class Fungorium {
         }else{
             return;
         }
+
         //Random kiválasztja merre akar menni és azt hogy hányszor próbálkozik
+        // Azért loopol 2-t, mert:
+        // - önmagába vissza nem tud fordulni
+        // - ugyanabba az irányba nem megy tovább
         for (int i = 0; i < 2; i++) {
             do{
                 merre = rand.nextInt(4);
@@ -151,6 +164,7 @@ public class Fungorium {
         }
         return true;
     }
+
     //A generálásnál a generálás irányába folytatja a rekurziót 
     private void irany(int merre, int x, int y){
         switch (merre) {
@@ -170,9 +184,11 @@ public class Fungorium {
                 break;
         }
     }
+
     //Megtaláljuk a tektonokat és hozzájuk tesszük a tekton elemeket
     void findSziget(){
         szigetekSzama = 0;
+
         //Beállítjuk a tömböt a keresés segítéséhez
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
@@ -183,6 +199,7 @@ public class Fungorium {
                 }
             }
         }
+
         for(int i = 0; i < this.sor; i++){
             for(int j = 0 ; j < this.oszlop ;j++){
                 if(!szigetekKeret[i][j]){
@@ -728,7 +745,11 @@ public class Fungorium {
         for(int i = 0; i < sor; i++){
             for(int j = 0; j < oszlop; j++){
                 if(test[i][j] == '1'){
+<<<<<<< HEAD
                     map[i][j] = new GombaTestEvo(ideiglenes); 
+=======
+                    map[i][j] = new GombaTestEvo(ideiglenes);
+>>>>>>> 84c92a1cf047b78f2e3496b42e08bc9518127e4a
                 }else if(test[i][j] == '2'){
                     map[i][j] = new FonalTarto(ideiglenes); 
                 }else if(test[i][j] == '3'){
