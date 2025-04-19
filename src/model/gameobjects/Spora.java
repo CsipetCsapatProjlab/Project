@@ -58,5 +58,5 @@ public class Spora extends GameObject {
         // TODO
     }
 
-
+    public Gombasz getGombasz(){return gombasz;}
 }

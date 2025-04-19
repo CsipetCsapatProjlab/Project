@@ -65,4 +65,5 @@ public class GombaTest extends GameObject {
         grid.torol(spora);
         destination.hozzaAd(spora);
     }
+    public Gombasz getGombasz(){return gombasz;}
 }

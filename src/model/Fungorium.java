@@ -14,6 +14,14 @@ import java.util.Random;
 import model.enums.Hatas;
 import model.enums.Move;
 import model.enums.TektonelemTypes;
+import model.gameobjects.BenitoSpora;
+import model.gameobjects.Fonal;
+import model.gameobjects.GameObject;
+import model.gameobjects.GombaTest;
+import model.gameobjects.GyorsSpora;
+import model.gameobjects.LassitoSpora;
+import model.gameobjects.OsztodoRovarSpora;
+import model.gameobjects.Spora;
 import model.grid.EgyFonal;
 import model.grid.FonalEvo;
 import model.grid.FonalTarto;
@@ -498,8 +506,134 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Hiba történt a pálya mentésekor: " + e.getMessage());
         }
-
+        gombaMentes();
+        fonalMentes();
+        sporaMentes();
         saveMapSize("mentes/tekton/valtozok.txt");
+    }
+
+    public void gombaMentes(){
+        String filePath = "mentes/objetumok/Gombak.txt";
+        File file = new File(filePath);
+        file.getParentFile().mkdirs();
+        List<GameObject> elemek;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < sor; i++) {
+                for (int j = 0; j < oszlop; j++) {
+                    elemek = map[i][j].getGameObject();
+                    boolean gomba = false;
+                    GombaTest test = null;
+                    for (GameObject gameObject : elemek) {
+                        if(gameObject instanceof GombaTest){
+                            gomba = true;
+                            test = (GombaTest)gameObject;
+                        }
+                    }
+                    if(gomba){
+                        writer.write(test.getGombasz().meik);
+                    }else{
+                        writer.write("-");
+                    }
+                }
+                writer.newLine();
+            }
+            System.out.println("Gombatestetek mentése sikeres: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Hiba történt a gombatestek mentésekor: " + e.getMessage());
+        }
+    }
+
+    public void fonalMentes(){
+        String filePath = "mentes/objetumok/Fonalak.txt";
+        File file = new File(filePath);
+        file.getParentFile().mkdirs();
+        List<GameObject> elemek;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < sor; i++) {
+                for (int j = 0; j < oszlop; j++) {
+                    elemek = map[i][j].getGameObject();
+                    boolean gomba = false;
+                    Fonal test = null;
+                    for (GameObject gameObject : elemek) {
+                        if(gameObject instanceof Fonal){
+                            gomba = true;
+                            test = (Fonal)gameObject;
+                        }
+                    }
+                    if(gomba){
+                        writer.write(test.getGombasz().meik);
+                    }else{
+                        writer.write("-");
+                    }
+                }
+                writer.newLine();
+            }
+            System.out.println("Fonal mentése sikeres: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Hiba történt a fonal mentésekor: " + e.getMessage());
+        }
+    }
+    public void sporaMentes(){
+        String filePath = "mentes/objetumok/Sporak.txt";
+        File file = new File(filePath);
+        file.getParentFile().mkdirs();
+        List<GameObject> elemek;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < sor; i++) {
+                for (int j = 0; j < oszlop; j++) {
+                    elemek = map[i][j].getGameObject();
+                    char meik = '-';
+                    for (GameObject gameObject : elemek) {
+                        if(gameObject instanceof BenitoSpora){
+                            meik = '1';
+                        }else if(gameObject instanceof GyorsSpora){
+                            meik = '2';
+                        }else if(gameObject instanceof LassitoSpora){
+                            meik = '3';
+                        }else if(gameObject instanceof OsztodoRovarSpora){
+                            meik = '4';
+                        }
+                    }
+                    writer.write(meik);
+                }
+                writer.newLine();
+            }
+            System.out.println("sporak mentése sikeres: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Hiba történt a sporak mentésekor: " + e.getMessage());
+        }
+        sporaKiMentes();
+    }
+
+    public void sporaKiMentes(){
+        String filePath = "mentes/objetumok/Sporak_kihez.txt";
+        File file = new File(filePath);
+        file.getParentFile().mkdirs();
+        List<GameObject> elemek;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < sor; i++) {
+                for (int j = 0; j < oszlop; j++) {
+                    elemek = map[i][j].getGameObject();
+                    boolean gomba = false;
+                    Spora test = null;
+                    for (GameObject gameObject : elemek) {
+                        if(gameObject instanceof Spora){
+                            gomba = true;
+                            test = (Spora)gameObject;
+                        }
+                    }
+                    if(gomba){
+                        writer.write(test.getGombasz().meik);
+                    }else{
+                        writer.write("-");
+                    }
+                }
+                writer.newLine();
+            }
+            System.out.println("Sporakinek mentése sikeres: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Hiba történt a sporakinek mentésekor: " + e.getMessage());
+        }
     }
 
     public void saveMapSize(String path) {

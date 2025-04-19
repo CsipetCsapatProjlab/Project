@@ -68,6 +68,7 @@ public abstract class Grid {
     public String toString(){
         return " ";
     }
+    
     /**
      * A mezo szomszedait lekerdezi
      * @return Mezo tomb a szomszedokkal

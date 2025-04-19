@@ -78,4 +78,6 @@ public class Fonal extends GameObject {
     public void rovarEves(Grid grid){
         fonalConsumeLogic.egyel(grid);
     }
+
+    public Gombasz getGombasz(){return observer;}
 }

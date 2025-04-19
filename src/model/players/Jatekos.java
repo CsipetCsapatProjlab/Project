@@ -7,13 +7,16 @@ import model.grid.Grid;
 
 public abstract class Jatekos {
     String nev;
-
+    public static int jatekosokSzama = 0;
+    public int meik;
     /**
      * Letrehozza a jatekost
      * @param nev
      */
     public Jatekos(String nev) {
         this.nev = nev;
+        jatekosokSzama++;
+        meik = jatekosokSzama;
     }
 
     /**
