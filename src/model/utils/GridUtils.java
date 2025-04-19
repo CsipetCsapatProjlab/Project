@@ -14,12 +14,12 @@ public class GridUtils {
     public static class GridPathFinder {
 
         /**
-         * Megkeresi a legrövidebb utat két rács csomópont között Dijkstra algoritmusával.
+         * Megkeresi a legrövidebb utat két Grid között Dijkstra algoritmusával.
          *
-         * @param kezdo A kezdő rács csomópont.
-         * @param cel A cél rács csomópont.
+         * @param kezdo A kezdő Grid.
+         * @param cel A cél Grid.
          * @param maxCumulativeWeight Az út maximálisan megengedett összsúlya.
-         * @param dLogic Az IDiscoverLogic példány, amely meghatározza a rács csomópontok közötti mozgás súlyát.
+         * @param dLogic Az IDiscoverLogic példány, amely meghatározza a Gridek közötti mozgás súlyát.
          * @return A Grid csomópontok listája, amely a kezdő csomóponttól a cél csomópontig tartó legrövidebb utat képviseli.
          *         Ha nem található út a maximális összsúlyon belül, üres listát ad vissza.
          *
@@ -27,6 +27,7 @@ public class GridUtils {
          * Figyelembe veszi a csomópontok közötti mozgás súlyát, amelyet az IDiscoverLogic implementáció határoz meg.
          * Az elérhetetlen csomópontokat (amelyek mozgási költsége Double.POSITIVE_INFINITY) kihagyja.
          * Az út csak akkor épül fel, ha az összsúly nem haladja meg a megadott maximumot.
+         * DIJKSTRA algoritmusa azért megfelelő, mert a gráfban nem lehet negatív összsúlyú kör!
          */
         public static List<Grid> gridPathFind(Grid kezdo, Grid cel, double maxCumulativeWeight, IDiscoverLogic dLogic) {
             PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.weight));
@@ -63,17 +64,18 @@ public class GridUtils {
         }
 
         /**
-         * Szélességi keresést (BFS) hajt végre, hogy megtalálja az összes elérhető rács csomópontot egy kezdő csomópontból egy megadott mélységig.
+         * Szélességi keresést (BFS) hajt végre, hogy megtalálja az összes elérhető Gridet egy kezdő Gridből egy megadott mélységig.
          *
-         * @param kezdo A kezdő rács csomópont.
-         * @param depth A maximális mélység, amelyet a kezdő csomóponttól felfedezünk.
-         * @param dLogic Az IDiscoverLogic példány, amely meghatározza, hogy lehetséges-e a mozgás a rács csomópontok között.
-         * @return A Grid csomópontok listája, amelyek elérhetők a kezdő csomópontból a megadott mélységen belül.
+         * @param kezdo A kezdő Grid.
+         * @param depth A maximális mélység, amelyet a kezdő Gridtől felfedezünk.
+         * @param dLogic Az IDiscoverLogic példány, amely meghatározza, hogy lehetséges-e a mozgás a Gridek között.
+         * @return A Gridek listája, amelyek elérhetők a kezdő Gridtől a megadott mélységen belül.
          *
-         * Ez a metódus BFS-t használ, hogy felfedezze az összes csomópontot, amely elérhető a kezdő csomópontból a megadott mélységig.
+         * Ez a metódus BFS-t használ, hogy felfedezze az összes Gridet, amely elérhető a kezdő Gridtől a megadott mélységig.
          * Az IDiscoverLogic implementációt használja annak meghatározására, hogy lehetséges-e a mozgás egy szomszédos csomóponthoz.
-         * Az elérhetetlen csomópontokat (amelyek mozgási költsége Double.POSITIVE_INFINITY) kihagyja.
+         * Az elérhetetlen Grideket (amelyek mozgási költsége Double.POSITIVE_INFINITY) kihagyja.
          * A metódus biztosítja, hogy minden csomópontot csak egyszer látogasson meg, hogy elkerülje a végtelen ciklusokat.
+         * A BFS azért megfelelő, mert mélység alapján keresünk, azaz minden élsúly egy!
          */
         public static List<Grid> gridFindAll(Grid kezdo, int depth, IDiscoverLogic dLogic) {
             List<Grid> result = new ArrayList<>();
