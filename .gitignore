@@ -32,3 +32,8 @@ src/model/grid/EgyFonal.class
 src/model/grid/FonalEvo.class
 src/model/grid/FonalTarto.class
 src/model/grid/GombatestEvo.class
+src/model/gameobjects/BenitoSpora.class
+src/model/gameobjects/LassitoSpora.class
+src/model/gameobjects/GyorsSpora.class
+src/model/gameobjects/OsztodoRovarSpora.class
+src/model/utils/CONSTANTS.class

@@ -1,18 +1,20 @@
 package model.grid;
 
-import java.util.List;
-
 import model.Tekton;
+import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.GameObject;
+import model.gameobjects.GombaTest;
 
-public class GombatestEvo extends TektonElem{
-
-    public GombatestEvo(List<GameObject> gameObjects, Tekton tekton) {
-        super(gameObjects, tekton);
+public class GombaTestEvo extends TektonElem {
+    public GombaTestEvo(Tekton t) {
+        super(t);
     }
 
-    public GombatestEvo(Tekton tekton) {
-        super(tekton);
+    @Override
+    public boolean elfogadGameObject(GameObject gameObject){
+        if(gameObject instanceof GombaTest) {
+            return false;
+        }
+        return true;
     }
-
 }
