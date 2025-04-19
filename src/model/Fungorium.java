@@ -21,11 +21,12 @@ import model.gameobjects.GombaTest;
 import model.gameobjects.GyorsSpora;
 import model.gameobjects.LassitoSpora;
 import model.gameobjects.OsztodoRovarSpora;
+import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.EgyFonal;
 import model.grid.FonalEvo;
 import model.grid.FonalTarto;
-import model.grid.GombatestEvo;
+import model.grid.GombaTestEvo;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
@@ -206,7 +207,7 @@ public class Fungorium {
         //Megfelelő tektoneleme létrehozása
         switch (t.getHatas()) {
             case    GOMBATESTEVO:
-                map[x][y] = new GombatestEvo(t);
+                map[x][y] = new GombaTestEvo(t);
                 t.addelem((TektonElem)map[x][y]);
                 test[x][y] = '1';
                 break;
@@ -509,6 +510,7 @@ public class Fungorium {
         gombaMentes();
         fonalMentes();
         sporaMentes();
+        rovarMentes();
         saveMapSize("mentes/tekton/valtozok.txt");
     }
 
@@ -636,6 +638,37 @@ public class Fungorium {
         }
     }
 
+    public void rovarMentes(){
+        String filePath = "mentes/objetumok/Rovarok.txt";
+        File file = new File(filePath);
+        file.getParentFile().mkdirs();
+        List<GameObject> elemek;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < sor; i++) {
+                for (int j = 0; j < oszlop; j++) {
+                    elemek = map[i][j].getGameObject();
+                    boolean gomba = false;
+                    Rovar test = null;
+                    for (GameObject gameObject : elemek) {
+                        if(gameObject instanceof Rovar){
+                            gomba = true;
+                            test = (Rovar)gameObject;
+                        }
+                    }
+                    if(gomba){
+                        writer.write(test.getRovarasz().meik);
+                    }else{
+                        writer.write("-");
+                    }
+                }
+                writer.newLine();
+            }
+            System.out.println("Rovarok mentése sikeres: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Hiba történt a Rovarok mentésekor: " + e.getMessage());
+        }
+    }
+
     public void saveMapSize(String path) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             writer.write(sor + "," + oszlop);
@@ -695,7 +728,7 @@ public class Fungorium {
         for(int i = 0; i < sor; i++){
             for(int j = 0; j < oszlop; j++){
                 if(test[i][j] == '1'){
-                    map[i][j] = new GombatestEvo(ideiglenes); 
+                    map[i][j] = new GombaTestEvo(ideiglenes); 
                 }else if(test[i][j] == '2'){
                     map[i][j] = new FonalTarto(ideiglenes); 
                 }else if(test[i][j] == '3'){

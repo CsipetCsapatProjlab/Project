@@ -88,4 +88,6 @@ public class Rovar extends GameObject{
     public void addHatas(Hatas hatas) {
         // TODO
     }
+
+    public Rovarasz getRovarasz(){return rovarasz;}
 }
