@@ -745,11 +745,7 @@ public class Fungorium {
         for(int i = 0; i < sor; i++){
             for(int j = 0; j < oszlop; j++){
                 if(test[i][j] == '1'){
-
-                    map[i][j] = new GombaTestEvo(ideiglenes); 
-
                     map[i][j] = new GombaTestEvo(ideiglenes);
-
                 }else if(test[i][j] == '2'){
                     map[i][j] = new FonalTarto(ideiglenes); 
                 }else if(test[i][j] == '3'){
