@@ -1,2 +1,6 @@
 /src/out/
 *.class
+/build/
+.idea/
+.vs/
+.vscode/
