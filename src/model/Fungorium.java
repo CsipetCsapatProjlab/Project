@@ -23,7 +23,7 @@ import model.gameobjects.LassitoSpora;
 import model.gameobjects.OsztodoRovarSpora;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
-<<<<<<< HEAD
+
 import model.grid.EgyFonal;
 import model.grid.FonalEvo;
 import model.grid.FonalTarto;
@@ -31,10 +31,10 @@ import model.grid.GombaTestEvo;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
-=======
+
 import model.grid.*;
 import model.grid.GombaTestEvo;
->>>>>>> 84c92a1cf047b78f2e3496b42e08bc9518127e4a
+
 import model.players.Jatekos;
 
 public class Fungorium {
@@ -745,11 +745,11 @@ public class Fungorium {
         for(int i = 0; i < sor; i++){
             for(int j = 0; j < oszlop; j++){
                 if(test[i][j] == '1'){
-<<<<<<< HEAD
+
                     map[i][j] = new GombaTestEvo(ideiglenes); 
-=======
+
                     map[i][j] = new GombaTestEvo(ideiglenes);
->>>>>>> 84c92a1cf047b78f2e3496b42e08bc9518127e4a
+
                 }else if(test[i][j] == '2'){
                     map[i][j] = new FonalTarto(ideiglenes); 
                 }else if(test[i][j] == '3'){

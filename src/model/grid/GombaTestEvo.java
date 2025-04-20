@@ -6,6 +6,7 @@ import model.gameobjects.GameObject;
 import model.gameobjects.GombaTest;
 
 public class GombaTestEvo extends TektonElem {
+    
     public GombaTestEvo(Tekton t) {
         super(t);
     }
