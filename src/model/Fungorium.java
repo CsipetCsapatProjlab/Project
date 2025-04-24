@@ -8,8 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import model.enums.Hatas;
 import model.enums.Move;
 import model.enums.TektonelemTypes;
 import model.gameobjects.BenitoSpora;
@@ -30,6 +32,8 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 
+import model.grid.*;
+import model.grid.GombaTestEvo;
 import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
@@ -86,6 +90,7 @@ public class Fungorium {
         return new int[] { sor, oszlop };
     }
 
+    /// Megadja a játkmotorban lévő játkésok listáját egy tömben
     public Jatekos[] getPlayers() {
         return motor.getJatekosok().toArray(new Jatekos[0]);
     }
@@ -358,10 +363,12 @@ public class Fungorium {
         }
     }
 
+    /// visszaadja a Tektonok számát
     public int getSzigetSzam() {
         return szigetekSzama;
     }
 
+    /// Visszadja a játékmotort
     public JatekMotor getMotor() {
         return motor;
     }
@@ -516,11 +523,13 @@ public class Fungorium {
         }
     }
 
+    /// új kört kezeli megpróbálja szakadást előállítani és menti az állást
     public void ujKor() {
         szakad();
         mentes("mentes");
     }
 
+    /// Menti a pálya állását a kijelölt mappába és abba létrehozza a a filokat vagy ha létezik felülírja
     public void mentes(String alapmappa) {
         String filePath = alapmappa + "/tekton/palya_tektonelemek.txt";
         File file = new File(filePath);
@@ -545,6 +554,7 @@ public class Fungorium {
         saveMapSize(alapmappa + "/tekton/valtozok.txt");
     }
 
+    /// menti a gombák helyét és azt hogy a listában meik játékoshoz tartozik
     public void gombaMentes(String alapmappa) {
         String filePath = alapmappa + "/objetumok/Gombak.txt";
         File file = new File(filePath);
@@ -608,6 +618,7 @@ public class Fungorium {
         }
     }
 
+    /// menti a sporákat a szerint hogy milyen fajta spóra
     public void sporaMentes(String alapmappa) {
         String filePath = alapmappa + "/objetumok/Sporak.txt";
         File file = new File(filePath);
@@ -640,6 +651,7 @@ public class Fungorium {
         sporaKiMentes(alapmappa);
     }
 
+    /// azt menti melyik spóra meik játékoshoz tartozik
     public void sporaKiMentes(String alapmappa) {
         String filePath = alapmappa + "/objetumok/Sporak_kihez.txt";
         File file = new File(filePath);
@@ -671,6 +683,7 @@ public class Fungorium {
         }
     }
 
+    /// menti a rovarakat-a szerint kihez tartoznak és hol vannak
     public void rovarMentes(String alapmappa) {
         String filePath = alapmappa + "/objetumok/Rovarok.txt";
         File file = new File(filePath);
@@ -702,6 +715,7 @@ public class Fungorium {
         }
     }
 
+    /// menti a pálya sorai és oszlopainak a számát
     public void saveMapSize(String path) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             writer.write(sor + "," + oszlop);
@@ -709,7 +723,7 @@ public class Fungorium {
             e.printStackTrace();
         }
     }
-
+    /// betölti a pálya oszlopainak és sorainak a számát
     public void loadMapSize(String path) {
         int[] values = new int[2]; // [sor, oszlop]
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -738,12 +752,17 @@ public class Fungorium {
         this.rand = other.rand;
         this.szigetekSzama = other.szigetekSzama;
     }
+
+    /// Egy egyszerű betöltés
     public void betoltes(String name){
         shallowCopy(new Fungorium(name));
     }
+    /// Egy egyszerű generálás
     public void ujraGeneralas() {
         shallowCopy(new Fungorium(sor, oszlop));
     }
+
+    /// Egy új pályát hoz létre egy korábbi mentés alapján
     public Fungorium(String alapmappa) {
         loadMapSize(alapmappa + "/tekton/valtozok.txt");
 
@@ -786,6 +805,7 @@ public class Fungorium {
         findszomszed();
     }
 
+    /// betölti a gombákat és hozzáadja őket a játékosaikhoz
     private void betoltGombatestek(String path) {
         List<Jatekos> jatekosok = motor.getJatekosok();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -816,8 +836,9 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a gombákat: " + e.getMessage());
         }
-    }
+    }    
 
+    /// betölti a fonalakat és hozzá rendeli őket a játékosaikhoz
     private void betoltFonalak(String path) {
         List<Jatekos> jatekosok = motor.getJatekosok();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -850,6 +871,7 @@ public class Fungorium {
         }
     }
 
+    /// betölti a spórákat és hozzá rendeli őket a játékosaikhoz
     private void betoltSporak(String tipusPath, String kihezPath) {
         List<Jatekos> jatekosok = motor.getJatekosok();
         try (
@@ -892,8 +914,9 @@ public class Fungorium {
             System.err.println("Nem sikerült betölteni a spórákat: " + e.getMessage());
         }
     }
+    
 
-
+    /// betölti a rovarakat és hozzá rendeli őket a játékosaikhoz
     private void betoltRovarok(String path) {
         List<Jatekos> jatekosok = motor.getJatekosok();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -924,24 +947,29 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a rovarokat: " + e.getMessage());
         }
-    }
+    }    
 
+    /// beállítja a pályát egy másik pálya alapján
     public void setMap(Grid[][] g) {
         map = g;
     }
 
+    /// beállítja a tektonok listáját egy másik lista alapján
     public void setTektons(List<Tekton> t) {
         tektons = t;
     }
 
+    /// egy lépés regisztrál és lép meg
     public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) {
         motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
     }
 
+    /// megadja az adott helyen lévő gridet
     public Grid getGrid(int i, int i1) {
         return map[i][i1];
     }
 
+    /// hozzáad egy új játékost
     public void addJatekos(Jatekos j) {
         motor.jatekosHozzaAd(j);
     }
