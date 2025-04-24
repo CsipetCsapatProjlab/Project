@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import model.enums.Move;
 import model.grid.Grid;
 import model.grid.TektonElem;
@@ -93,5 +92,9 @@ public class JatekMotor {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public Jatekos[] getJatekosok(){
+        return jatekosok.toArray(new Jatekos[0]);
     }
 }

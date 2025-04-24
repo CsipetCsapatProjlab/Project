@@ -55,6 +55,14 @@ public class Rovar extends GameObject{
         // TODO
     }
 
+    @Override
+    protected String[] getData() {
+        return new String[]{
+                getClass().getSimpleName() + ": " + observer.getNev(),
+                "Energia: " + energia,
+        };
+    }
+
     public double getEnergia() {
         return energia;
     }

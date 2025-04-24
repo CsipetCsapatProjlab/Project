@@ -73,4 +73,14 @@ public abstract class GameObject {
     public boolean isAt(Grid other) {
         return grid == other;
     }
+
+    public String toString(){
+        StringBuilder resultBuilder = new StringBuilder();
+        for (String token : getData()) {
+            resultBuilder.append(token).append("; ");
+        }
+        return resultBuilder.toString();
+    }
+
+    protected abstract String[] getData();
 }

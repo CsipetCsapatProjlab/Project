@@ -8,10 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import model.enums.Hatas;
 import model.enums.Move;
 import model.enums.TektonelemTypes;
 import model.gameobjects.BenitoSpora;
@@ -32,14 +30,11 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 
-import model.grid.*;
-import model.grid.GombaTestEvo;
-
 import model.players.Jatekos;
 
 public class Fungorium {
     JatekMotor motor;// A játék motorja 
-    Grid[][] map; //A pálya amin a játék játszódij
+    Grid[][] map; //A pálya amin a játék játszódik
     boolean[][] szigetekKeret; // Segéd tömb ami a genrálást segíti
     char[][] test;  // Segéd tömb ami a genrálást segíti és 
     List<Tekton> tektons; //Tektonok listája
@@ -81,6 +76,15 @@ public class Fungorium {
         }
         this.parosit();
         this.findszomszed();
+    }
+
+    /// Visszaadja a sor és oszlpszámot
+    public int[] getShape() {
+        return new int[] { sor, oszlop };
+    }
+
+    public Jatekos[] getPlayers() {
+        return motor.getJatekosok();
     }
 
     //Stringé allakítja a pályát
@@ -539,7 +543,7 @@ public class Fungorium {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < sor; i++) {
                 for (int j = 0; j < oszlop; j++) {
-                    elemek = map[i][j].getGameObject();
+                    elemek = map[i][j].getGameObjects();
                     boolean gomba = false;
                     GombaTest test = null;
                     for (GameObject gameObject : elemek) {
@@ -570,7 +574,7 @@ public class Fungorium {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < sor; i++) {
                 for (int j = 0; j < oszlop; j++) {
-                    elemek = map[i][j].getGameObject();
+                    elemek = map[i][j].getGameObjects();
                     boolean gomba = false;
                     Fonal test = null;
                     for (GameObject gameObject : elemek) {
@@ -600,7 +604,7 @@ public class Fungorium {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < sor; i++) {
                 for (int j = 0; j < oszlop; j++) {
-                    elemek = map[i][j].getGameObject();
+                    elemek = map[i][j].getGameObjects();
                     char meik = '-';
                     for (GameObject gameObject : elemek) {
                         if(gameObject instanceof BenitoSpora){
@@ -632,7 +636,7 @@ public class Fungorium {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < sor; i++) {
                 for (int j = 0; j < oszlop; j++) {
-                    elemek = map[i][j].getGameObject();
+                    elemek = map[i][j].getGameObjects();
                     boolean gomba = false;
                     Spora test = null;
                     for (GameObject gameObject : elemek) {
@@ -663,7 +667,7 @@ public class Fungorium {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < sor; i++) {
                 for (int j = 0; j < oszlop; j++) {
-                    elemek = map[i][j].getGameObject();
+                    elemek = map[i][j].getGameObjects();
                     boolean gomba = false;
                     Rovar test = null;
                     for (GameObject gameObject : elemek) {
@@ -709,7 +713,25 @@ public class Fungorium {
         this.sor = values[0];
         this.oszlop = values[1];
     }
-    
+    /// Egyszerű másolás, a másolt objektumban és ebben ugyanazokra lesz referencia
+    private void shallowCopy(Fungorium other) {
+        this.motor = other.motor;
+        this.map = other.map;
+        this.szigetekKeret = other.szigetekKeret;
+        this.test = other.test;
+        this.tektons = other.tektons;
+        this.sor = other.sor;
+        this.oszlop = other.oszlop;
+        this.lavaszam = other.lavaszam;
+        this.rand = other.rand;
+        this.szigetekSzama = other.szigetekSzama;
+    }
+    public void betoltes(){
+        shallowCopy(new Fungorium());
+    }
+    public void ujraGeneralas() {
+        shallowCopy(new Fungorium(sor, oszlop));
+    }
     public Fungorium() {
         loadMapSize("mentes/tekton/valtozok.txt");
         tektons = new ArrayList<>();

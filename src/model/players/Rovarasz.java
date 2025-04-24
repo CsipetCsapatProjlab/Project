@@ -68,4 +68,9 @@ public class Rovarasz extends Jatekos {
             throw new InvalidMoveException("Nincs olyan rovar a kezdő griden.",kezdo,cel,move);
         }
     }
+
+    @Override
+    public int getPoints() {
+        return szerzettTapanyag;
+    }
 }

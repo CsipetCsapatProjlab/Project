@@ -2,14 +2,9 @@ package model.grid;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
-import interfaces.IDiscoverLogic;
 
 import java.util.*;
 
-import jdk.jshell.spi.ExecutionControl;
-import model.enums.Hatas;
-import model.exceptions.IncompatibleGameObjectException;
-import model.enums.TektonelemTypes;
 import model.gameobjects.GameObject;
 
 public abstract class Grid {
@@ -26,7 +21,7 @@ public abstract class Grid {
     protected Grid(List<GameObject> g) {
         this.gameObjects = g;
     }
-    public List<GameObject> getGameObject(){return gameObjects;}
+    public List<GameObject> getGameObjects(){return gameObjects;}
 
     public int clear() {
         List<GameObject> tmp = new ArrayList<>();

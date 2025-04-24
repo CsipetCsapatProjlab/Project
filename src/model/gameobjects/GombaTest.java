@@ -37,6 +37,14 @@ public class GombaTest extends GameObject {
         // TODO
     }
 
+    @Override
+    protected String[] getData() {
+        return new String[]{
+                getClass().getSimpleName() + ": " + gombasz.getNev(),
+                fejlesztett ? "fejlett" : "fejletlen",
+        };
+    }
+
     /**
      * Visszaadja a test fejlesztesi szintjet
      * @return Fejlesztett-e a test

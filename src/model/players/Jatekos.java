@@ -41,4 +41,11 @@ public abstract class Jatekos {
     public void meghal() {
         // TODO
     }
+
+    public abstract int getPoints();
+
+    @Override
+    public String toString() {
+        return nev + ": " + getClass().getSimpleName() + "; " + getPoints();
+    }
 }

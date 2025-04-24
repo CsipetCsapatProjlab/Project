@@ -9,7 +9,6 @@ public class Spora extends GameObject {
     int tapertek;
     Gombasz gombasz;
     Hatas hatas;
-    
     public Spora(Grid g, Gombasz gombasz){super(g, gombasz);}
 
     /**
@@ -17,14 +16,13 @@ public class Spora extends GameObject {
      * @param grid Melyik mezore
      * @param tapErtek Milyen taperteke van
      * @param gombasz Ki birtokolja
-     * @param hatas Mi a hatasa
+     * @param hatas hatása
      */
     public Spora(Grid grid, int tapErtek, Gombasz gombasz, Hatas hatas) {
         super(grid, gombasz);
         this.tapertek = tapErtek;
         this.observer = gombasz;
         this.hatas = hatas;
-
         gombasz.add(this);
     }
 
@@ -59,4 +57,12 @@ public class Spora extends GameObject {
     }
 
     public Gombasz getGombasz(){return gombasz;}
+
+    @Override
+    protected String[] getData() {
+        return new String[]{
+                getClass().getSimpleName() + ": " + gombasz.getNev(),
+                "Tapertek: " + tapertek,
+        };
+    }
 }

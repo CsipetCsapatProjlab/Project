@@ -11,5 +11,7 @@ public class Main {
         System.out.println(f);
         System.out.println(f.getSzigetSzam());
         f.ujKor();
+        CommandLine cl = new CommandLine(f);
+        cl.start();
     }
 }
