@@ -1,7 +1,6 @@
 package model.players;
 
 import model.enums.Move;
-import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.gameobjects.Rovar;
 import model.grid.Grid;
@@ -77,6 +76,11 @@ public class Rovarasz extends Jatekos {
     @Override
     public String mentes(){
         return nev + " ; " + Integer.toString(meik) + " ; " + Integer.toString(szerzettTapanyag) + " ; " + "Rovarasz";
+    }
+
+    @Override
+    public int getPoints() {
+        return szerzettTapanyag;
     }
 
     public void setTapanyagok(int s){

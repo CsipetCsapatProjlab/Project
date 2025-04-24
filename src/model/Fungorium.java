@@ -8,10 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import model.enums.Hatas;
 import model.enums.Move;
 import model.enums.TektonelemTypes;
 import model.gameobjects.BenitoSpora;
@@ -32,8 +30,6 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 
-import model.grid.*;
-import model.grid.GombaTestEvo;
 import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
@@ -83,6 +79,15 @@ public class Fungorium {
         }
         this.parosit();
         this.findszomszed();
+    }
+
+    /// Visszaadja a sor és oszlpszámot
+    public int[] getShape() {
+        return new int[] { sor, oszlop };
+    }
+
+    public Jatekos[] getPlayers() {
+        return motor.getJatekosok().toArray(new Jatekos[0]);
     }
 
     // Stringé allakítja a pályát
@@ -720,7 +725,25 @@ public class Fungorium {
         this.sor = values[0];
         this.oszlop = values[1];
     }
-
+    /// Egyszerű másolás, a másolt objektumban és ebben ugyanazokra lesz referencia
+    private void shallowCopy(Fungorium other) {
+        this.motor = other.motor;
+        this.map = other.map;
+        this.szigetekKeret = other.szigetekKeret;
+        this.test = other.test;
+        this.tektons = other.tektons;
+        this.sor = other.sor;
+        this.oszlop = other.oszlop;
+        this.lavaszam = other.lavaszam;
+        this.rand = other.rand;
+        this.szigetekSzama = other.szigetekSzama;
+    }
+    public void betoltes(String name){
+        shallowCopy(new Fungorium(name));
+    }
+    public void ujraGeneralas() {
+        shallowCopy(new Fungorium(sor, oszlop));
+    }
     public Fungorium(String alapmappa) {
         loadMapSize(alapmappa + "/tekton/valtozok.txt");
 
@@ -793,7 +816,7 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a gombákat: " + e.getMessage());
         }
-    }    
+    }
 
     private void betoltFonalak(String path) {
         List<Jatekos> jatekosok = motor.getJatekosok();
@@ -825,8 +848,8 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a fonalakat: " + e.getMessage());
         }
-    }    
-    
+    }
+
     private void betoltSporak(String tipusPath, String kihezPath) {
         List<Jatekos> jatekosok = motor.getJatekosok();
         try (
@@ -869,7 +892,7 @@ public class Fungorium {
             System.err.println("Nem sikerült betölteni a spórákat: " + e.getMessage());
         }
     }
-    
+
 
     private void betoltRovarok(String path) {
         List<Jatekos> jatekosok = motor.getJatekosok();
@@ -901,7 +924,7 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a rovarokat: " + e.getMessage());
         }
-    }    
+    }
 
     public void setMap(Grid[][] g) {
         map = g;

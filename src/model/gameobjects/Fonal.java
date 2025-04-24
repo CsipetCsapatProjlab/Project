@@ -47,6 +47,13 @@ public class Fonal extends GameObject {
         // TODO
     }
 
+    @Override
+    protected String[] getData() {
+        return new String[] {
+                getClass().getSimpleName() + ": " + observer.getNev(),
+        };
+    }
+
     /**
      * Noveszt egy fonalat a kivant gridre
      * @param destination Novesztes cel gridje

@@ -100,6 +100,9 @@ public class Gombasz extends Jatekos {
         fonalak.add(f);
     }
 
+    @Override
+    public int getPoints() {return kinottGombatest;}
+
     /**
      * Spora regisztralasa
      * @param s
