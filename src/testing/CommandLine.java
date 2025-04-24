@@ -140,11 +140,9 @@ public class CommandLine {
                             .filter(jatekos -> jatekos.getNev().equals(name))
                             .toArray();
                     for (Object jatekos: talaltJatekosok)
-                        switch (jatekos) {
-                            case Rovarasz r -> r.setTapanyagok(value);
-                            case Gombasz g -> g.setgombatest(value);
-                            default -> throw new RuntimeException("Egyelőre csak Gombász és rovarász játékosra implementálva");
-                        }
+                        if (jatekos instanceof Rovarasz r) r.setTapanyagok(value);
+                        else if (jatekos instanceof Gombasz g) g.setgombatest(value);
+                        else throw new RuntimeException("Egyelőre csak Gombász és rovarász játékosra implementálva");
                 }
         ));
     }
