@@ -23,9 +23,8 @@ public class JatekMotor {
         jatekosok = new ArrayList<>();
     }
     
-    public Jatekos getJatekos(int j){
-        System.out.println(j);
-        return jatekosok.get(j);
+    public List<Jatekos> getJatekosok(){
+        return jatekosok;
     }
     
     public void jatekosHozzaAd(Jatekos jatekos){

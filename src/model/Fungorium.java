@@ -40,7 +40,7 @@ import model.players.Rovarasz;
 
 public class Fungorium {
     JatekMotor motor;// A játék motorja
-    static Grid[][] map; // A pálya amin a játék játszódij
+    Grid[][] map; // A pálya amin a játék játszódij
     boolean[][] szigetekKeret; // Segéd tömb ami a genrálást segíti
     char[][] test; // Segéd tömb ami a genrálást segíti és
     List<Tekton> tektons; // Tektonok listája
@@ -558,7 +558,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(test.getGombasz().meik);
+                        writer.write(Integer.toString(test.getGombasz().meik));
                     } else {
                         writer.write("-");
                     }
@@ -590,7 +590,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(test.getGombasz().meik);
+                        writer.write(Integer.toString(test.getGombasz().meik));
                     } else {
                         writer.write("-");
                     }
@@ -653,7 +653,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(test.getGombasz().meik);
+                        writer.write(Integer.toString(test.getGombasz().meik));
                     } else {
                         writer.write("-");
                     }
@@ -684,7 +684,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(test.getRovarasz().meik);
+                        writer.write(Integer.toString(test.getRovarasz().meik));
                     } else {
                         writer.write("-");
                     }
@@ -764,56 +764,104 @@ public class Fungorium {
     }
 
     private void betoltGombatestek(String path) {
+        List<Jatekos> jatekosok = motor.getJatekosok();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             for (int i = 0; i < sor; i++) {
                 String line = reader.readLine();
+                if (line == null || line.length() < oszlop) {
+                    System.err.println("Hibás sor a fájlban a " + i + ". sorban. Elég rövid!");
+                    continue; // Ha a sor túl rövid, lépj a következőre
+                }
                 for (int j = 0; j < oszlop; j++) {
-                    if (line.charAt(j) != '-') {
-                        GombaTest g = new GombaTest(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
-                        ((Gombasz)motor.getJatekos(line.charAt(j) - '0')).add(g);
+                    char currentChar = line.charAt(j);
+                    if (currentChar != '-') {
+                        // Ellenőrizzük, hogy a karakter számjegy-e
+                        if (Character.isDigit(currentChar)) {
+                            int index = currentChar - '0';
+                            if (index >= 0 && index < jatekosok.size()) {
+                                GombaTest g = new GombaTest(map[i][j], (Gombasz) jatekosok.get(index));
+                                ((Gombasz) jatekosok.get(index)).add(g);
+                            } else {
+                                System.err.println("Érvénytelen index: " + index + " a " + i + "." + j + " pozícióban.");
+                            }
+                        } else {
+                            System.err.println("Érvénytelen karakter a sorban: " + currentChar + " a " + i + "." + j + " pozícióban.");
+                        }
                     }
                 }
             }
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a gombákat: " + e.getMessage());
         }
-    }
+    }    
 
     private void betoltFonalak(String path) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-                for (int i = 0; i < sor; i++) {
-                    String line = reader.readLine();
-                    for (int j = 0; j < oszlop; j++) {
-                        if (line.charAt(j) != '-') {
-                            Fonal f = new Fonal(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
-                            ((Gombasz)motor.getJatekos(line.charAt(j) - '0')).add(f);
+        List<Jatekos> jatekosok = motor.getJatekosok();
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            for (int i = 0; i < sor; i++) {
+                String line = reader.readLine();
+                if (line == null || line.length() < oszlop) {
+                    System.err.println("Hibás sor a fájlban a " + i + ". sorban. Elég rövid!");
+                    continue; // Ha a sor túl rövid, lépj a következőre
+                }
+                for (int j = 0; j < oszlop; j++) {
+                    char currentChar = line.charAt(j);
+                    if (currentChar != '-') {
+                        // Ellenőrizzük, hogy a karakter számjegy-e
+                        if (Character.isDigit(currentChar)) {
+                            int index = currentChar - '0';
+                            if (index >= 0 && index < jatekosok.size()) {
+                                Fonal f = new Fonal(map[i][j], (Gombasz) jatekosok.get(index));
+                                ((Gombasz) jatekosok.get(index)).add(f);
+                            } else {
+                                System.err.println("Érvénytelen index: " + index + " a " + i + "." + j + " pozícióban.");
+                            }
+                        } else {
+                            System.err.println("Érvénytelen karakter a sorban: " + currentChar + " a " + i + "." + j + " pozícióban.");
                         }
                     }
                 }
-            } catch (IOException e) {
-                System.err.println("Nem sikerült betölteni a fonalakat: " + e.getMessage());
             }
+        } catch (IOException e) {
+            System.err.println("Nem sikerült betölteni a fonalakat: " + e.getMessage());
         }
-
+    }    
+    
     private void betoltSporak(String tipusPath, String kihezPath) {
+        List<Jatekos> jatekosok = motor.getJatekosok();
         try (
-                BufferedReader tipusReader = new BufferedReader(new FileReader(tipusPath));
-                BufferedReader kihezReader = new BufferedReader(new FileReader(kihezPath));) {
+            BufferedReader tipusReader = new BufferedReader(new FileReader(tipusPath));
+            BufferedReader kihezReader = new BufferedReader(new FileReader(kihezPath));) {
             for (int i = 0; i < sor; i++) {
                 String tipusSor = tipusReader.readLine();
                 String kihezSor = kihezReader.readLine();
+                if (tipusSor == null || kihezSor == null || tipusSor.length() < oszlop || kihezSor.length() < oszlop) {
+                    System.err.println("Hibás sor a fájlban a " + i + ". sorban.");
+                    continue;
+                }
                 for (int j = 0; j < oszlop; j++) {
                     char tipus = tipusSor.charAt(j);
                     char kihez = kihezSor.charAt(j);
                     if (tipus != '-' && kihez != '-') {
-                        Spora s = switch (tipus) {
-                            case '1' -> new BenitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
-                            case '2' -> new GyorsSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
-                            case '3' -> new LassitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
-                            case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
-                            default -> null;
-                        };
-                        ((Gombasz)motor.getJatekos(kihez - '0')).add(s);
+                        if (Character.isDigit(kihez)) {
+                            int index = kihez - '0';
+                            if (index >= 0 && index < jatekosok.size()) {
+                                Spora s = switch (tipus) {
+                                    case '1' -> new BenitoSpora(map[i][j],(Gombasz) jatekosok.get(index));
+                                    case '2' -> new GyorsSpora(map[i][j],(Gombasz) jatekosok.get(index));
+                                    case '3' -> new LassitoSpora(map[i][j],(Gombasz) jatekosok.get(index));
+                                    case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz) jatekosok.get(index));
+                                    default -> null;
+                                };
+                                if (s != null) {
+                                    ((Gombasz) jatekosok.get(index)).add(s);
+                                }
+                            } else {
+                                System.err.println("Érvénytelen kihez index: " + index + " a " + i + "." + j + " pozícióban.");
+                            }
+                        } else {
+                            System.err.println("Érvénytelen kihez karakter a sorban: " + kihez + " a " + i + "." + j + " pozícióban.");
+                        }
                     }
                 }
             }
@@ -821,22 +869,39 @@ public class Fungorium {
             System.err.println("Nem sikerült betölteni a spórákat: " + e.getMessage());
         }
     }
+    
 
     private void betoltRovarok(String path) {
+        List<Jatekos> jatekosok = motor.getJatekosok();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             for (int i = 0; i < sor; i++) {
                 String line = reader.readLine();
+                if (line == null || line.length() < oszlop) {
+                    System.err.println("Hibás sor a fájlban a " + i + ". sorban. Elég rövid!");
+                    continue;
+                }
                 for (int j = 0; j < oszlop; j++) {
-                    if (line.charAt(j) != '-') {
-                        Rovar r = new Rovar(map[i][j],(Rovarasz)motor.getJatekos(line.charAt(j) - '0'));
-                        ((Rovarasz)motor.getJatekos(j - '0')).hozzaAd(r);
+                    char currentChar = line.charAt(j);
+                    if (currentChar != '-') {
+                        // Ellenőrizzük, hogy a karakter számjegy-e
+                        if (Character.isDigit(currentChar)) {
+                            int index = currentChar - '0';
+                            if (index >= 0 && index < jatekosok.size()) {
+                                Rovar r = new Rovar(map[i][j], (Rovarasz) jatekosok.get(index));
+                                ((Rovarasz) jatekosok.get(index)).hozzaAd(r);
+                            } else {
+                                System.err.println("Érvénytelen index: " + index + " a " + i + "." + j + " pozícióban.");
+                            }
+                        } else {
+                            System.err.println("Érvénytelen karakter a sorban: " + currentChar + " a " + i + "." + j + " pozícióban.");
+                        }
                     }
                 }
             }
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a rovarokat: " + e.getMessage());
         }
-    }
+    }    
 
     public void setMap(Grid[][] g) {
         map = g;
@@ -850,7 +915,7 @@ public class Fungorium {
         motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
     }
 
-    public static Grid getGrid(int i, int i1) {
+    public Grid getGrid(int i, int i1) {
         return map[i][i1];
     }
 
