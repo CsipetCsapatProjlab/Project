@@ -24,10 +24,12 @@ public class Gombasz extends Jatekos {
     public Gombasz(TektonElem grid, String nev) {
         super(nev);
         gombaTestek.add(new GombaTest(grid, this));
-        grid.hozzaAd(gombaTestek.getFirst());
         kinottGombatest=0;
     }
-    
+    public Gombasz(String nev) {
+        super(nev);
+        kinottGombatest=0;
+    }
 
     /**
      *

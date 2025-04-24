@@ -24,6 +24,7 @@ public class JatekMotor {
     }
     
     public Jatekos getJatekos(int j){
+        System.out.println(j);
         return jatekosok.get(j);
     }
     
@@ -111,13 +112,13 @@ public class JatekMotor {
     
                 switch (tipus) {
                     case "Rovarasz" -> {
-                        Rovarasz rovarasz = new Rovarasz(null, nev);
+                        Rovarasz rovarasz = new Rovarasz(nev);
                         rovarasz.setTapanyagok(extra);
                         rovarasz.meik = meik;
                         jatekosok.add(rovarasz);
                     }
                     case "Gombasz" -> {
-                        Gombasz gombasz = new Gombasz(null, nev);
+                        Gombasz gombasz = new Gombasz(nev);
                         gombasz.setgombatest(extra);
                         gombasz.meik = meik;
                         jatekosok.add(gombasz);
@@ -162,5 +163,8 @@ public class JatekMotor {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    public int getJatekosokSzama(){
+        return jatekosok.size();
     }
 }

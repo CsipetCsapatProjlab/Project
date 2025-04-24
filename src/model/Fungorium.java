@@ -443,7 +443,7 @@ public class Fungorium {
         } else {
             mennyi++;
         }
-        if (y + 1 < this.oszlop) {
+        if (y + 1 > this.oszlop) {
             if (test[x][y + 1] == '#') {
                 mennyi++;
             }
@@ -479,7 +479,7 @@ public class Fungorium {
                     } else if (test[i][j] == '4') {
                         t = new Tekton(TektonelemTypes.EGYFONAL);
                     }
-                    connectSziget(i, j, t);
+                    szakadKeresTekton(i, j, t);
                     szigetekSzama++;
                     tektons.add(t);
                 }
@@ -498,21 +498,21 @@ public class Fungorium {
         t.addelem((TektonElem) map[x][y]);
         ((TektonElem) map[x][y]).setTekton(t);
         if (x - 1 >= 0) {
-            connectSziget(x - 1, y, t);
+            szakadKeresTekton(x - 1, y, t);
         }
         if (x + 1 < this.sor) {
-            connectSziget(x + 1, y, t);
+            szakadKeresTekton(x + 1, y, t);
         }
         if (y - 1 >= 0) {
-            connectSziget(x, y - 1, t);
+            szakadKeresTekton(x, y - 1, t);
         }
         if (y + 1 < this.oszlop) {
-            connectSziget(x, y + 1, t);
+            szakadKeresTekton(x, y + 1, t);
         }
     }
 
     public void ujKor() {
-        //szakad();
+        szakad();
         mentes();
     }
 
@@ -769,8 +769,7 @@ public class Fungorium {
                 String line = reader.readLine();
                 for (int j = 0; j < oszlop; j++) {
                     if (line.charAt(j) != '-') {
-                        GombaTest g = new GombaTest(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j)));
-                        map[i][j].hozzaAd(g);
+                        new GombaTest(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
                     }
                 }
             }
@@ -785,8 +784,7 @@ public class Fungorium {
                     String line = reader.readLine();
                     for (int j = 0; j < oszlop; j++) {
                         if (line.charAt(j) != '-') {
-                            Fonal f = new Fonal(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j)));
-                            map[i][j].hozzaAd(f);
+                            new Fonal(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
                         }
                     }
                 }
@@ -806,15 +804,13 @@ public class Fungorium {
                     char tipus = tipusSor.charAt(j);
                     char kihez = kihezSor.charAt(j);
                     if (tipus != '-' && kihez != '-') {
-                        Spora s = switch (tipus) {
-                            case '1' -> new BenitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
-                            case '2' -> new GyorsSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
-                            case '3' -> new LassitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
-                            case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
-                            default -> null;
+                        switch (tipus) {
+                            case '1' -> new BenitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
+                            case '2' -> new GyorsSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
+                            case '3' -> new LassitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
+                            case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
+                            default -> System.out.println("hibas Spora");
                         };
-                        if (s != null)
-                            map[i][j].hozzaAd(s);
                     }
                 }
             }
@@ -829,8 +825,7 @@ public class Fungorium {
                 String line = reader.readLine();
                 for (int j = 0; j < oszlop; j++) {
                     if (line.charAt(j) != '-') {
-                        Rovar r = new Rovar(map[i][j],(Rovarasz)motor.getJatekos(line.charAt(j)));
-                        map[i][j].hozzaAd(r);
+                        new Rovar(map[i][j],(Rovarasz)motor.getJatekos(line.charAt(j) - '0'));
                     }
                 }
             }
