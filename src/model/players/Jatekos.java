@@ -41,4 +41,8 @@ public abstract class Jatekos {
     public void meghal() {
         // TODO
     }
+
+    public String mentes(){
+        return nev + ";" + Integer.toString(meik);
+    }
 }

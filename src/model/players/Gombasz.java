@@ -109,4 +109,12 @@ public class Gombasz extends Jatekos {
      * Spora lista lekerdezese
      */
     public List<Spora> getSporas(){return sporak;}
+
+    public String mentes(){
+        return nev + " ; " + Integer.toString(meik) + " ; " + Integer.toString(kinottGombatest) + " ; " + "Gombasz";
+    }
+
+    public void setgombatest(int g){
+        kinottGombatest = g;
+    }
 }

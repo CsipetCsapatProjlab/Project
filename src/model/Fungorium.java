@@ -528,6 +528,7 @@ public class Fungorium {
         fonalMentes();
         sporaMentes();
         rovarMentes();
+        motor.mentes();
         saveMapSize("mentes/tekton/valtozok.txt");
     }
 
@@ -716,6 +717,7 @@ public class Fungorium {
         map = new Grid[sor][oszlop];
         szigetekKeret = new boolean[sor][oszlop];
         test = new char[sor][oszlop];
+        motor = new JatekMotor();
 
         String filePath = "mentes/Tekton/palya_tektonelemek.txt";
         File file = new File(filePath);
