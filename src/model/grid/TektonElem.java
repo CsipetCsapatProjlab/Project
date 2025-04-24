@@ -29,10 +29,6 @@ public class TektonElem extends Grid {
         this.tekton = tekton;
     }
 
-    public String toString(){
-        return " ";
-    }
-
     public Tekton getTekton(){return tekton;}
     public void setTekton(Tekton t){tekton = t;}
 

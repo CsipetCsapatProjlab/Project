@@ -22,7 +22,11 @@ public class JatekMotor {
     public JatekMotor(){
         jatekosok = new ArrayList<>();
     }
-
+    
+    public Jatekos getJatekos(int j){
+        return jatekosok.get(j);
+    }
+    
     public void jatekosHozzaAd(Jatekos jatekos){
         jatekosok.add(jatekos);
     }

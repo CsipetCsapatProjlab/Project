@@ -10,7 +10,11 @@ import jdk.jshell.spi.ExecutionControl;
 import model.enums.Hatas;
 import model.exceptions.IncompatibleGameObjectException;
 import model.enums.TektonelemTypes;
+import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
+import model.gameobjects.GombaTest;
+import model.gameobjects.Rovar;
+import model.gameobjects.Spora;
 
 public abstract class Grid {
     Grid[] neighbours;
@@ -66,6 +70,30 @@ public abstract class Grid {
     }
 
     public String toString(){
+        boolean rovar = false;
+        boolean spora = false;
+        boolean gomba = false;
+        boolean fonal = false;
+        for (GameObject gameObject : gameObjects) {
+            if(gameObject instanceof Rovar){
+                rovar = true;
+            }else if(gameObject instanceof Spora){
+                spora = true;
+            }else if(gameObject instanceof GombaTest){
+                gomba = true;
+            }else if(gameObject instanceof Fonal){
+                fonal = true;
+            } 
+        }
+        if(rovar){
+            return "R";
+        }else if(gomba){
+            return "G";
+        }else if(spora){
+            return "S";
+        }else if(fonal){
+            return "$";
+        }
         return " ";
     }
     

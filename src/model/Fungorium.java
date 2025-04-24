@@ -34,22 +34,24 @@ import model.grid.TektonElem;
 
 import model.grid.*;
 import model.grid.GombaTestEvo;
-
+import model.players.Gombasz;
 import model.players.Jatekos;
+import model.players.Rovarasz;
 
 public class Fungorium {
-    JatekMotor motor;// A játék motorja 
-    Grid[][] map; //A pálya amin a játék játszódij
+    JatekMotor motor;// A játék motorja
+    static Grid[][] map; // A pálya amin a játék játszódij
     boolean[][] szigetekKeret; // Segéd tömb ami a genrálást segíti
-    char[][] test;  // Segéd tömb ami a genrálást segíti és 
-    List<Tekton> tektons; //Tektonok listája
-    int sor; //A pálya sorainak a száma
-    int oszlop; //A pálya oszlopainak a száma
-    int lavaszam = 0; //Azt tartja számon hány láva van a pályán
+    char[][] test; // Segéd tömb ami a genrálást segíti és
+    List<Tekton> tektons; // Tektonok listája
+    int sor; // A pálya sorainak a száma
+    int oszlop; // A pálya oszlopainak a száma
+    int lavaszam = 0; // Azt tartja számon hány láva van a pályán
     Random rand = new Random();
     int szigetekSzama = 0;// Tektonok száma
-    
-    public Fungorium(int ujsor,int ujoszlop){ //A pályát létrehozó konstruktor meghív minden fügvényt ami ahoz kell hogy a pálya létrejöjjön
+
+    public Fungorium(int ujsor, int ujoszlop) { // A pályát létrehozó konstruktor meghív minden fügvényt ami ahoz kell
+                                                // hogy a pálya létrejöjjön
         sor = ujsor;
         oszlop = ujoszlop;
         tektons = new ArrayList<>();
@@ -65,17 +67,17 @@ public class Fungorium {
             }
         }
 
-
-        //Itt generálódik a pálya először a lávák majd megkeresi a tektonokat és ha a végeradmény nem felel meg újra kezdi
+        // Itt generálódik a pálya először a lávák majd megkeresi a tektonokat és ha a
+        // végeradmény nem felel meg újra kezdi
         boolean sikeres = false;
-        while(!sikeres){
-            while(lavaszam <= (sor*oszlop/3)){
-                this.generateMaze(rand.nextInt(sor),rand.nextInt(oszlop)); 
+        while (!sikeres) {
+            while (lavaszam <= (sor * oszlop / 3)) {
+                this.generateMaze(rand.nextInt(sor), rand.nextInt(oszlop));
             }
             findSziget();
-            if(szigetekSzama > 3){
+            if (szigetekSzama > 3) {
                 sikeres = true;
-            }else{
+            } else {
                 reset();
             }
         }
@@ -83,7 +85,7 @@ public class Fungorium {
         this.findszomszed();
     }
 
-    //Stringé allakítja a pályát
+    // Stringé allakítja a pályát
     public String toString() {
         for (int i = 0; i <= this.oszlop + 1; i++) {
             System.out.print("0");
@@ -104,8 +106,8 @@ public class Fungorium {
         return "";
     }
 
-    void generateMaze(int x, int y){ // legenerálja a pályát
-        if(szigetekKeret[x][y]){ //ellenőrzi hogy voltunk-e már azon a mezőn
+    void generateMaze(int x, int y) { // legenerálja a pályát
+        if (szigetekKeret[x][y]) { // ellenőrzi hogy voltunk-e már azon a mezőn
             return;
         }
         if (x < 0 || y < 0 || x >= this.sor || y >= this.oszlop) {
@@ -118,25 +120,26 @@ public class Fungorium {
             map[x][y] = new Lava();
             szigetekKeret[x][y] = true;
             this.lavaszam++;
-        }else{
+        } else {
             return;
         }
 
-        //Random kiválasztja merre akar menni és azt hogy hányszor próbálkozik
+        // Random kiválasztja merre akar menni és azt hogy hányszor próbálkozik
         // Azért loopol 2-t, mert:
         // - önmagába vissza nem tud fordulni
         // - ugyanabba az irányba nem megy tovább
         for (int i = 0; i < 2; i++) {
-            do{
+            do {
                 merre = rand.nextInt(4);
-            }while(merre == elozo);
+            } while (merre == elozo);
             elozo = merre;
             if (x - 1 >= 0 && y - 1 >= 0 && x + 1 < this.sor && y + 1 < this.oszlop) {
-                irany(merre ,x ,y);
+                irany(merre, x, y);
             }
         }
     }
-    //Egy ellenőrző hogy ne alakulhasson ki 2x2 es láva rész
+
+    // Egy ellenőrző hogy ne alakulhasson ki 2x2 es láva rész
     private boolean lavaPlace(int x, int y) {
         if (x > 0 && y > 0) {
             if (test[x - 1][y - 1] == '#' && test[x - 1][y - 1] == test[x - 1][y]
@@ -165,8 +168,8 @@ public class Fungorium {
         return true;
     }
 
-    //A generálásnál a generálás irányába folytatja a rekurziót 
-    private void irany(int merre, int x, int y){
+    // A generálásnál a generálás irányába folytatja a rekurziót
+    private void irany(int merre, int x, int y) {
         switch (merre) {
             case 0:
                 generateMaze(x - 1, y);
@@ -185,27 +188,27 @@ public class Fungorium {
         }
     }
 
-    //Megtaláljuk a tektonokat és hozzájuk tesszük a tekton elemeket
-    void findSziget(){
+    // Megtaláljuk a tektonokat és hozzájuk tesszük a tekton elemeket
+    void findSziget() {
         szigetekSzama = 0;
 
-        //Beállítjuk a tömböt a keresés segítéséhez
+        // Beállítjuk a tömböt a keresés segítéséhez
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
-                if(test[i][j] == '#'){
+                if (test[i][j] == '#') {
                     szigetekKeret[i][j] = true;
-                }else{
+                } else {
                     szigetekKeret[i][j] = false;
                 }
             }
         }
 
-        for(int i = 0; i < this.sor; i++){
-            for(int j = 0 ; j < this.oszlop ;j++){
-                if(!szigetekKeret[i][j]){
+        for (int i = 0; i < this.sor; i++) {
+            for (int j = 0; j < this.oszlop; j++) {
+                if (!szigetekKeret[i][j]) {
                     TektonelemTypes[] hatasok = TektonelemTypes.values();
                     Tekton t = new Tekton(hatasok[rand.nextInt(hatasok.length)]);
-                    connectSziget(i,j, t);
+                    connectSziget(i, j, t);
                     szigetekSzama++;
                     tektons.add(t);
                 }
@@ -213,56 +216,57 @@ public class Fungorium {
         }
     }
 
-    void connectSziget(int x, int y, Tekton t){//Összeköti a tektonelemeket a tektonokhoz
+    void connectSziget(int x, int y, Tekton t) {// Összeköti a tektonelemeket a tektonokhoz
         if (x < 0 || y < 0 || x >= this.sor || y >= this.oszlop || test[x][y] == '#') {
             return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
         }
-        if(szigetekKeret[x][y]){ //ellenőrzi hogy voltunk-e már azon a mezőn
+        if (szigetekKeret[x][y]) { // ellenőrzi hogy voltunk-e már azon a mezőn
             return;
         }
         szigetekKeret[x][y] = true;
-        //Megfelelő tektoneleme létrehozása
+        // Megfelelő tektoneleme létrehozása
         switch (t.getHatas()) {
-            case    GOMBATESTEVO:
+            case GOMBATESTEVO:
                 map[x][y] = new GombaTestEvo(t);
-                t.addelem((TektonElem)map[x][y]);
+                t.addelem((TektonElem) map[x][y]);
                 test[x][y] = '1';
                 break;
-            case    FONALTARTO:
+            case FONALTARTO:
                 map[x][y] = new FonalTarto(t);
-                t.addelem((TektonElem)map[x][y]);
+                t.addelem((TektonElem) map[x][y]);
                 test[x][y] = '2';
                 break;
-            case    FONALEVO:
+            case FONALEVO:
                 map[x][y] = new FonalEvo(t);
-                t.addelem((TektonElem)map[x][y]);
+                t.addelem((TektonElem) map[x][y]);
                 test[x][y] = '3';
                 break;
-            case    EGYFONAL:
+            case EGYFONAL:
                 map[x][y] = new EgyFonal(t);
-                t.addelem((TektonElem)map[x][y]);
+                t.addelem((TektonElem) map[x][y]);
                 test[x][y] = '4';
                 break;
-        
+
             default:
                 System.err.println("Nem kezelt tektonfalyta");
                 break;
         }
         if (x - 1 >= 0) {
-            connectSziget(x-1, y,t);
+            connectSziget(x - 1, y, t);
         }
         if (x + 1 < this.sor) {
-            connectSziget(x+1, y,t);
+            connectSziget(x + 1, y, t);
         }
         if (y - 1 >= 0) {
-            connectSziget(x, y-1,t);
+            connectSziget(x, y - 1, t);
         }
         if (y + 1 < this.oszlop) {
-            connectSziget(x, y+1,t);
+            connectSziget(x, y + 1, t);
         }
     }
-    //reseteli a pályát egy rossz generálás esetén
-    void reset(){
+
+    // reseteli a pályát egy rossz generálás esetén
+    void reset() {
         // Törlés minden pályával kapcsolatos adatot
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
@@ -271,109 +275,112 @@ public class Fungorium {
                 map[i][j] = null; // A pálya cellái is null-ra kerülnek
             }
         }
-        
+
         // Törlés minden tektonikus elemről
         tektons.clear();
-    
+
         // Változók alaphelyzetbe állítása
         szigetekSzama = 0;
         lavaszam = 0;
     }
-    private void parosit(){ //Összepárosítja a szomszédos grideket
+
+    private void parosit() { // Összepárosítja a szomszédos grideket
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
                 Grid[] szomszedok = new Grid[4];
-                int hany = 0; 
-                if(i - 1 > 0){ //fel
-                    szomszedok[hany] = map[i-1][j];
+                int hany = 0;
+                if (i - 1 > 0) { // fel
+                    szomszedok[hany] = map[i - 1][j];
                     hany++;
                 }
-                if(i + 1 < sor){ //le
-                    szomszedok[hany] = map[i+1][j];
+                if (i + 1 < sor) { // le
+                    szomszedok[hany] = map[i + 1][j];
                     hany++;
                 }
-                if(j + 1 < oszlop){ //jobb
-                    szomszedok[hany] = map[i][j+1];
+                if (j + 1 < oszlop) { // jobb
+                    szomszedok[hany] = map[i][j + 1];
                     hany++;
                 }
-                if(j - 1 > 0){ //ball
-                    szomszedok[hany] = map[i][j-1];
+                if (j - 1 > 0) { // ball
+                    szomszedok[hany] = map[i][j - 1];
                     hany++;
                 }
                 map[i][j].setNeighbours(szomszedok, hany);
             }
         }
     }
-    //Tekton szomszéd keresés része
-    void findszomszed(){
-        for(int i = 0; i < this.sor; i++){
-            for(int j = 0 ; j < this.oszlop ;j++){
-                if(!szigetekKeret[i][j]){
-                    tektonSzomszedKeres(i,j);
+
+    // Tekton szomszéd keresés része
+    void findszomszed() {
+        for (int i = 0; i < this.sor; i++) {
+            for (int j = 0; j < this.oszlop; j++) {
+                if (!szigetekKeret[i][j]) {
+                    tektonSzomszedKeres(i, j);
                 }
             }
         }
     }
-    
-    public void tektonSzomszedKeres(int x,int y){//megkeresi a tektonok szomszédjait
+
+    public void tektonSzomszedKeres(int x, int y) {// megkeresi a tektonok szomszédjait
         if (x < 0 || y < 0 || x >= this.sor || y >= this.oszlop || test[x][y] == '#') {
             return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
         }
-        //hozzárendeleés feltételei
-        if (x - 2 >= 0 && test[x-1][y] == '#' && test[x-2][y] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x-2][y]).getTekton());
+        // hozzárendeleés feltételei
+        if (x - 2 >= 0 && test[x - 1][y] == '#' && test[x - 2][y] != '#') {
+            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x - 2][y]).getTekton());
         }
-        if (x + 2 < this.sor && test[x+1][y] == '#' && test[x+2][y] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x+2][y]).getTekton());
+        if (x + 2 < this.sor && test[x + 1][y] == '#' && test[x + 2][y] != '#') {
+            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x + 2][y]).getTekton());
         }
-        if (y - 2 >= 0 && test[x][y-1] == '#' && test[x][y-2] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x][y-2]).getTekton());
+        if (y - 2 >= 0 && test[x][y - 1] == '#' && test[x][y - 2] != '#') {
+            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x][y - 2]).getTekton());
         }
-        if (y + 2 < this.oszlop && test[x][y+1] == '#' && test[x][y+2] != '#') {
-            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x][y+2]).getTekton());
+        if (y + 2 < this.oszlop && test[x][y + 1] == '#' && test[x][y + 2] != '#') {
+            ((TektonElem) map[x][y]).getTekton().addNeigbour(((TektonElem) map[x][y + 2]).getTekton());
         }
 
         if (x - 1 >= 0) {
-            tektonSzomszedKeres(x-1, y);
+            tektonSzomszedKeres(x - 1, y);
         }
         if (x + 1 < this.sor) {
-            tektonSzomszedKeres(x+1, y);
+            tektonSzomszedKeres(x + 1, y);
         }
         if (y - 1 >= 0) {
-            tektonSzomszedKeres(x, y-1);
+            tektonSzomszedKeres(x, y - 1);
         }
         if (y + 1 < this.oszlop) {
-            tektonSzomszedKeres(x, y+1);
+            tektonSzomszedKeres(x, y + 1);
         }
     }
 
-    public int getSzigetSzam(){
+    public int getSzigetSzam() {
         return szigetekSzama;
     }
+
     public JatekMotor getMotor() {
         return motor;
     }
 
-    //szakadás előkészítő fügvény
+    // szakadás előkészítő fügvény
     public void szakad() {
-        for(int i = 0; i < 10; i++){
-            //kiválasztjuk a pontott amiből indulunk
+        for (int i = 0; i < 10; i++) {
+            // kiválasztjuk a pontott amiből indulunk
             Tekton valasztott = tektons.get(rand.nextInt(tektons.size()));
-            if(valasztott.getTektonszam() > 6 && valasztott.getTektonszam() > valasztott.getTektonszam()/2){
+            if (valasztott.getTektonszam() > 6 && valasztott.getTektonszam() > valasztott.getTektonszam() / 2) {
                 List<TektonElem> elemek = valasztott.getTektonElems();
                 TektonElem valasz = elemek.get(rand.nextInt(elemek.size()));
                 int mezosor = -1;
                 int mezooszlop = -1;
-                for(int x = 0; x < sor; x++){
-                    for(int y = 0; y < oszlop; y++){
-                        if(valasz.equals(map[x][y])){
+                for (int x = 0; x < sor; x++) {
+                    for (int y = 0; y < oszlop; y++) {
+                        if (valasz.equals(map[x][y])) {
                             mezosor = x;
                             mezooszlop = y;
                         }
                     }
                 }
-                //Szakadunk
-                if(mezooszlop != -1 && mezosor != -1 && map[mezosor][mezooszlop].getSzomszedokSzama() == 4){
+                // Szakadunk
+                if (mezooszlop != -1 && mezosor != -1 && map[mezosor][mezooszlop].getSzomszedokSzama() == 4) {
                     szakadjon(mezosor, mezooszlop);
                 }
                 parosit();
@@ -382,95 +389,97 @@ public class Fungorium {
             }
         }
     }
-    //a szakadást végző fügvény
-    private void szakadjon(int kezdosor, int kezdooszlop){
-        if(lavaPlace(kezdosor, kezdooszlop)){
+
+    // a szakadást végző fügvény
+    private void szakadjon(int kezdosor, int kezdooszlop) {
+        if (lavaPlace(kezdosor, kezdooszlop)) {
             test[kezdosor][kezdooszlop] = '#';
             map[kezdosor][kezdooszlop] = new Lava();
         }
         System.out.println(kezdosor + " " + kezdooszlop);
-        if(kezdosor-1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2){
-            if(test[kezdosor-1][kezdooszlop] != '#'){
-                szakadjon(kezdosor-1, kezdooszlop);
+        if (kezdosor - 1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2) {
+            if (test[kezdosor - 1][kezdooszlop] != '#') {
+                szakadjon(kezdosor - 1, kezdooszlop);
             }
         }
-        if(kezdosor+1 < this.sor && szomszedLava(kezdosor, kezdooszlop) <= 2){
-            if(test[kezdosor+1][kezdooszlop] != '#'){
-                szakadjon(kezdosor+1, kezdooszlop);
+        if (kezdosor + 1 < this.sor && szomszedLava(kezdosor, kezdooszlop) <= 2) {
+            if (test[kezdosor + 1][kezdooszlop] != '#') {
+                szakadjon(kezdosor + 1, kezdooszlop);
             }
         }
-        if(kezdooszlop-1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2){
-            if(test[kezdosor-1][kezdooszlop] != '#'){
-                szakadjon(kezdosor, kezdooszlop-1);
+        if (kezdooszlop - 1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2) {
+            if (test[kezdosor - 1][kezdooszlop] != '#') {
+                szakadjon(kezdosor, kezdooszlop - 1);
             }
         }
-        if(kezdooszlop+1 < this.oszlop && szomszedLava(kezdosor, kezdooszlop) <= 2){
-            if(test[kezdosor-1][kezdooszlop] != '#'){
-                szakadjon(kezdosor, kezdooszlop-1);
+        if (kezdooszlop + 1 < this.oszlop && szomszedLava(kezdosor, kezdooszlop) <= 2) {
+            if (test[kezdosor - 1][kezdooszlop] != '#') {
+                szakadjon(kezdosor, kezdooszlop - 1);
             }
         }
     }
-    //Ellenőrizzük hány szomszéd van aki láva
-    private int szomszedLava(int x,int y){
+
+    // Ellenőrizzük hány szomszéd van aki láva
+    private int szomszedLava(int x, int y) {
         int mennyi = 0;
-        if(x-1 >= 0){
-            if(test[x-1][y] == '#'){
+        if (x - 1 >= 0) {
+            if (test[x - 1][y] == '#') {
                 mennyi++;
             }
-        }else{
+        } else {
             mennyi++;
         }
-        if(x+1 < this.sor){
-            if(test[x+1][y] == '#'){
+        if (x + 1 < this.sor) {
+            if (test[x + 1][y] == '#') {
                 mennyi++;
             }
-        }else{
+        } else {
             mennyi++;
         }
-        if(y-1 >= 0){
-            if(test[x][y-1] == '#'){
+        if (y - 1 >= 0) {
+            if (test[x][y - 1] == '#') {
                 mennyi++;
             }
-        }else{
+        } else {
             mennyi++;
         }
-        if(y+1 > this.oszlop){
-            if(test[x][y+1] == '#'){
+        if (y + 1 > this.oszlop) {
+            if (test[x][y + 1] == '#') {
                 mennyi++;
             }
-        }else{
+        } else {
             mennyi++;
         }
         return mennyi;
     }
 
-    //Szakadás után újra rendelni a tektonokhoz a tektonelemeket
-    void keresTekton(){
+    // Szakadás után újra rendelni a tektonokhoz a tektonelemeket
+    void keresTekton() {
         tektons.clear();
         szigetekSzama = 0;
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
-                if(test[i][j] == '#'){
+                if (test[i][j] == '#') {
                     szigetekKeret[i][j] = true;
-                }else{
+                } else {
                     szigetekKeret[i][j] = false;
                 }
             }
         }
-        for(int i = 0; i < this.sor; i++){
-            for(int j = 0 ; j < this.oszlop ;j++){
-                if(!szigetekKeret[i][j]){
+        for (int i = 0; i < this.sor; i++) {
+            for (int j = 0; j < this.oszlop; j++) {
+                if (!szigetekKeret[i][j]) {
                     Tekton t = null;
-                    if(test[i][j] == '1'){
+                    if (test[i][j] == '1') {
                         t = new Tekton(TektonelemTypes.GOMBATESTEVO);
-                    }else if(test[i][j] == '2'){
+                    } else if (test[i][j] == '2') {
                         t = new Tekton(TektonelemTypes.FONALTARTO);
-                    }else if(test[i][j] == '3'){
+                    } else if (test[i][j] == '3') {
                         t = new Tekton(TektonelemTypes.FONALEVO);
-                    }else if(test[i][j] == '4'){
+                    } else if (test[i][j] == '4') {
                         t = new Tekton(TektonelemTypes.EGYFONAL);
                     }
-                    connectSziget(i,j, t);
+                    connectSziget(i, j, t);
                     szigetekSzama++;
                     tektons.add(t);
                 }
@@ -478,37 +487,36 @@ public class Fungorium {
         }
     }
 
-    void szakadKeresTekton(int x, int y, Tekton t){//Összeköti a tektonelemeket a tektonokhoz
+    void szakadKeresTekton(int x, int y, Tekton t) {// Összeköti a tektonelemeket a tektonokhoz
         if (x < 0 || y < 0 || x >= this.sor || y >= this.oszlop || test[x][y] == '#') {
             return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
         }
-        if(szigetekKeret[x][y]){ //ellenőrzi hogy voltunk-e már azon a mezőn
+        if (szigetekKeret[x][y]) { // ellenőrzi hogy voltunk-e már azon a mezőn
             return;
         }
         szigetekKeret[x][y] = true;
-        t.addelem((TektonElem)map[x][y]);
+        t.addelem((TektonElem) map[x][y]);
         ((TektonElem) map[x][y]).setTekton(t);
         if (x - 1 >= 0) {
-            connectSziget(x-1, y,t);
+            connectSziget(x - 1, y, t);
         }
         if (x + 1 < this.sor) {
-            connectSziget(x+1, y,t);
+            connectSziget(x + 1, y, t);
         }
         if (y - 1 >= 0) {
-            connectSziget(x, y-1,t);
+            connectSziget(x, y - 1, t);
         }
         if (y + 1 < this.oszlop) {
-            connectSziget(x, y+1,t);
+            connectSziget(x, y + 1, t);
         }
     }
 
     public void ujKor() {
         szakad();
         mentes();
-        System.out.println(this);
     }
 
-    public void mentes(){
+    public void mentes() {
         String filePath = "mentes/tekton/palya_tektonelemek.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs(); // Létrehozza a mappastruktúrát, ha még nem létezik
@@ -532,7 +540,7 @@ public class Fungorium {
         saveMapSize("mentes/tekton/valtozok.txt");
     }
 
-    public void gombaMentes(){
+    public void gombaMentes() {
         String filePath = "mentes/objetumok/Gombak.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
@@ -544,14 +552,14 @@ public class Fungorium {
                     boolean gomba = false;
                     GombaTest test = null;
                     for (GameObject gameObject : elemek) {
-                        if(gameObject instanceof GombaTest){
+                        if (gameObject instanceof GombaTest) {
                             gomba = true;
-                            test = (GombaTest)gameObject;
+                            test = (GombaTest) gameObject;
                         }
                     }
-                    if(gomba){
+                    if (gomba) {
                         writer.write(test.getGombasz().meik);
-                    }else{
+                    } else {
                         writer.write("-");
                     }
                 }
@@ -563,7 +571,8 @@ public class Fungorium {
         }
     }
 
-    public void fonalMentes(){
+    // Menti a fonalakat a szerint hogy a motorban meik játékoshoz tartozik
+    public void fonalMentes() {
         String filePath = "mentes/objetumok/Fonalak.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
@@ -575,14 +584,14 @@ public class Fungorium {
                     boolean gomba = false;
                     Fonal test = null;
                     for (GameObject gameObject : elemek) {
-                        if(gameObject instanceof Fonal){
+                        if (gameObject instanceof Fonal) {
                             gomba = true;
-                            test = (Fonal)gameObject;
+                            test = (Fonal) gameObject;
                         }
                     }
-                    if(gomba){
+                    if (gomba) {
                         writer.write(test.getGombasz().meik);
-                    }else{
+                    } else {
                         writer.write("-");
                     }
                 }
@@ -593,7 +602,8 @@ public class Fungorium {
             System.err.println("Hiba történt a fonal mentésekor: " + e.getMessage());
         }
     }
-    public void sporaMentes(){
+
+    public void sporaMentes() {
         String filePath = "mentes/objetumok/Sporak.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
@@ -604,13 +614,13 @@ public class Fungorium {
                     elemek = map[i][j].getGameObject();
                     char meik = '-';
                     for (GameObject gameObject : elemek) {
-                        if(gameObject instanceof BenitoSpora){
+                        if (gameObject instanceof BenitoSpora) {
                             meik = '1';
-                        }else if(gameObject instanceof GyorsSpora){
+                        } else if (gameObject instanceof GyorsSpora) {
                             meik = '2';
-                        }else if(gameObject instanceof LassitoSpora){
+                        } else if (gameObject instanceof LassitoSpora) {
                             meik = '3';
-                        }else if(gameObject instanceof OsztodoRovarSpora){
+                        } else if (gameObject instanceof OsztodoRovarSpora) {
                             meik = '4';
                         }
                     }
@@ -625,7 +635,7 @@ public class Fungorium {
         sporaKiMentes();
     }
 
-    public void sporaKiMentes(){
+    public void sporaKiMentes() {
         String filePath = "mentes/objetumok/Sporak_kihez.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
@@ -637,14 +647,14 @@ public class Fungorium {
                     boolean gomba = false;
                     Spora test = null;
                     for (GameObject gameObject : elemek) {
-                        if(gameObject instanceof Spora){
+                        if (gameObject instanceof Spora) {
                             gomba = true;
-                            test = (Spora)gameObject;
+                            test = (Spora) gameObject;
                         }
                     }
-                    if(gomba){
+                    if (gomba) {
                         writer.write(test.getGombasz().meik);
-                    }else{
+                    } else {
                         writer.write("-");
                     }
                 }
@@ -656,7 +666,7 @@ public class Fungorium {
         }
     }
 
-    public void rovarMentes(){
+    public void rovarMentes() {
         String filePath = "mentes/objetumok/Rovarok.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
@@ -668,14 +678,14 @@ public class Fungorium {
                     boolean gomba = false;
                     Rovar test = null;
                     for (GameObject gameObject : elemek) {
-                        if(gameObject instanceof Rovar){
+                        if (gameObject instanceof Rovar) {
                             gomba = true;
-                            test = (Rovar)gameObject;
+                            test = (Rovar) gameObject;
                         }
                     }
-                    if(gomba){
+                    if (gomba) {
                         writer.write(test.getRovarasz().meik);
-                    }else{
+                    } else {
                         writer.write("-");
                     }
                 }
@@ -694,7 +704,7 @@ public class Fungorium {
             e.printStackTrace();
         }
     }
-    
+
     public void loadMapSize(String path) {
         int[] values = new int[2]; // [sor, oszlop]
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -710,74 +720,139 @@ public class Fungorium {
         this.sor = values[0];
         this.oszlop = values[1];
     }
-    
+
     public Fungorium() {
         loadMapSize("mentes/tekton/valtozok.txt");
-        tektons = new ArrayList<>();
+
         map = new Grid[sor][oszlop];
-        szigetekKeret = new boolean[sor][oszlop];
         test = new char[sor][oszlop];
+        szigetekKeret = new boolean[sor][oszlop];
+        tektons = new ArrayList<>();
         motor = new JatekMotor();
+        motor.betoltes();
 
-        String filePath = "mentes/Tekton/palya_tektonelemek.txt";
-        File file = new File(filePath);
-
-        if (!file.exists()) {
-            System.err.println("A fájl nem található: " + file.getAbsolutePath());
-            return;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            int i = 0;
-
-            while ((line = reader.readLine()) != null && i < sor) {
-                for (int j = 0; j < Math.min(line.length(), oszlop); j++) {
+        // 1. Pálya típusainak betöltése
+        try (BufferedReader reader = new BufferedReader(new FileReader("mentes/tekton/palya_tektonelemek.txt"))) {
+            for (int i = 0; i < sor; i++) {
+                String line = reader.readLine();
+                for (int j = 0; j < oszlop; j++) {
                     test[i][j] = line.charAt(j);
+                    Tekton idegigelene = new Tekton();
+                    switch (test[i][j]) {
+                        case '1' -> map[i][j] = new GombaTestEvo(idegigelene);
+                        case '2' -> map[i][j] = new FonalTarto(idegigelene);
+                        case '3' -> map[i][j] = new FonalEvo(idegigelene);
+                        case '4' -> map[i][j] = new EgyFonal(idegigelene);
+                        case '#' -> map[i][j] = new Lava();
+                    }
                 }
-                i++;
             }
-
-            System.out.println("Pálya betöltve: " + file.getAbsolutePath());
         } catch (IOException e) {
-            System.err.println("Hiba történt a pálya betöltésekor: " + e.getMessage());
+            System.err.println("Nem sikerült betölteni a pályát: " + e.getMessage());
         }
 
-        Tekton ideiglenes = new Tekton();
-        for(int i = 0; i < sor; i++){
-            for(int j = 0; j < oszlop; j++){
-                if(test[i][j] == '1'){
-                    map[i][j] = new GombaTestEvo(ideiglenes);
-                }else if(test[i][j] == '2'){
-                    map[i][j] = new FonalTarto(ideiglenes); 
-                }else if(test[i][j] == '3'){
-                    map[i][j] = new FonalEvo(ideiglenes); 
-                }else if(test[i][j] == '4'){
-                    map[i][j] = new EgyFonal(ideiglenes); 
-                }else if(test[i][j] == '#'){
-                    map[i][j] = new Lava();
+        // 2. GameObject-ek betöltése
+        betoltGombatestek("mentes/objetumok/Gombak.txt");
+        betoltFonalak("mentes/objetumok/Fonalak.txt");
+        betoltSporak("mentes/objetumok/Sporak.txt", "mentes/objetumok/Sporak_kihez.txt");
+        betoltRovarok("mentes/objetumok/Rovarok.txt");
+
+        // 3. Újrarendezés és szomszédok
+        keresTekton();
+        parosit();
+        findszomszed();
+    }
+
+    private void betoltGombatestek(String path) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            for (int i = 0; i < sor; i++) {
+                String line = reader.readLine();
+                for (int j = 0; j < oszlop; j++) {
+                    if (line.charAt(j) != '-') {
+                        GombaTest g = new GombaTest(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j)));
+                        map[i][j].hozzaAd(g);
+                    }
                 }
+            }
+        } catch (IOException e) {
+            System.err.println("Nem sikerült betölteni a gombákat: " + e.getMessage());
+        }
+    }
+
+    private void betoltFonalak(String path) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+                for (int i = 0; i < sor; i++) {
+                    String line = reader.readLine();
+                    for (int j = 0; j < oszlop; j++) {
+                        if (line.charAt(j) != '-') {
+                            Fonal f = new Fonal(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j)));
+                            map[i][j].hozzaAd(f);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("Nem sikerült betölteni a fonalakat: " + e.getMessage());
             }
         }
 
-        palyabetoltes();
+    private void betoltSporak(String tipusPath, String kihezPath) {
+        try (
+                BufferedReader tipusReader = new BufferedReader(new FileReader(tipusPath));
+                BufferedReader kihezReader = new BufferedReader(new FileReader(kihezPath));) {
+            for (int i = 0; i < sor; i++) {
+                String tipusSor = tipusReader.readLine();
+                String kihezSor = kihezReader.readLine();
+                for (int j = 0; j < oszlop; j++) {
+                    char tipus = tipusSor.charAt(j);
+                    char kihez = kihezSor.charAt(j);
+                    if (tipus != '-' && kihez != '-') {
+                        Spora s = switch (tipus) {
+                            case '1' -> new BenitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
+                            case '2' -> new GyorsSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
+                            case '3' -> new LassitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
+                            case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz)motor.getJatekos(kihez));
+                            default -> null;
+                        };
+                        if (s != null)
+                            map[i][j].hozzaAd(s);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Nem sikerült betölteni a spórákat: " + e.getMessage());
+        }
     }
 
-    private void palyabetoltes(){
-        keresTekton();
-        findszomszed();
-        parosit();
+    private void betoltRovarok(String path) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            for (int i = 0; i < sor; i++) {
+                String line = reader.readLine();
+                for (int j = 0; j < oszlop; j++) {
+                    if (line.charAt(j) != '-') {
+                        Rovar r = new Rovar(map[i][j],(Rovarasz)motor.getJatekos(line.charAt(j)));
+                        map[i][j].hozzaAd(r);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Nem sikerült betölteni a rovarokat: " + e.getMessage());
+        }
     }
-    public void setMap(Grid[][] g){map = g;}
-    public void setTektons(List<Tekton> t){tektons = t;}
+
+    public void setMap(Grid[][] g) {
+        map = g;
+    }
+
+    public void setTektons(List<Tekton> t) {
+        tektons = t;
+    }
 
     public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) {
-        motor.kovetkezoLepes(map[startCoordinate][startCoordinate1],map[endCoordinate][endCoordinate1],move);
+        motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
     }
 
-    public Grid getGrid(int i, int i1) {
+    public static Grid getGrid(int i, int i1) {
         return map[i][i1];
-
     }
 
     public void addJatekos(Jatekos j) {

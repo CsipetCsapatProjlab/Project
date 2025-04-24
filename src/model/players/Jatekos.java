@@ -15,8 +15,8 @@ public abstract class Jatekos {
      */
     public Jatekos(String nev) {
         this.nev = nev;
-        jatekosokSzama++;
         meik = jatekosokSzama;
+        jatekosokSzama++;
     }
 
     /**

@@ -35,7 +35,7 @@ public class Rovar extends GameObject{
     }
 
     public static void CloneRovar(Rovar r){
-        Rovar ro=new Rovar(r);
+        Rovar ro = new Rovar(r);
     }
 
     /**
