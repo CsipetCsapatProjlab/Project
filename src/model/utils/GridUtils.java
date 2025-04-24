@@ -60,7 +60,7 @@ public class GridUtils {
                 }
             }
 
-            return new ArrayList<>(); // No path found
+            return new LinkedList<>(); // No path found
         }
 
         /**
