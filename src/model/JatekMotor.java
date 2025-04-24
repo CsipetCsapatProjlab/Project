@@ -15,17 +15,20 @@ import model.players.Jatekos;
 import model.players.Rovarasz;
 
 public class JatekMotor {
-    private List<Jatekos> jatekosok;
-    int currentPlayer = 0;
+    private List<Jatekos> jatekosok; // a játékosok listája
+    int currentPlayer = 0;// a jelenleg soron következő játékos
 
+    //egy kostruktor ami létrehozza
     public JatekMotor(){
         jatekosok = new ArrayList<>();
     }
 
+    //visszadja a játékosok listáját
     public List<Jatekos> getJatekosok(){
         return jatekosok;
     }
 
+    //hozzáad egy új játékost a listához
     public void jatekosHozzaAd(Jatekos jatekos){
         jatekosok.add(jatekos);
     }
@@ -162,6 +165,8 @@ public class JatekMotor {
             e.printStackTrace();
         }
     }
+
+    //visszadja a lista méretét
     public int getJatekosokSzama(){
         return jatekosok.size();
     }
