@@ -769,7 +769,8 @@ public class Fungorium {
                 String line = reader.readLine();
                 for (int j = 0; j < oszlop; j++) {
                     if (line.charAt(j) != '-') {
-                        new GombaTest(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
+                        GombaTest g = new GombaTest(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
+                        ((Gombasz)motor.getJatekos(line.charAt(j) - '0')).add(g);
                     }
                 }
             }
@@ -784,7 +785,8 @@ public class Fungorium {
                     String line = reader.readLine();
                     for (int j = 0; j < oszlop; j++) {
                         if (line.charAt(j) != '-') {
-                            new Fonal(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
+                            Fonal f = new Fonal(map[i][j], (Gombasz)motor.getJatekos(line.charAt(j) - '0'));
+                            ((Gombasz)motor.getJatekos(line.charAt(j) - '0')).add(f);
                         }
                     }
                 }
@@ -804,13 +806,14 @@ public class Fungorium {
                     char tipus = tipusSor.charAt(j);
                     char kihez = kihezSor.charAt(j);
                     if (tipus != '-' && kihez != '-') {
-                        switch (tipus) {
+                        Spora s = switch (tipus) {
                             case '1' -> new BenitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
                             case '2' -> new GyorsSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
                             case '3' -> new LassitoSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
                             case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz)motor.getJatekos(kihez - '0'));
-                            default -> System.out.println("hibas Spora");
+                            default -> null;
                         };
+                        ((Gombasz)motor.getJatekos(kihez - '0')).add(s);
                     }
                 }
             }
@@ -825,7 +828,8 @@ public class Fungorium {
                 String line = reader.readLine();
                 for (int j = 0; j < oszlop; j++) {
                     if (line.charAt(j) != '-') {
-                        new Rovar(map[i][j],(Rovarasz)motor.getJatekos(line.charAt(j) - '0'));
+                        Rovar r = new Rovar(map[i][j],(Rovarasz)motor.getJatekos(line.charAt(j) - '0'));
+                        ((Rovarasz)motor.getJatekos(j - '0')).hozzaAd(r);
                     }
                 }
             }
