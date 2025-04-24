@@ -513,11 +513,11 @@ public class Fungorium {
 
     public void ujKor() {
         szakad();
-        mentes();
+        mentes("mentes");
     }
 
-    public void mentes() {
-        String filePath = "mentes/tekton/palya_tektonelemek.txt";
+    public void mentes(String alapmappa) {
+        String filePath = alapmappa + "/tekton/palya_tektonelemek.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs(); // Létrehozza a mappastruktúrát, ha még nem létezik
 
@@ -532,16 +532,16 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Hiba történt a pálya mentésekor: " + e.getMessage());
         }
-        gombaMentes();
-        fonalMentes();
-        sporaMentes();
-        rovarMentes();
+        gombaMentes(alapmappa);
+        fonalMentes(alapmappa);
+        sporaMentes(alapmappa);
+        rovarMentes(alapmappa);
         motor.mentes();
-        saveMapSize("mentes/tekton/valtozok.txt");
+        saveMapSize(alapmappa + "/tekton/valtozok.txt");
     }
 
-    public void gombaMentes() {
-        String filePath = "mentes/objetumok/Gombak.txt";
+    public void gombaMentes(String alapmappa) {
+        String filePath = alapmappa + "/objetumok/Gombak.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
         List<GameObject> elemek;
@@ -572,8 +572,8 @@ public class Fungorium {
     }
 
     // Menti a fonalakat a szerint hogy a motorban meik játékoshoz tartozik
-    public void fonalMentes() {
-        String filePath = "mentes/objetumok/Fonalak.txt";
+    public void fonalMentes(String alapmappa) {
+        String filePath = alapmappa + "/objetumok/Fonalak.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
         List<GameObject> elemek;
@@ -603,8 +603,8 @@ public class Fungorium {
         }
     }
 
-    public void sporaMentes() {
-        String filePath = "mentes/objetumok/Sporak.txt";
+    public void sporaMentes(String alapmappa) {
+        String filePath = alapmappa + "/objetumok/Sporak.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
         List<GameObject> elemek;
@@ -632,11 +632,11 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Hiba történt a sporak mentésekor: " + e.getMessage());
         }
-        sporaKiMentes();
+        sporaKiMentes(alapmappa);
     }
 
-    public void sporaKiMentes() {
-        String filePath = "mentes/objetumok/Sporak_kihez.txt";
+    public void sporaKiMentes(String alapmappa) {
+        String filePath = alapmappa + "/objetumok/Sporak_kihez.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
         List<GameObject> elemek;
@@ -666,8 +666,8 @@ public class Fungorium {
         }
     }
 
-    public void rovarMentes() {
-        String filePath = "mentes/objetumok/Rovarok.txt";
+    public void rovarMentes(String alapmappa) {
+        String filePath = alapmappa + "/objetumok/Rovarok.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
         List<GameObject> elemek;
@@ -721,8 +721,8 @@ public class Fungorium {
         this.oszlop = values[1];
     }
 
-    public Fungorium() {
-        loadMapSize("mentes/tekton/valtozok.txt");
+    public Fungorium(String alapmappa) {
+        loadMapSize(alapmappa + "/tekton/valtozok.txt");
 
         map = new Grid[sor][oszlop];
         test = new char[sor][oszlop];
@@ -752,10 +752,10 @@ public class Fungorium {
         }
 
         // 2. GameObject-ek betöltése
-        betoltGombatestek("mentes/objetumok/Gombak.txt");
-        betoltFonalak("mentes/objetumok/Fonalak.txt");
-        betoltSporak("mentes/objetumok/Sporak.txt", "mentes/objetumok/Sporak_kihez.txt");
-        betoltRovarok("mentes/objetumok/Rovarok.txt");
+        betoltGombatestek(alapmappa + "/objetumok/Gombak.txt");
+        betoltFonalak(alapmappa + "/objetumok/Fonalak.txt");
+        betoltSporak(alapmappa + "/objetumok/Sporak.txt", "mentes/objetumok/Sporak_kihez.txt");
+        betoltRovarok(alapmappa + "/objetumok/Rovarok.txt");
 
         // 3. Újrarendezés és szomszédok
         keresTekton();
