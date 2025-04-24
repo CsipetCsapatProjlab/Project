@@ -1,14 +1,13 @@
 package model.gameobjects;
 
 import interfaces.GameObjectVisitor;
+import java.util.LinkedList;
 import logic_classes.FonalConsumeLogic;
 import logic_classes.FonalGrowLogic;
 import logic_classes.GombaTestPlaceLogic;
 import model.grid.Grid;
-import model.utils.GridUtils;
 import model.players.Gombasz;
-
-import java.util.List;
+import model.utils.GridUtils;
 
 public class Fonal extends GameObject {
     Gombasz observer;
@@ -53,7 +52,7 @@ public class Fonal extends GameObject {
      * @param destination Novesztes cel gridje
      */
     public void fonalNovesztes(Grid destination) throws Exception {
-        List<Grid> path=GridUtils.GridPathFinder.gridPathFind(this.getPosition(),destination,10,fonalGrowLogic);
+        LinkedList<Grid> path=GridUtils.GridPathFinder.gridPathFind(this.getPosition(),destination,10,fonalGrowLogic);
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {

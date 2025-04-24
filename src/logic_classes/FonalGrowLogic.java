@@ -2,19 +2,18 @@ package logic_classes;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
+import java.util.LinkedList;
+import java.util.Objects;
 import model.Tekton;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
-import model.utils.GridUtils;
 import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;
-
-import java.util.List;
-import java.util.Objects;
+import model.utils.GridUtils;
 
 
 
@@ -146,7 +145,7 @@ public class FonalGrowLogic extends DiscoverLogic{
      */
 
     public void noveszt(Grid celGrid, int depth) throws Exception {
-        List<Grid> path= GridUtils.GridPathFinder.gridPathFind(fonalOrigin.getPosition(),celGrid,depth,this);
+        LinkedList<Grid> path= GridUtils.GridPathFinder.gridPathFind(fonalOrigin.getPosition(),celGrid,depth,this);
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {

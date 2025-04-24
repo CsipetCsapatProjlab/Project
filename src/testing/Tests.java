@@ -1,17 +1,15 @@
 package testing;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-import model.Fungorium;
 import model.JatekMotor;
 import model.Tekton;
-import model.enums.Move;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
-import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
-import model.grid.Lava;
 import model.grid.TektonElem;
 import model.players.Gombasz;
 import model.players.Rovarasz;
@@ -356,7 +354,7 @@ public class Tests {
             else MyLogger.In("Rovar spora eves sikertelen!", false);
         }else MyLogger.In("Rovar spora eves sikertelen!", false);
         MyLogger.Return("Rovar.consume()");
-        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("JatekMotor.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Return("");
         grid[2][2].clear();
         start();
