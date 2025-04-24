@@ -59,4 +59,12 @@ public class Spora extends GameObject {
     }
 
     public Gombasz getGombasz(){return gombasz;}
+
+    @Override
+    protected String[] getData() {
+        return new String[]{
+                getClass().getSimpleName() + ": " + gombasz.getNev(),
+                "Tapertek: " + tapertek,
+        };
+    }
 }

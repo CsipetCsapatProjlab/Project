@@ -1,14 +1,8 @@
 import model.Fungorium;
-import model.gameobjects.GombaTest;
-import model.gameobjects.Rovar;
 import model.grid.TektonElem;
 import model.players.Gombasz;
 import model.players.Rovarasz;
-import model.Fungorium;
 import testing.CommandLine;
-import testing.Tests;
-
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,5 +19,7 @@ public class Main {
         Fungorium f2 = new Fungorium("mentes");
         System.out.println(f2);
         System.out.println(f2.getSzigetSzam());
+        CommandLine cl = new CommandLine(f);
+        cl.start();
     }
 }

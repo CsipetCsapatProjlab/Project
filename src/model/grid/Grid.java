@@ -2,14 +2,9 @@ package model.grid;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
-import interfaces.IDiscoverLogic;
 
 import java.util.*;
 
-import jdk.jshell.spi.ExecutionControl;
-import model.enums.Hatas;
-import model.exceptions.IncompatibleGameObjectException;
-import model.enums.TektonelemTypes;
 import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
 import model.gameobjects.GombaTest;

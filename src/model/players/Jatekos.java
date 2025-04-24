@@ -42,6 +42,13 @@ public abstract class Jatekos {
         // TODO
     }
 
+    public abstract int getPoints();
+
+    @Override
+    public String toString() {
+        return nev + ": " + getClass().getSimpleName() + "; " + getPoints();
+    }
+
     public String mentes(){
         return nev + ";" + Integer.toString(meik);
     }

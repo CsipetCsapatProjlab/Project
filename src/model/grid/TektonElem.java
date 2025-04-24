@@ -4,11 +4,7 @@ import java.util.List;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
-import java.util.List;
 import model.Tekton;
-import model.enums.Hatas;
-import model.enums.TektonelemTypes;
-import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.GameObject;
 
 public class TektonElem extends Grid {
