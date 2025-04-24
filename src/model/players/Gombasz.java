@@ -27,6 +27,7 @@ public class Gombasz extends Jatekos {
         grid.hozzaAd(gombaTestek.getFirst());
         kinottGombatest=0;
     }
+    
 
     /**
      *

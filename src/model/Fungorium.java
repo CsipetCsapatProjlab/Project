@@ -443,7 +443,7 @@ public class Fungorium {
         } else {
             mennyi++;
         }
-        if (y + 1 > this.oszlop) {
+        if (y + 1 < this.oszlop) {
             if (test[x][y + 1] == '#') {
                 mennyi++;
             }
@@ -512,7 +512,7 @@ public class Fungorium {
     }
 
     public void ujKor() {
-        szakad();
+        //szakad();
         mentes();
     }
 

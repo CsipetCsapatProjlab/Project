@@ -25,7 +25,7 @@ public class Rovarasz extends Jatekos {
         rovarok.add(new Rovar(grid,this));
         szerzettTapanyag=0;
     }
-
+    
     public void hozzaAd(Rovar rovarúj){
         rovarok.add(rovarúj);
     }

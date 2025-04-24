@@ -1,5 +1,7 @@
 package model.gameobjects;
 
+import java.util.Random;
+
 import interfaces.GameObjectVisitor;
 import logic_classes.RovarConsumeLogic;
 import logic_classes.RovarMoveLogic;
@@ -23,7 +25,12 @@ public class Rovar extends GameObject{
         rovarMoveLogic = new RovarMoveLogic(this);
     }
 
-    public Rovar(Grid grid, Rovarasz r){super(grid, r);}
+    public Rovar(Grid grid, Rovarasz r){
+        super(grid, r);
+        Random rand = new Random();
+        rovarasz = r;
+        energia = rand.nextInt(5);
+    }
     public Rovar(Grid grid, Rovarasz rovarasz, int energia) {
         super(grid, rovarasz);
         this.rovarasz = rovarasz;
