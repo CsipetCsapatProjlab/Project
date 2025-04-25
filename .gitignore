@@ -1,4 +1,5 @@
 /src/out/
+/src/mentes/
 *.class
 /build/
 .idea/

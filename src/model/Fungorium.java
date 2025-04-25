@@ -8,10 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import model.enums.Hatas;
 import model.enums.Move;
 import model.enums.TektonelemTypes;
 import model.gameobjects.BenitoSpora;
@@ -32,8 +30,6 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 
-import model.grid.*;
-import model.grid.GombaTestEvo;
 import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
@@ -95,25 +91,22 @@ public class Fungorium {
         return motor.getJatekosok().toArray(new Jatekos[0]);
     }
 
-    // Stringé allakítja a pályát
+    /// Stringé allakítja a pályát
+    @Override
     public String toString() {
-        for (int i = 0; i <= this.oszlop + 1; i++) {
-            System.out.print("0");
-        }
-        System.out.println();
+        StringBuilder result = new StringBuilder();
+        result.append("0".repeat(Math.max(0, this.oszlop + 2)));
+        result.append("\n");
+
         for (int i = 0; i < this.sor; i++) {
-            System.out.print("0");
+            result.append(0);
             for (int j = 0; j < this.oszlop; j++) {
-                System.out.print(map[i][j]);
+                result.append(map[i][j]);
             }
-            System.out.print("0");
-            System.out.println();
+            result.append("0\n");
         }
-        for (int i = 0; i <= this.oszlop + 1; i++) {
-            System.out.print("0");
-        }
-        System.out.println();
-        return "";
+        result.append("0".repeat(Math.max(0, this.oszlop + 2)));
+        return result.toString();
     }
 
     void generateMaze(int x, int y) { // legenerálja a pályát
@@ -876,7 +869,7 @@ public class Fungorium {
         List<Jatekos> jatekosok = motor.getJatekosok();
         try (
             BufferedReader tipusReader = new BufferedReader(new FileReader(tipusPath));
-            BufferedReader kihezReader = new BufferedReader(new FileReader(kihezPath));) {
+            BufferedReader kihezReader = new BufferedReader(new FileReader(kihezPath))) {
             for (int i = 0; i < sor; i++) {
                 String tipusSor = tipusReader.readLine();
                 String kihezSor = kihezReader.readLine();
