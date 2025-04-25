@@ -8,36 +8,178 @@ import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CommandLine {
     Fungorium fungorium;
     Map<String, Command> systemCommands = new HashMap<>();
     Map<String, Command> playerCommands = new HashMap<>();
+    List<String> log = new ArrayList<>();
+    boolean quit = false;
+    private PrintStream out = System.out;
+
+
     public CommandLine(Fungorium fungorium) {
-        this.fungorium=fungorium;
-        addCommand(new Command(
-                "/help",
-                "Kiírja a lehetséges commandokat",
-                a -> {
-                    System.out.println("System commands:");
-                    systemCommands.values().stream()
-                        .map(Command::getDescription)
-                        .map(desc -> "\t" + desc)
-                        .forEach(System.out::println);
-                    System.out.println("Player Commands:");
-                    playerCommands.values().stream()
-                        .map(Command::getDescription)
-                        .map(desc -> "\t" + desc)
-                        .forEach(System.out::println);
-                })
-        );
+        this.fungorium = fungorium;
+        addBaseCommands();
+    }
+
+    public void setPrintStream(PrintStream out) {
+        this.out = out;
+    }
+
+    private void addBaseCommands() {
+        Command[] commands = {
+                new Command(
+                        "/help",
+                        "Kiírja a lehetséges commandokat",
+                        a -> {
+                            out.println("System commands:");
+                            systemCommands.values().stream()
+                                    .map(Command::getDescription)
+                                    .map(desc -> "\t" + desc)
+                                    .forEach(out::println);
+                            out.println("Player Commands:");
+                            playerCommands.values().stream()
+                                    .map(Command::getDescription)
+                                    .map(desc -> "\t" + desc)
+                                    .forEach(out::println);
+                        }
+                ),
+                new Command(
+                        "/addp",
+                        "Rovarászt vagy gombászt ad hozzá a megfelelő névvel és hellyel",
+                        args -> {
+                            String name = args[1];
+                            int[] gridCoord = getCoordinates(args[2]);
+                            Grid grid = fungorium.getGrid(gridCoord[0], gridCoord[1]);
+
+                            if (!(grid instanceof TektonElem))
+                                out.println("A grid nem egy tektonElem nem helyezhető rá játékos");
+
+                            TektonElem tElem = ((TektonElem) grid);
+                            Jatekos j = switch (args[0]) {
+                                case "r" -> new Rovarasz(tElem, name);
+                                case "g" -> new Gombasz(tElem, name);
+                                default -> throw new IllegalArgumentException("Játékos csak r(Rovarász)/g(Gombasz) lehet");
+                            };
+                            fungorium.addJatekos(j);
+                        },
+                        "[r/g] name <startX>x<startY>"
+                ),
+                new Command(
+                        "/load",
+                        "Betölti az állást, a megadott névvel",
+                        args -> fungorium.betoltes(args[0]),
+                        "name"
+                ),
+                new Command(
+                        "/save",
+                        "Elmenti az állást, a megadott névvel",
+                        args -> fungorium.mentes(args[0]),
+                        "name"
+                ),
+                new Command(
+                        "/print",
+                        "Kiírja a pályát",
+                        a -> out.println(fungorium)
+                ),
+                new Command(
+                        "/regen",
+                        "Újra generálja a pályát",
+                        a -> fungorium.ujraGeneralas()
+                ),
+                new Command(
+                        "/tekton_szakad",
+                        "Előidéz egy szakadást",
+                        a -> fungorium.szakad()
+                ),
+                new Command(
+                        "/listgameobjects",
+                        "Kilistázza a GameObjecteket",
+                        a -> {
+                            var shape = fungorium.getShape();
+                            for (int x = 0; x < shape[0]; x++) {
+                                for (int y = 0; y < shape[1]; y++) {
+                                    int finalX = x;
+                                    int finalY = y;
+                                    fungorium.getGrid(x, y)
+                                            .getGameObject()
+                                            .stream()
+                                            .map(Object::toString)
+                                            .map(data ->data + finalX + 'x' + finalY)
+                                            .forEach(out::println);
+                                }
+                            }
+                        }
+                ),
+                new Command(
+                        "/listjatekos",
+                        "Kilistázza a játékosokat",
+                        a -> Arrays.stream(fungorium.getPlayers())
+                                .forEach(out::println)
+                ),
+                new Command(
+                        "/setjatekos",
+                        "Beállítja a megadott nevű játékosnak a pontjait a megadott értékre. A gombásznak a gombatest, rovarásznak a megevett spóra számát állítja be.",
+                        args -> {
+                            String name = args[0];
+                            int value = Integer.parseInt(args[1]);
+                            var talaltJatekosok = Arrays.stream(fungorium.getPlayers())
+                                    .filter(jatekos -> jatekos.getNev().equals(name))
+                                    .toArray();
+                            for (Object jatekos: talaltJatekosok)
+                                if (jatekos instanceof Rovarasz r) r.setTapanyagok(value);
+                                else if (jatekos instanceof Gombasz g) g.setgombatest(value);
+                                else throw new RuntimeException("Egyelőre csak Gombász és rovarász játékosra implementálva");
+                        }
+                ),
+                new Command(
+                        "/log",
+                        "Kiírja az eddig kiadott parancsokat",
+                        args -> log.forEach(out::println)
+                ),
+                new Command(
+                        "/quit",
+                        "Kilép a command line-ból",
+                        a -> quit=true
+                ),
+                new Command(
+                        "/output",
+                        "A kimenet beállítása a megadott fájlra, a 0 visszaállítja a konzolt",
+                        args -> {
+                            var arg = args[0];
+                            if (arg.equals("0")) setPrintStream(System.out);
+                            else {
+                                try {
+                                    setPrintStream(new PrintStream(arg));
+                                } catch (FileNotFoundException e) {
+                                    out.println("A fájl nem található!");
+                                }
+                            }
+                        },
+                        "path"
+                ),
+                new Command(
+                        "/script",
+                        "Szkript futtatása a megadott elérési úttal\n",
+                        args -> {
+                            //TODO
+                        },
+                        "path"
+                )
+        };
+
+        for (Command command : commands) {
+            systemCommands.put(command.name, command);
+        }
 
         //Játékos lépéseinek hozzáadása
         for (Move move : Move.values()) {
             String name = move.name();
-            addCommand(new Command(
+            playerCommands.put(name, new Command(
                     name,
                     "Végrehajtja a megfelelő akciót, Az 1. mező a start grid coordinátája, a 2 a célé.",
                     args -> {
@@ -48,131 +190,21 @@ public class CommandLine {
                     "<startX>x<startY> <endX>x<endY>"
             ));
         }
-
-        addCommand(new Command(
-                "/addp",
-                "Rovarászt vagy gombászt ad hozzá a megfelelő névvel és hellyel",
-                args -> {
-                    String name = args[1];
-                    int[] gridCoord = getCoordinates(args[2]);
-                    Grid grid = fungorium.getGrid(gridCoord[0], gridCoord[1]);
-
-                    if (!(grid instanceof TektonElem))
-                        System.out.println("A grid nem egy tektonElem nem helyezhető rá játékos");
-
-                    TektonElem tElem = ((TektonElem) grid);
-                    Jatekos j = switch (args[0]) {
-                        case "r" -> new Rovarasz(tElem, name);
-                        case "g" -> new Gombasz(tElem, name);
-                        default -> throw new IllegalArgumentException("Játékos csak r(Rovarász)/g(Gombasz) lehet");
-                    };
-                    fungorium.addJatekos(j);
-                },
-                "[r/g] name <startX>x<startY>"
-        ));
-
-        addCommand(new Command(
-                "/load",
-                "Betölti az állást, a megadott névvel",
-                args -> fungorium.betoltes(args[1]),
-                "name"
-        ));
-
-        addCommand(new Command(
-                "/save",
-                "Elmenti az állást, a megadott névvel",
-                args -> fungorium.mentes(args[1]),
-                "name"
-        ));
-
-        addCommand(new Command(
-                "/print",
-                "Kiírja a pályát",
-                a -> System.out.println(fungorium)
-        ));
-
-        addCommand(new Command(
-                "/regen",
-                "Újra generálja a pályát",
-                a -> fungorium.ujraGeneralas()
-        ));
-
-        addCommand(new Command(
-                "/tekton_szakad",
-                "Előidéz egy szakadást",
-                a -> fungorium.szakad()
-        ));
-
-        addCommand(new Command(
-                "/listgameobjects",
-                "Kilistázza a GameObjecteket",
-                a -> {
-                    var shape = fungorium.getShape();
-                    for (int x = 0; x < shape[0]; x++) {
-                        for (int y = 0; y < shape[1]; y++) {
-                            int finalX = x;
-                            int finalY = y;
-                            fungorium.getGrid(x, y)
-                                    .getGameObject()
-                                    .stream()
-                                    .map(Object::toString)
-                                    .map(data ->data + finalX + 'x' + finalY)
-                                    .forEach(System.out::println);
-                        }
-                    }
-                }
-        ));
-
-        addCommand(new Command(
-                "/listjatekos",
-                "Kilistázza a játékosokat",
-                a -> Arrays.stream(fungorium.getPlayers())
-                        .forEach(System.out::println)
-        ));
-
-        addCommand(new Command(
-                "/setjatekos",
-                "Beállítja a megadott nevű játékosnak a pontjait a megadott értékre. A gombásznak a gombatest, rovarásznak a megevett spóra számát állítja be.",
-                args -> {
-                    String name = args[1];
-                    int value = Integer.parseInt(args[2]);
-                    var talaltJatekosok = Arrays.stream(fungorium.getPlayers())
-                            .filter(jatekos -> jatekos.getNev().equals(name))
-                            .toArray();
-                    for (Object jatekos: talaltJatekosok)
-                        if (jatekos instanceof Rovarasz r) r.setTapanyagok(value);
-                        else if (jatekos instanceof Gombasz g) g.setgombatest(value);
-                        else throw new RuntimeException("Egyelőre csak Gombász és rovarász játékosra implementálva");
-                }
-        ));
-    }
-    private void addCommand(Command command){
-        String name = command.name;
-        if (name.charAt(0)=='/'){
-            systemCommands.put(name, command);
-        } else {
-            playerCommands.put(name, command);
-        }
     }
 
     public void start() {
-
-        AtomicBoolean quit = new AtomicBoolean(false);
-        addCommand(new Command(
-                "/quit",
-                "Kilép a command line-ból",
-                a -> quit.set(true)
-        ));
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Írd be a parancsokat, segítséghez /help.");
-        while (!quit.get()) {
+        while (!quit) {
             System.out.print("> ");
-            executeCommand(scanner.nextLine());
+            String cmd = scanner.nextLine();
+            log.add(cmd);
+            executeCommand(cmd);
         }
+        quit = false;
     }
 
-    public void executeCommand(String commandList){
+    private void executeCommand(String commandList){
         String[] commands = commandList.split(" ");
         String commandString = commands[0];
         commands = Arrays.copyOfRange(commands, 1, commands.length);
@@ -185,11 +217,11 @@ public class CommandLine {
         if (command != null) {
             command.accept(commands);
         } else {
-            System.out.println("Command not found!");
+            out.println("Command not found!");
         }
     }
 
-    public int[] getCoordinates(String coordinate){
+    private static int[] getCoordinates(String coordinate){
         return Arrays.stream(coordinate.split("x")).mapToInt(Integer::parseInt).toArray();
     }
 }
