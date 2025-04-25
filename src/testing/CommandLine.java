@@ -8,6 +8,7 @@ import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.*;
@@ -166,7 +167,19 @@ public class CommandLine {
                         "/script",
                         "Szkript futtatása a megadott elérési úttal\n",
                         args -> {
-                            //TODO
+                            Scanner scanner;
+                            try {
+                                scanner = new Scanner(new File(args[0]));
+                            } catch (FileNotFoundException e) {
+                                out.println("A fájl nem található!");
+                                return;
+                            }
+
+                            while (scanner.hasNextLine()) {
+                                String cmd = scanner.nextLine();
+                                log.add(cmd);
+                                executeCommand(cmd);
+                            }
                         },
                         "path"
                 )

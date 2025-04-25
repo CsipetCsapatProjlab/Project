@@ -8,14 +8,14 @@ import model.grid.Grid;
 public abstract class Jatekos {
     String nev;
     public static int jatekosokSzama = 0;
-    public int meik;
+    public int melyik;
     /**
      * Letrehozza a jatekost
      * @param nev
      */
     public Jatekos(String nev) {
         this.nev = nev;
-        meik = jatekosokSzama;
+        melyik = jatekosokSzama;
         jatekosokSzama++;
     }
 
@@ -50,6 +50,6 @@ public abstract class Jatekos {
     }
 
     public String mentes(){
-        return nev + ";" + Integer.toString(meik);
+        return nev + ";" + Integer.toString(melyik);
     }
 }

@@ -167,7 +167,7 @@ public class Tests {
     void test1(){
         MyLogger.Visit("Mentes");
         MyLogger.Visit("JatekMotor.mentes()");
-        motor.mentes();
+        motor.mentes("mentes");
         MyLogger.In("Mentes sikeres", false);
         MyLogger.Return("JatekMotor.mentes()");
         MyLogger.Return("");

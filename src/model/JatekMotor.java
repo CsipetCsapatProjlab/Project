@@ -64,8 +64,8 @@ public class JatekMotor {
     /**
      * Jatekallas mentese
      */
-    public void mentes() {
-        String filePath = "mentes/jatekosok.txt";
+    public void mentes(String alapmappa) {
+        String filePath = alapmappa + "/jatekosok.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
 
@@ -115,13 +115,13 @@ public class JatekMotor {
                     case "Rovarasz" -> {
                         Rovarasz rovarasz = new Rovarasz(nev);
                         rovarasz.setTapanyagok(extra);
-                        rovarasz.meik = meik;
+                        rovarasz.melyik = meik;
                         jatekosok.add(rovarasz);
                     }
                     case "Gombasz" -> {
                         Gombasz gombasz = new Gombasz(nev);
                         gombasz.setgombatest(extra);
-                        gombasz.meik = meik;
+                        gombasz.melyik = meik;
                         jatekosok.add(gombasz);
                     }
                     default -> System.err.println("Ismeretlen típus: " + tipus);

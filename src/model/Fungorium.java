@@ -543,7 +543,7 @@ public class Fungorium {
         fonalMentes(alapmappa);
         sporaMentes(alapmappa);
         rovarMentes(alapmappa);
-        motor.mentes();
+        motor.mentes(alapmappa);
         saveMapSize(alapmappa + "/tekton/valtozok.txt");
     }
 
@@ -566,7 +566,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(Integer.toString(test.getGombasz().meik));
+                        writer.write(Integer.toString(test.getGombasz().melyik));
                     } else {
                         writer.write("-");
                     }
@@ -598,7 +598,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(Integer.toString(test.getGombasz().meik));
+                        writer.write(Integer.toString(test.getGombasz().melyik));
                     } else {
                         writer.write("-");
                     }
@@ -663,7 +663,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(Integer.toString(test.getGombasz().meik));
+                        writer.write(Integer.toString(test.getGombasz().melyik));
                     } else {
                         writer.write("-");
                     }
@@ -695,7 +695,7 @@ public class Fungorium {
                         }
                     }
                     if (gomba) {
-                        writer.write(Integer.toString(test.getRovarasz().meik));
+                        writer.write(Integer.toString(test.getRovarasz().melyik));
                     } else {
                         writer.write("-");
                     }
@@ -767,7 +767,7 @@ public class Fungorium {
         motor.betoltes();
 
         // 1. Pálya típusainak betöltése
-        try (BufferedReader reader = new BufferedReader(new FileReader("mentes/tekton/palya_tektonelemek.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(alapmappa + "/tekton/palya_tektonelemek.txt"))) {
             for (int i = 0; i < sor; i++) {
                 String line = reader.readLine();
                 for (int j = 0; j < oszlop; j++) {
@@ -789,7 +789,7 @@ public class Fungorium {
         // 2. GameObject-ek betöltése
         betoltGombatestek(alapmappa + "/objetumok/Gombak.txt");
         betoltFonalak(alapmappa + "/objetumok/Fonalak.txt");
-        betoltSporak(alapmappa + "/objetumok/Sporak.txt", "mentes/objetumok/Sporak_kihez.txt");
+        betoltSporak(alapmappa + "/objetumok/Sporak.txt", alapmappa + "/objetumok/Sporak_kihez.txt");
         betoltRovarok(alapmappa + "/objetumok/Rovarok.txt");
 
         // 3. Újrarendezés és szomszédok

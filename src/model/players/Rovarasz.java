@@ -75,7 +75,7 @@ public class Rovarasz extends Jatekos {
     }
     @Override
     public String mentes(){
-        return nev + " ; " + Integer.toString(meik) + " ; " + Integer.toString(szerzettTapanyag) + " ; " + "Rovarasz";
+        return nev + " ; " + Integer.toString(melyik) + " ; " + Integer.toString(szerzettTapanyag) + " ; " + "Rovarasz";
     }
 
     @Override
