@@ -1,5 +1,5 @@
 /src/out/
-/src/mentes/
+src/mentes/
 *.class
 /build/
 .idea/
