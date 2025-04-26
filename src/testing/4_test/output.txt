@@ -1,0 +1,5 @@
+->Beolvasas sikeres
+->Sikeres jatekos beallitas
+->m1: Gombasz; 15
+  r: Rovarasz; 10
+->GAME OVER

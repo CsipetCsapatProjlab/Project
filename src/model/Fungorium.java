@@ -21,7 +21,6 @@ import model.gameobjects.LassitoSpora;
 import model.gameobjects.OsztodoRovarSpora;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
-
 import model.grid.EgyFonal;
 import model.grid.FonalEvo;
 import model.grid.FonalTarto;
@@ -29,7 +28,6 @@ import model.grid.GombaTestEvo;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
-
 import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
@@ -764,7 +762,7 @@ public class Fungorium {
         szigetekKeret = new boolean[sor][oszlop];
         tektons = new ArrayList<>();
         motor = new JatekMotor();
-        motor.betoltes();
+        motor.betoltes(alapmappa + "/jatekosok.txt");
 
         // 1. Pálya típusainak betöltése
         try (BufferedReader reader = new BufferedReader(new FileReader(alapmappa + "/tekton/palya_tektonelemek.txt"))) {

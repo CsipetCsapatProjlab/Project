@@ -16,7 +16,7 @@ public class Main {
         f.ujKor();
         System.out.println(f);
         System.out.println(f.getSzigetSzam());
-        Fungorium f2 = new Fungorium("mentes");
+        Fungorium f2 = new Fungorium("src/test_script");
         System.out.println(f2);
         System.out.println(f2.getSzigetSzam());
         CommandLine cl = new CommandLine(f);

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import model.enums.Move;
 import model.grid.Grid;
 import model.grid.TektonElem;
@@ -84,8 +85,7 @@ public class JatekMotor {
     /**
      * Jatekallas betoltese
      */
-    public void betoltes() {
-        String filePath = "mentes/jatekosok.txt";
+    public void betoltes(String filePath) {
         File file = new File(filePath);
     
         if (!file.exists()) {

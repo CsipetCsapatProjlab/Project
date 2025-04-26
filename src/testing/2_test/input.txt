@@ -1,0 +1,7 @@
+/load src\test_script
+Rovar_mozog 3x4 3x1
+Rovar_mozog 3x1 3x2
+Rovar_eszik 3x2 3x2
+Tekton_szakad 1x5
+/listgameobject
+/gameover

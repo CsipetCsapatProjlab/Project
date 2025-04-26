@@ -1,2 +1,2 @@
-m1 ; 0 ; 0 ; Gombasz
+g ; 0 ; 0 ; Gombasz
 r ; 1 ; 0 ; Rovarasz
