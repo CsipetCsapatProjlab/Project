@@ -4,11 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import model.enums.Move;
+import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.grid.TektonElem;
 import model.players.Gombasz;
@@ -49,21 +49,38 @@ public class JatekMotor {
         currentPlayer=(currentPlayer+1)%jatekosok.size();
     }
 
+    /// Visszaadja a győztest
+    public Jatekos getWinner() {
+        return  jatekosok.stream()
+                .max(Comparator.comparingInt(Jatekos::getPoints))
+                .get();
+    }
+
     /**
      * Lep a felhasznalo babujaval
      * @param kezdo Honnan
      * @param cel   Hova
      * @param move  Milyen modon
      */
-    public void kovetkezoLepes(Grid kezdo, Grid cel, Move move) {
-        try {
-            jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
-        }catch (Exception e) {}
-        currentPlayer++;
+    public void kovetkezoLepes(Grid kezdo, Grid cel, Move move) throws IncompatibleGameObjectException, InvalidMoveException {
+        jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
+        nextPlayer();
+    }
+
+    ///  A következő játékosra léptet
+    public void nextPlayer() {
+        ++currentPlayer;
+        currentPlayer %= jatekosok.size();
+    }
+
+    /// Visszaadja a jelenlegi játékost
+    public Jatekos getCurrentPlayer() {
+        return jatekosok.get(currentPlayer);
     }
 
     /**
      * Jatekallas mentese
+     * @param alapmappa a mappa és mentés neve
      */
     public void mentes(String alapmappa) {
         String filePath = alapmappa + "/jatekosok.txt";

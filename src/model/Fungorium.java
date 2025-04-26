@@ -12,6 +12,8 @@ import java.util.Random;
 
 import model.enums.Move;
 import model.enums.TektonelemTypes;
+import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.gameobjects.BenitoSpora;
 import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
@@ -950,9 +952,24 @@ public class Fungorium {
         tektons = t;
     }
 
-    /// egy lépés regisztrál és lép meg
-    public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) {
+    /// egy lépést regisztrál és lép meg
+    public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) throws IncompatibleGameObjectException, InvalidMoveException {
         motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
+    }
+
+    /// skippeli a játékos körét
+    public void nextPlayer() {
+        motor.nextPlayer();
+    }
+
+    /// Visszaadja a soron következő játékost
+    public Jatekos getCurrentPlayer() {
+        return motor.getCurrentPlayer();
+    }
+
+    /// Visszaadja a győztest
+    public Jatekos getWinner() {
+        return motor.getWinner();
     }
 
     /// megadja az adott helyen lévő gridet

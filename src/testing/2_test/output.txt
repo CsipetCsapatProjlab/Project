@@ -2,7 +2,7 @@
 ->Rovar mozgas sikeres
 ->Rovar mozgas sikeres
 ->Rovar spora eves sikeres
-->Tekton szakadas sikeres
+->Tekton szakadás sikeres
 ->GombaTest: m1; fejletlen; sporak: 3db; 3x2
   Spora: m1; blokk_rovar; 5 tapertek; 0x0
   Fonal: m1; 1x3

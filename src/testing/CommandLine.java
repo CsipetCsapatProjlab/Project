@@ -2,6 +2,8 @@ package testing;
 
 import model.Fungorium;
 import model.enums.Move;
+import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.grid.TektonElem;
 import model.players.Gombasz;
@@ -73,7 +75,15 @@ public class CommandLine {
                 new Command(
                         "/load",
                         "Betölti az állást, a megadott névvel",
-                        args -> fungorium.betoltes(args[0]),
+                        args -> {
+                            try {
+                                fungorium.betoltes(args[0]);
+                            } catch (Exception e) {
+                                out.println("->Betöltési hiba");
+                                return;
+                            }
+                            out.println("->Beolvasás sikeres");
+                        },
                         "name"
                 ),
                 new Command(
@@ -95,7 +105,15 @@ public class CommandLine {
                 new Command(
                         "/tekton_szakad",
                         "Előidéz egy szakadást",
-                        a -> fungorium.szakad()
+                        a -> {
+                            try {
+                                fungorium.szakad();
+                            } catch (Exception e) {
+                                out.println("Tekton szakadás sikertelen");
+                                return;
+                            }
+                            out.println("->Tekton szakadás sikeres");
+                        }
                 ),
                 new Command(
                         "/listgameobjects",
@@ -165,7 +183,7 @@ public class CommandLine {
                 ),
                 new Command(
                         "/script",
-                        "Szkript futtatása a megadott elérési úttal\n",
+                        "Szkript futtatása a megadott elérési úttal.",
                         args -> {
                             Scanner scanner;
                             try {
@@ -182,7 +200,26 @@ public class CommandLine {
                             }
                         },
                         "path"
-                )
+                ),
+                new Command(
+                        "/skip",
+                        "Skippeli a soron lévő játékos körét játékos körét.",
+                        a -> {
+                            fungorium.nextPlayer();
+                            out.println("->Következő jatekos sikeres");
+                        }
+
+                ),
+                new Command(
+                        "/get_current",
+                        "Visszaadja a jelenlegi játékos adatait.",
+                        a -> out.println(fungorium.getCurrentPlayer())
+                ),
+                new Command(
+                        "/gameover",
+                        "Befejezi a játékot visszaadja a győztest.",
+                        a -> out.println("->Winner: " + fungorium.getWinner() + "\n" + "GAME OVER")
+                ),
         };
 
         for (Command command : commands) {
@@ -198,7 +235,13 @@ public class CommandLine {
                     args -> {
                         int[] startCoordinates = getCoordinates(args[0]);
                         int[] endCoordinates = getCoordinates(args[1]);
-                        fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move);
+                        try {
+                            fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move);
+                        } catch (InvalidMoveException | IncompatibleGameObjectException e) {
+                            out.println("->" + name + "egy hibás lépés: " + e.getMessage());
+                            return;
+                        }
+                        out.println("->" + name + "sikeres");
                     },
                     "<startX>x<startY> <endX>x<endY>"
             ));
