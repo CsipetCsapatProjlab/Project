@@ -4,6 +4,7 @@ import model.Fungorium;
 import model.enums.Move;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
+import model.gameobjects.*;
 import model.grid.Grid;
 import model.grid.TektonElem;
 import model.players.Gombasz;
@@ -220,6 +221,42 @@ public class CommandLine {
                         "Befejezi a játékot visszaadja a győztest.",
                         a -> out.println("->Winner: " + fungorium.getWinner() + "\n" + "GAME OVER")
                 ),
+
+                new Command(
+                        "/adds",
+                        "Spóra hozzáadása",
+                        args -> {
+                            String hatas = args[0];
+                            int[] coordinates = getCoordinates(args[2]);
+                            Grid grid = fungorium.getGrid(coordinates[0], coordinates[1]);
+                            Jatekos jatekos;
+                            try {
+                                jatekos = fungorium.getJatekos(args[1]);
+                            } catch (Exception e) {
+                                out.println("A játékos nem található");
+                                return;
+                            }
+
+                            if (jatekos instanceof Gombasz gombasz) gombasz = (Gombasz) jatekos;
+                            else {
+                                out.println("A játékos nem gombász");
+                                return;
+                            }
+                            Spora spora = switch (hatas) {
+                                case "benito" -> new BenitoSpora(grid, gombasz);
+                                case "osztodo" -> new OsztodoRovarSpora(grid, gombasz);
+                                case "lassito" -> new LassitoSpora(grid, gombasz);
+                                case "gyors" -> new GyorsSpora(grid, gombasz);
+                                case "normal" -> new Spora(grid, gombasz);
+                                default -> null;
+                            };
+                            if (spora != null) {
+                                grid.hozzaAd(spora);
+                                out.println("Spóra hozzáadás sikeres!");
+                            } else out.println("Ilyen hatás nincs!");
+                        },
+                        "[benito/osztodo/lassito/gyors/normal] gombász_név <startX>x<startY>"
+                )
         };
 
         for (Command command : commands) {

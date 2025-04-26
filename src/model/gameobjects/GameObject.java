@@ -27,8 +27,7 @@ public abstract class GameObject {
     }
 
     public void atmozog(Grid other){
-        if(other==grid) return;
-        else{
+        if (other != grid) {
             grid.torol(this);
             other.hozzaAd(this);
             grid=other;

@@ -10,7 +10,11 @@ public class Spora extends GameObject {
     Gombasz gombasz;
     Hatas hatas;
     
-    public Spora(Grid g, Gombasz gombasz){super(g, gombasz);}
+    public Spora(Grid g, Gombasz gombasz){
+        super(g, gombasz);
+        this.gombasz = gombasz;
+        this.tapertek = 1;
+    }
 
     /**
      * Letrehozza a sporat
@@ -22,7 +26,7 @@ public class Spora extends GameObject {
     public Spora(Grid grid, int tapErtek, Gombasz gombasz, Hatas hatas) {
         super(grid, gombasz);
         this.tapertek = tapErtek;
-        this.observer = gombasz;
+        this.gombasz = gombasz;
         this.hatas = hatas;
 
         gombasz.add(this);

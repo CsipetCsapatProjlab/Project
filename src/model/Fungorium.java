@@ -36,7 +36,7 @@ import model.players.Rovarasz;
 
 public class Fungorium {
     JatekMotor motor;// A játék motorja
-    Grid[][] map; // A pálya amin a játék játszódij
+    Grid[][] map; // A pálya amin a játék játszódik
     boolean[][] szigetekKeret; // Segéd tömb ami a genrálást segíti
     char[][] test; // Segéd tömb ami a genrálást segíti és
     List<Tekton> tektons; // Tektonok listája
@@ -970,6 +970,15 @@ public class Fungorium {
     /// Visszaadja a győztest
     public Jatekos getWinner() {
         return motor.getWinner();
+    }
+
+    /// Visszaadja a játokost
+    /// @param name játékos neve
+    public Jatekos getJatekos(String name) {
+        return motor.getJatekosok().stream()
+                .filter(jatekos -> jatekos.getNev().equals(name))
+                .findAny()
+                .orElseThrow();
     }
 
     /// megadja az adott helyen lévő gridet

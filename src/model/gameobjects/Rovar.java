@@ -20,6 +20,7 @@ public class Rovar extends GameObject{
 
     public Rovar(Rovar other) {
         super(other.grid,other.rovarasz);
+        this.rovarasz = other.rovarasz;
         energia = CONSTANTS.ROVARENERGIA;
         rovarConsumeLogic = new RovarConsumeLogic(this);
         rovarMoveLogic = new RovarMoveLogic(this);
@@ -28,7 +29,7 @@ public class Rovar extends GameObject{
     public Rovar(Grid grid, Rovarasz r){
         super(grid, r);
         Random rand = new Random();
-        rovarasz = r;
+        this.rovarasz = r;
         energia = rand.nextInt(5);
     }
     public Rovar(Grid grid, Rovarasz rovarasz, int energia) {

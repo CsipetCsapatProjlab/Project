@@ -10,7 +10,7 @@ import model.players.Gombasz;
 import model.utils.GridUtils;
 
 public class Fonal extends GameObject {
-    Gombasz observer;
+    Gombasz gombasz;
     FonalGrowLogic fonalGrowLogic;
     GombaTestPlaceLogic gombaTestPlaceLogic;
     FonalConsumeLogic fonalConsumeLogic;
@@ -22,7 +22,7 @@ public class Fonal extends GameObject {
      */
     public Fonal(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
-        this.observer = gombasz;
+        this.gombasz = gombasz;
         this.fonalGrowLogic = new FonalGrowLogic(this);
         this.gombaTestPlaceLogic = new GombaTestPlaceLogic(this);
         this.fonalConsumeLogic = new FonalConsumeLogic(this);
@@ -63,7 +63,7 @@ public class Fonal extends GameObject {
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {
-                Fonal sp=new Fonal(g, observer);
+                Fonal sp=new Fonal(g, gombasz);
                 g.hozzaAd(sp);
             }
         }
@@ -78,12 +78,12 @@ public class Fonal extends GameObject {
      */
     public void gombaTestNovesztes(Grid grid) {
         if(gombaTestPlaceLogic.placeGombaTest(grid, 5)){
-            GombaTest gt=new GombaTest(grid, observer);
+            GombaTest gt=new GombaTest(grid, gombasz);
         }
     }
     public void rovarEves(Grid grid){
         fonalConsumeLogic.egyel(grid);
     }
 
-    public Gombasz getGombasz(){return observer;}
+    public Gombasz getGombasz(){return gombasz;}
 }
