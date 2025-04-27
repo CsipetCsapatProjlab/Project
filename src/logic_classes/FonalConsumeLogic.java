@@ -23,7 +23,7 @@ public class FonalConsumeLogic implements GameObjectVisitor {
     @Override
     public void visit(Rovar rovar) {
         if(Math.ceil(rovar.getEnergia())<=0 && !haveEaten){
-            rovar.remove();
+            rovar.removeFromGrid();
             haveEaten=true;
         }
     }

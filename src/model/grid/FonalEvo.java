@@ -15,7 +15,7 @@ public class FonalEvo extends TektonElem{
     int felszivodasigForduloAlap;
 
     @Override
-    void forduloUtan() {
+    public void forduloUtan() {
         if (felszivodasigFordulo > 0) {
             felszivodasigFordulo--;
         }

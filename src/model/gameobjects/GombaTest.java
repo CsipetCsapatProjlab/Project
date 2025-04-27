@@ -7,55 +7,36 @@ import model.grid.Grid;
 import model.players.Gombasz;
 
 public class GombaTest extends GameObject {
-    private Gombasz gombasz;
     boolean fejlesztett = false;
     SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic(this);
 
-    /**
-     * Letrehozza a testet
-     * @param grid Melyik mezore
-     * @param gombasz Ki birtokolja
-     */
+    public Gombasz getGombasz(){return (Gombasz)observer;}
+    public boolean getFejlesztett(){return fejlesztett;}
+    public void setFejlesztett() {fejlesztett = true;}
+
+    @Override
+    public void accept(GameObjectVisitor visitor) {visitor.visit(this);}
+
     public GombaTest(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
-        this.gombasz = gombasz;
+        fejlesztett = false;
+
+        gombasz.hozzaAd(this);
     }
 
-    /**
-     * Megvalositja a GameObject remove() fv.-et a sajat modjan
-     */
     @Override
-    public void remove() {
-        //TODO
+    public void removeFromGrid() {
+        super.removeFromGrid();
+        getGombasz().torol(this);
     }
 
-    /**
-     * Megvalositja a GameObject accept() fv.-et a sajat modjan
-     */
-    @Override
-    public void accept(GameObjectVisitor visitor) {
-        // TODO
-    }
 
     @Override
     protected String[] getData() {
         return new String[]{
-                getClass().getSimpleName() + ": " + gombasz.getNev(),
+                getClass().getSimpleName() + ": " + getGombasz().getNev(),
                 fejlesztett ? "fejlett" : "fejletlen",
         };
-    }
-
-    /**
-     * Visszaadja a test fejlesztesi szintjet
-     * @return Fejlesztett-e a test
-     */
-    public boolean getFejlesztett(){return fejlesztett;}
-
-    /**
-     * Fejleszti a testet
-     */
-    public void setFejlesztett() {
-        fejlesztett = true;
     }
 
     /**
@@ -63,15 +44,7 @@ public class GombaTest extends GameObject {
      * @param destination Hova lojje
      * @param spora Melyik sporat
      */
-    public void sporaKilo(Grid destination, Spora spora) throws IncompatibleGameObjectException {
-        /*int a = 0;
-        for (int i = 0; i < gombasz.getSporas().size(); i++){
-            if(gombasz.getSporas() == spora) a++;
-        }
-        if(a < gombasz.getSporas().size()) return;
-        gombasz.getSporas().torol(gombasz.getSporas().get(a));*/
-        grid.torol(spora);
-        destination.hozzaAd(spora);
+    public void sporaKilo(Grid destination, Spora spora){
+       //TODO
     }
-    public Gombasz getGombasz(){return gombasz;}
 }

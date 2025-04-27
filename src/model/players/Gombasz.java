@@ -97,29 +97,40 @@ public class Gombasz extends Jatekos {
      * Gombatest regisztralasa
      * @param g
      */
-    public void add(GombaTest g){
+    public void hozzaAd(GombaTest g){
         kinottGombatest++;
         gombaTestek.add(g);
     }
-
     /**
      * Fonal regisztralasa
      * @param f
      */
-    public void add(Fonal f){
+    public void hozzaAd(Fonal f){
         fonalak.add(f);
     }
-
-    @Override
-    public int getPoints() {return kinottGombatest;}
 
     /**
      * Spora regisztralasa
      * @param s
      */
-    public void add(Spora s){
+    public void hozzaAd(Spora s){
         sporak.add(s);
     }
+
+    public void torol(Spora s){
+        sporak.remove(s);
+    }
+
+    public void torol(GombaTest s){
+        gombaTestek.remove(s);
+    }
+
+    public void torol(Fonal s){
+        fonalak.remove(s);
+    }
+
+    @Override
+    public int getPoints() {return kinottGombatest;}
 
     /**
      * Spora lista lekerdezese

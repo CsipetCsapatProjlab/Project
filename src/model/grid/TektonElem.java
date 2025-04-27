@@ -33,7 +33,9 @@ public class TektonElem extends Grid {
      */
     @Override
     public void accept(GameObjectVisitor visitor) {
-
+        for (var obj:gameObjects){
+            obj.accept(visitor);
+        }
     }
 
     @Override
@@ -46,6 +48,6 @@ public class TektonElem extends Grid {
      */
     @Override
     public void accept(GridVisitor visitor) {
-
+        visitor.visit(this);
     }
 }

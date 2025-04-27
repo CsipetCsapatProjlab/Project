@@ -1,10 +1,8 @@
 package model.gameobjects;
 
 import model.utils.Constants;
-import model.enums.Hatas;
 import model.grid.Grid;
 import model.players.Gombasz;
-import model.utils.Constants;
 
 public class BenitoSpora extends Spora {
 
@@ -12,21 +10,12 @@ public class BenitoSpora extends Spora {
         super(g, gombasz);
     }
 
-    /**
-     * Letrehozza a sporat
-     *
-     * @param grid     Melyik mezore
-     * @param tapErtek Milyen taperteke van
-     * @param gombasz  Ki birtokolja
-     * @param hatas    Mi a hatasa
-     */
-    public BenitoSpora(Grid grid, int tapErtek, Gombasz gombasz, Hatas hatas) {
-        super(grid, tapErtek, gombasz, hatas);
+    public BenitoSpora(Grid grid, Gombasz gombasz, int tapErtek) {
+        super(grid, gombasz,tapErtek);
     }
 
     /**
      * Hatas aktivalasa az ot elfogyaszto rovaron
-     *
      * @param rovar Elfogyaszto rovar
      */
     @Override

@@ -13,50 +13,23 @@ import model.utils.Constants;
 import model.utils.GridUtils;
 
 public class Fonal extends GameObject {
-    Gombasz gombasz;
-    FonalGrowLogic fonalGrowLogic;
-    GombaTestPlaceLogic gombaTestPlaceLogic;
-    FonalConsumeLogic fonalConsumeLogic;
+    FonalGrowLogic fonalGrowLogic=new FonalGrowLogic(this);
+    GombaTestPlaceLogic gombaTestPlaceLogic=new GombaTestPlaceLogic(this);
+    FonalConsumeLogic fonalConsumeLogic=new FonalConsumeLogic(this);
 
-    /**
-     * Letrehozza a Fonalat
-     * @param grid Melyik mezore
-     * @param gombasz Ki birtokolja
-     */
+    @Override
+    public void accept(GameObjectVisitor visitor) {visitor.visit(this);}
+    public Gombasz getGombasz(){return (Gombasz)observer;}
+
     public Fonal(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
-        this.gombasz = gombasz;
-        this.fonalGrowLogic = new FonalGrowLogic(this);
-        this.gombaTestPlaceLogic = new GombaTestPlaceLogic(this);
-        this.fonalConsumeLogic = new FonalConsumeLogic(this);
-
-        gombasz.add(this);
+        gombasz.hozzaAd(this);
     }
-
-    /**
-     * Az objektum torli magat
-     */
     @Override
-    public void remove(){
-        grid.torol(this);
-        grid = null;
+    public void removeFromGrid(){
+        super.removeFromGrid();
+        getGombasz().torol(this);
     }
-
-    /**
-     * Elfogadja a visitort
-     */
-    @Override
-    public void accept(GameObjectVisitor visitor) {
-        // TODO
-    }
-
-    @Override
-    protected String[] getData() {
-        return new String[] {
-                getClass().getSimpleName() + ": " + observer.getNev(),
-        };
-    }
-
     /**
      * Noveszt egy fonalat a kivant gridre
      * @param destination Novesztes cel gridje
@@ -66,26 +39,27 @@ public class Fonal extends GameObject {
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {
-                Fonal sp=new Fonal(g, gombasz);
+                Fonal sp=new Fonal(g, getGombasz());
             }
         }
         else{
             throw new FailedMoveException("A fonál növesztés nem sikerült!",this,Move.Fonal_noveszt);
         }
     }
-
     /**
      * Noveszt egy testet a kivant gridre
      * @param grid Novesztes cel gridje
      */
     public void gombaTestNovesztes(Grid grid) {
         if(gombaTestPlaceLogic.placeGombaTest(grid, 5)){
-            GombaTest gt=new GombaTest(grid, gombasz);
+            GombaTest gt=new GombaTest(grid, getGombasz());
         }
     }
-    public void rovarEves(Grid grid){
-        fonalConsumeLogic.egyel(grid);
-    }
 
-    public Gombasz getGombasz(){return gombasz;}
+    @Override
+    protected String[] getData() {
+        return new String[] {
+                getClass().getSimpleName() + ": " + observer.getNev(),
+        };
+    }
 }

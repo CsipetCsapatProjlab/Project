@@ -98,7 +98,7 @@ public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
                 for (Spora sp: fromGombatest){
                     TektonElem randomTektonElem=destination.getRandomElement();
                     if(!isSporaOnTektonElem(randomTektonElem)){
-                        sp.atmozog(randomTektonElem);
+
                     }
                 }
                 return true;

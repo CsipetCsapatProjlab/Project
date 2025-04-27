@@ -138,26 +138,6 @@ public class FonalGrowLogic extends DiscoverLogic{
         else return 1; // Valamelyik biztosan láva, oda nehéz növeszteni.
     }
 
-    /**
-     * Csak akkor jó a növesztés, ha:
-     * Kiválasztott Tekton
-     * @param celGrid
-     */
-
-    public void noveszt(Grid celGrid, int depth) throws Exception {
-        LinkedList<Grid> path= GridUtils.GridPathFinder.gridPathFind(fonalOrigin.getPosition(),celGrid,depth,this);
-        if(!path.isEmpty()){
-            path.removeFirst(); // Az első elem maga a kezdő fonál
-            for (Grid g : path) {
-                Fonal sp=new Fonal(g, (Gombasz)fonalOrigin.getObserver());
-                g.hozzaAd(sp);
-            }
-        }
-        else{
-            throw new Exception("Nem tudtunk növeszteni!");
-        }
-    }
-
     public FonalGrowLogic(Fonal fonal){
         this.fonalOrigin = fonal;
     }

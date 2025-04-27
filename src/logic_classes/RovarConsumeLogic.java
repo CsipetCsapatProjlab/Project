@@ -11,6 +11,8 @@ import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
 
+import java.util.Optional;
+
 public class RovarConsumeLogic implements GameObjectVisitor, GridVisitor {
     int numberEaten=0;
     Rovar rovar;
@@ -53,28 +55,22 @@ public class RovarConsumeLogic implements GameObjectVisitor, GridVisitor {
         rovar=r;
     }
 
-    /**
-     * A rovar táplálkozási logikáját végrehajtó metódus, amely ellenőrzi és kezeli a rovar
-     * által fogyasztható elemeket a rácsban.
-     *
-     * A metódus két fő esetet kezel:
-     * 1. Láva és fonal páros: A fonal eltávolítása a lávából
-     * 2. Spóra és tekton páros: A spóra effektjének aktiválása és eltávolítása
-     *
-     * A metódus csak akkor hajtja végre a táplálkozást, ha a rovar energiaszintje pozitív.
-     *
-     * @param from A rács, amelyben a rovar táplálkozni fog
-     * @return true ha a rovar pontosan egy elemet fogyasztott, false egyébként
-     * @throws IllegalArgumentException ha a paraméter null
-     *
-     * @see Rovar#getEnergia()
-     * @see Fonal#remove()
-     * @see Lava#torol(model.gameobjects.GameObject)
-     * @see Spora#effektAktival(Rovar)
-     * @see Spora#remove()
-     * @see TektonElem#torol(model.gameobjects.GameObject)
-     */
-    public boolean eszik(Grid from){
+    public Optional<Spora> eszikSpora(Grid from){
+        if(from==null) throw new IllegalArgumentException("A honnan null értéket kapott.");
+
+        clearState();
+        from.accept((GridVisitor) this);
+        from.accept((GameObjectVisitor) this);
+
+        if(numberEaten==0 && rovar.getEnergia()>0){
+            if(spora!=null && tekton!=null){
+                return Optional.of(spora);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Fonal> vagFonal(Grid from){
         if(from==null) throw new IllegalArgumentException("A honnan null értéket kapott.");
 
         clearState();
@@ -83,17 +79,9 @@ public class RovarConsumeLogic implements GameObjectVisitor, GridVisitor {
 
         if(numberEaten==0 && rovar.getEnergia()>0){
             if(lava != null && fonal!=null){
-                fonal.remove();
-                lava.torol(fonal);
-                numberEaten++;
-            }
-            if(spora!=null && tekton!=null){
-                spora.effektAktival(rovar);
-                spora.remove();
-                tekton.torol(spora);
-                numberEaten++;
+                return Optional.of(fonal);
             }
         }
-        return numberEaten==1;
+        return Optional.empty();
     }
 }

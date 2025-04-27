@@ -37,6 +37,7 @@ public class Rovarasz extends Jatekos {
     public void torol(Rovar regi){
         rovarok.remove(regi);
     }
+    public void tapanyagHozzaad(int ujSzerzettTapanyag){szerzettTapanyag+=ujSzerzettTapanyag;}
 
     /**
      * Visszaadja a rovarjat
@@ -58,8 +59,9 @@ public class Rovarasz extends Jatekos {
        if(rovar.isPresent()){
            Rovar act=rovar.get();
            switch (move){
-               case Rovar_vag, Rovar_eszik -> act.consume();
-               case Rovar_mozog -> act.move(cel);
+               case Rovar_vag -> act.vag();
+               case Rovar_eszik -> act.eszik();
+               case Rovar_mozog -> act.mozog(cel);
            }
        }
     }

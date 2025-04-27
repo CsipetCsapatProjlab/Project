@@ -816,7 +816,6 @@ public class Fungorium {
                             int index = currentChar - '0';
                             if (index >= 0 && index < jatekosok.size()) {
                                 GombaTest g = new GombaTest(map[i][j], (Gombasz) jatekosok.get(index));
-                                ((Gombasz) jatekosok.get(index)).add(g);
                             } else {
                                 System.err.println("Érvénytelen index: " + index + " a " + i + "." + j + " pozícióban.");
                             }
@@ -849,7 +848,6 @@ public class Fungorium {
                             int index = currentChar - '0';
                             if (index >= 0 && index < jatekosok.size()) {
                                 Fonal f = new Fonal(map[i][j], (Gombasz) jatekosok.get(index));
-                                ((Gombasz) jatekosok.get(index)).add(f);
                             } else {
                                 System.err.println("Érvénytelen index: " + index + " a " + i + "." + j + " pozícióban.");
                             }
@@ -891,9 +889,6 @@ public class Fungorium {
                                     case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz) jatekosok.get(index));
                                     default -> null;
                                 };
-                                if (s != null) {
-                                    ((Gombasz) jatekosok.get(index)).add(s);
-                                }
                             } else {
                                 System.err.println("Érvénytelen kihez index: " + index + " a " + i + "." + j + " pozícióban.");
                             }
