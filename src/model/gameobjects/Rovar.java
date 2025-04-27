@@ -50,7 +50,7 @@ public class Rovar extends GameObject{
      * @param destination Melyik mezora mozogjon
      */
     public void mozog(Grid destination){
-        LinkedList<Grid> path=rovarMoveLogic.mozog(destination);
+        LinkedList<Grid> path=GridUtils.GridPathFinder.gridPathFind(getPosition(),destination,energia,rovarMoveLogic);
         double sum = GridUtils.GridPathFinder.getPathWeightSum(path, rovarMoveLogic);
 
         if(sum > energia || sum<=0){

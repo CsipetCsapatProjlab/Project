@@ -20,9 +20,7 @@ public class FonalEvo extends TektonElem{
             felszivodasigFordulo--;
         }
         if (felszivodasigFordulo == 0) {
-
-            this.torol(fonals.peek());
-
+            this.torol(fonals.pop());
         }
         super.forduloUtan();
     }
@@ -54,7 +52,7 @@ public class FonalEvo extends TektonElem{
     public boolean torol(GameObject g) {
         if (g instanceof Fonal) {
             if (fonals.isEmpty()) {
-                felszivodasigFordulo = -1;
+                felszivodasigFordulo = 0;
             }
             Fonal f = (Fonal) g;
             fonals.pop();

@@ -8,6 +8,7 @@ import logic_classes.GombaTestPlaceLogic;
 import model.enums.Move;
 import model.exceptions.FailedMoveException;
 import model.grid.Grid;
+import model.grid.TektonElem;
 import model.players.Gombasz;
 import model.utils.Constants;
 import model.utils.GridUtils;
@@ -35,11 +36,11 @@ public class Fonal extends GameObject {
      * @param destination Novesztes cel gridje
      */
     public void fonalNovesztes(Grid destination) throws FailedMoveException{
-        LinkedList<Grid> path=GridUtils.GridPathFinder.gridPathFind(this.getPosition(),destination, Constants.fonalNovesztesEnergia,fonalGrowLogic);
+        LinkedList<Grid> path=GridUtils.GridPathFinder.gridPathFind(this.getPosition(),destination,Constants.fonalNovesztesEnergia,fonalGrowLogic);
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {
-                Fonal sp=new Fonal(g, getGombasz());
+                new Fonal(g, getGombasz());
             }
         }
         else{
@@ -51,10 +52,31 @@ public class Fonal extends GameObject {
      * @param grid Novesztes cel gridje
      */
     public void gombaTestNovesztes(Grid grid) {
-        if(gombaTestPlaceLogic.placeGombaTest(grid, 5)){
-            GombaTest gt=new GombaTest(grid, getGombasz());
+        var te=gombaTestPlaceLogic.getGombaTestPlacement(grid,Constants.gombaTestNovesztesEnergia);
+
+        if(te.isPresent()){
+            var sporak=te.get();
+            for (int i = 0; i < Constants.gombaTestNovesztesEnergia; i++) {
+                sporak.get(Constants.rnd.nextInt(sporak.size())).removeFromGrid();
+            }
+            new GombaTest(grid,getGombasz());
+        }
+        else{
+            throw new FailedMoveException("A gombatest növesztés nem sikerült!",this,Move.GombaTest_noveszt);
         }
     }
+
+    public void rovarFogyasztas(){
+        var rovar=fonalConsumeLogic.getRovar(grid);
+
+        if(rovar.isPresent()){
+            rovar.get().removeFromGrid();
+        }
+        else{
+            throw new FailedMoveException("A rovar elfogyasztasa nem sikerült!", this, Move.Fonal_fogyaszt);
+        }
+    }
+
 
     @Override
     protected String[] getData() {

@@ -10,20 +10,13 @@ public abstract class Jatekos {
     String nev;
     public static int jatekosokSzama = 0;
     public int melyik;
-    /**
-     * Letrehozza a jatekost
-     * @param nev
-     */
+
     public Jatekos(String nev) {
         this.nev = nev;
         melyik = jatekosokSzama;
         jatekosokSzama++;
     }
 
-    /**
-     * Nev beallitasa
-     * @return
-     */
     public String getNev() {
         return nev;
     }
@@ -39,9 +32,7 @@ public abstract class Jatekos {
     /**
      * Jatekos megszuntetese
      */
-    public void meghal() {
-        // TODO
-    }
+    public void meghal() {}
 
     public abstract int getPoints();
 

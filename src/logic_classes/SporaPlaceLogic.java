@@ -23,7 +23,6 @@ public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
     Tekton tekton;
     boolean __GridContainsSpora;
 
-
     boolean isSporaOnTektonElem(Grid celGrid){
         celGrid.accept((GameObjectVisitor) this);
         return __GridContainsSpora;
@@ -79,7 +78,7 @@ public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
 
 
     public boolean placeSpora(Grid celGrid) throws IncompatibleGameObjectException {
-    clearState();
+        clearState();
 
         Tekton origin = null;
         Tekton destination = null;

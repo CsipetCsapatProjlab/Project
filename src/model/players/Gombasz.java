@@ -20,6 +20,13 @@ public class Gombasz extends Jatekos {
     List<Fonal> fonalak=new ArrayList<>();
     List<GombaTest> gombaTestek=new ArrayList<>();
 
+
+    @Override
+    public int getPoints() {return kinottGombatest;}
+
+    public List<Spora> getSporas(){return sporak;}
+    public void setgombatest(int g){kinottGombatest = g;}
+    public List<GombaTest> getGombaTests(){return gombaTestek;}
     /**
      * Letrehozza a gombaszt
      * @param grid Kezdo test helye
@@ -35,12 +42,6 @@ public class Gombasz extends Jatekos {
         kinottGombatest=0;
     }
 
-    /**
-     *
-     * @param s
-     * @param f
-     * @param g
-     */
     public Gombasz(List<Spora> s, List<Fonal> f, List<GombaTest> g){
         super("");
         sporak = s;
@@ -48,11 +49,6 @@ public class Gombasz extends Jatekos {
         gombaTestek = g;
     }
 
-    /**
-     * Visszaadja a gombasz testeit
-     * @return
-     */
-    public List<GombaTest> getGombaTests(){return gombaTestek;}
 
     /**
      * Fonal novesztes kezdo mezorol cel mezore, megadott modon
@@ -79,69 +75,44 @@ public class Gombasz extends Jatekos {
                 }
 
                 if(!f.isPresent() && !gt.isPresent()){
-                    throw new InvalidMoveException("Hibas kezdo grid fonalnoveszteskor.",kezdo,cel,move);
+                    throw new InvalidMoveException("Hibas kezdo grid, "+move.name(),kezdo,cel,move);
                 }
             }
+
             case GombaTest_noveszt -> {
-                for(Fonal f : fonalak){
-                    if (f.isAt(kezdo) /*&& kezdo.getTekton().getSporas().lentgh >= kezdo.getTekton().getFonalAr()*/) {
-                        f.gombaTestNovesztes(cel);
-                        return;
-                    }
+                var fn=fonalak.stream().filter(cur->cur.isAt(kezdo)).findFirst();
+                if(fn.isPresent()){
+                    fn.get().gombaTestNovesztes(cel);
+                }
+                else{
+                    throw new InvalidMoveException("Hibas kezdo grid, "+ move.name(),kezdo,cel,move);
                 }
             }
+
+            case Fonal_fogyaszt -> {
+                var fn = fonalak.stream().filter(cur->cur.isAt(kezdo)).findFirst();
+                if(fn.isPresent()){
+                    fn.get().rovarFogyasztas();
+                }
+                else{
+                    throw new InvalidMoveException("Hibas kezdo grid, "+ move.name(),kezdo,cel,move);
+                }
+            }
+
+
         }
     }
 
-    /**
-     * Gombatest regisztralasa
-     * @param g
-     */
     public void hozzaAd(GombaTest g){
         kinottGombatest++;
         gombaTestek.add(g);
     }
-    /**
-     * Fonal regisztralasa
-     * @param f
-     */
-    public void hozzaAd(Fonal f){
-        fonalak.add(f);
-    }
-
-    /**
-     * Spora regisztralasa
-     * @param s
-     */
-    public void hozzaAd(Spora s){
-        sporak.add(s);
-    }
-
-    public void torol(Spora s){
-        sporak.remove(s);
-    }
-
-    public void torol(GombaTest s){
-        gombaTestek.remove(s);
-    }
-
-    public void torol(Fonal s){
-        fonalak.remove(s);
-    }
+    public void hozzaAd(Fonal f){fonalak.add(f);}
+    public void hozzaAd(Spora s){sporak.add(s);}
+    public void torol(Spora s){sporak.remove(s);}
+    public void torol(GombaTest s){gombaTestek.remove(s);}
+    public void torol(Fonal s){fonalak.remove(s);}
 
     @Override
-    public int getPoints() {return kinottGombatest;}
-
-    /**
-     * Spora lista lekerdezese
-     */
-    public List<Spora> getSporas(){return sporak;}
-
-    public String mentes(){
-        return nev + " ; " + Integer.toString(melyik) + " ; " + Integer.toString(kinottGombatest) + " ; " + "Gombasz";
-    }
-
-    public void setgombatest(int g){
-        kinottGombatest = g;
-    }
+    public String mentes(){return nev + " ; " + Integer.toString(melyik) + " ; " + Integer.toString(kinottGombatest) + " ; " + "Gombasz";}
 }

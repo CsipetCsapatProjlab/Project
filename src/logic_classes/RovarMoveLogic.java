@@ -21,21 +21,20 @@ public class RovarMoveLogic extends DiscoverLogic {
     TektonElem elem;
     Lava lava;
     Fonal fonal;
+
+    public RovarMoveLogic(Rovar r){
+        rovar=r;
+    }
+
     private void clearState(){
         elem=null; lava=null; fonal=null;
     }
     @Override
-    public void visit(Spora spora) {
-
-    }
+    public void visit(Spora spora) {}
     @Override
-    public void visit(GombaTest gombaTest) {
-
-    }
+    public void visit(GombaTest gombaTest) {}
     @Override
-    public void visit(Rovar rovar) {
-
-    }
+    public void visit(Rovar rovar) {}
     @Override
     public void visit(Fonal fonal) {
         this.fonal = fonal;
@@ -50,6 +49,7 @@ public class RovarMoveLogic extends DiscoverLogic {
         this.elem=elem;
     }
 
+
     @Override
     public double canMove(Grid from, Grid neighbour) {
         if(from==neighbour) return 0;
@@ -63,13 +63,6 @@ public class RovarMoveLogic extends DiscoverLogic {
         }
         return Double.POSITIVE_INFINITY;
     }
-    public RovarMoveLogic(Rovar r){
-        rovar=r;
-    }
 
-
-    public LinkedList<Grid> mozog(Grid celGrid){
-       return GridUtils.GridPathFinder.gridPathFind(rovar.getPosition(),celGrid,rovar.getEnergia(),this);
-    }
 
 }

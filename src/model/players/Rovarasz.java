@@ -13,6 +13,10 @@ public class Rovarasz extends Jatekos {
     int szerzettTapanyag;
     List<Rovar> rovarok;
 
+    @Override
+    public int getPoints() {return szerzettTapanyag;}
+    public void setTapanyagok(int s){szerzettTapanyag = s;}
+    public List<Rovar> getRovarok(){return rovarok;}
     /**
      * Letrehozza a rovaraszt
      * @param grid Rovaranak kezdo mezoje
@@ -39,19 +43,10 @@ public class Rovarasz extends Jatekos {
     }
     public void tapanyagHozzaad(int ujSzerzettTapanyag){szerzettTapanyag+=ujSzerzettTapanyag;}
 
-    /**
-     * Visszaadja a rovarjat
-     * @return
-     */
-    public List<Rovar> getRovarok(){return rovarok;}
-
     public Rovarasz(List<Rovar> r){
         super("");
         rovarok= r;}
 
-    /**
-     * Lepes a rovarral kezdo mezorol cel mezore, megadott modon
-     */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
        var rovar=rovarok.stream().filter(x->x.isAt(kezdo)).findFirst();
@@ -64,18 +59,11 @@ public class Rovarasz extends Jatekos {
                case Rovar_mozog -> act.mozog(cel);
            }
        }
+       else{
+           throw new InvalidMoveException("Hibas kezdo grid, "+move.name(),kezdo,cel,move);
+       }
     }
     @Override
-    public String mentes(){
-        return nev + " ; " + Integer.toString(melyik) + " ; " + Integer.toString(szerzettTapanyag) + " ; " + "Rovarasz";
-    }
+    public String mentes(){return nev + " ; " + Integer.toString(melyik) + " ; " + Integer.toString(szerzettTapanyag) + " ; " + "Rovarasz";}
 
-    @Override
-    public int getPoints() {
-        return szerzettTapanyag;
-    }
-
-    public void setTapanyagok(int s){
-        szerzettTapanyag = s;
-    }
 }

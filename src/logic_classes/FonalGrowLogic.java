@@ -95,8 +95,8 @@ public class FonalGrowLogic extends DiscoverLogic{
      */
     private boolean possibleMove(Grid from, Grid neighbour){
         clearState();
-
         from.accept((GridVisitor) this);
+
         if(lavaVisited!=null){
             lavaVisited=null;
             neighbour.accept((GridVisitor) this);
@@ -104,7 +104,9 @@ public class FonalGrowLogic extends DiscoverLogic{
                 return false;
             }
         }
+
         neighbour.accept((GameObjectVisitor) this);
+
         if(this.gombaTestVisited!=null){
             return false;
         }
