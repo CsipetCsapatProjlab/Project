@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import logic_classes.SporaPlaceLogic;
 import model.enums.Move;
 import model.exceptions.InvalidMoveException;
 import model.gameobjects.Fonal;
@@ -75,7 +76,7 @@ public class Gombasz extends Jatekos {
                 }
 
                 if(!f.isPresent() && !gt.isPresent()){
-                    throw new InvalidMoveException("Hibas kezdo grid, "+move.name(),kezdo,cel,move);
+                    throw new InvalidMoveException("Hibas kezdo grid, " +move.name(), kezdo, cel, move);
                 }
             }
 
@@ -84,9 +85,7 @@ public class Gombasz extends Jatekos {
                 if(fn.isPresent()){
                     fn.get().gombaTestNovesztes(cel);
                 }
-                else{
-                    throw new InvalidMoveException("Hibas kezdo grid, "+ move.name(),kezdo,cel,move);
-                }
+                else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(),kezdo,cel,move);
             }
 
             case Fonal_fogyaszt -> {
@@ -94,9 +93,15 @@ public class Gombasz extends Jatekos {
                 if(fn.isPresent()){
                     fn.get().rovarFogyasztas();
                 }
-                else{
-                    throw new InvalidMoveException("Hibas kezdo grid, "+ move.name(),kezdo,cel,move);
+                else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move);
+            }
+
+            case Spora_lo ->  {
+                var gt=gombaTestek.stream().filter(cur->cur.isAt(kezdo)).findFirst();
+                if(gt.isPresent()){
+                    gt.get().sporaKilo(cel);
                 }
+                else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move);
             }
 
 

@@ -31,6 +31,10 @@ public abstract class GameObject {
         this.observer = observer;
         grid.hozzaAd(this);
     }
+    public GameObject(Jatekos observer) {
+        this.observer = observer;
+        grid=null;
+    }
 
     /**
      * Az objektum torli magat
@@ -48,4 +52,5 @@ public abstract class GameObject {
         }
         return resultBuilder.toString();
     }
+    public void forduloUtan(){}
 }

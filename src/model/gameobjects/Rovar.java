@@ -81,12 +81,18 @@ public class Rovar extends GameObject{
         }
     }
 
+
     @Override
     protected String[] getData() {
         return new String[]{
                 getClass().getSimpleName() + ": " + observer.getNev(),
                 "Energia: " + energia,
         };
+    }
+
+    @Override
+    public void forduloUtan(){
+        energia+=Constants.rovarMozgasEnergia;
     }
 
 

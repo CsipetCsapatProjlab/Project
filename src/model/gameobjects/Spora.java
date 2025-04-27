@@ -20,6 +20,11 @@ public class Spora extends GameObject {
         this.tapertek = Constants.sporaTapanyag;
     }
 
+    public Spora(Gombasz gombasz){
+        super(gombasz);
+        int tapertek = Constants.sporaTapanyag;
+    }
+
     public Spora(Grid grid,  Gombasz gombasz, int tapErtek) {
         super(grid, gombasz);
         this.tapertek = tapErtek;

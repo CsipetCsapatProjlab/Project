@@ -2,11 +2,23 @@ package model.gameobjects;
 
 import interfaces.GameObjectVisitor;
 import logic_classes.SporaPlaceLogic;
+import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.players.Gombasz;
+import model.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GombaTest extends GameObject {
+
+    LinkedList<Spora> storedSporas = new LinkedList<>();
+    int shootDelay=0;
+    double sporaNoves=0.0;
     boolean fejlesztett = false;
     SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic(this);
 
@@ -39,12 +51,32 @@ public class GombaTest extends GameObject {
         };
     }
 
+    @Override
+    public void forduloUtan() {
+        sporaNoves+= Constants.gombaTestSporaGenPerKor;
+        if(sporaNoves>=1){
+            sporaNoves-=1;
+            storedSporas.add(new Spora(getGombasz()));
+        }
+
+        shootDelay--;
+    }
+
     /**
      * Kivalasztott sporat kilovi a kivalasztott mezore
      * @param destination Hova lojje
-     * @param spora Melyik sporat
      */
-    public void sporaKilo(Grid destination, Spora spora){
-       //TODO
+    public void sporaKilo(Grid destination) throws FailedMoveException {
+        if(storedSporas.isEmpty()) return;
+
+        Spora sp=storedSporas.pop();
+        var grid=sporaPlaceLogic.placeSpora(destination);
+
+        if(grid.isPresent()){
+            grid.get().hozzaAd(sp);
+            sp.setPosition(grid.get());
+        }
+        else throw new FailedMoveException("Nem sikerült a sporakilövés",this, Move.Spora_lo);
     }
+
 }

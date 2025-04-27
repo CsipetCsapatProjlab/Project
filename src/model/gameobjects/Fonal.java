@@ -44,7 +44,7 @@ public class Fonal extends GameObject {
             }
         }
         else{
-            throw new FailedMoveException("A fonál növesztés nem sikerült!",this,Move.Fonal_noveszt);
+            throw new FailedMoveException("A fonál növesztés nem sikerült!", this, Move.Fonal_noveszt);
         }
     }
     /**
@@ -62,7 +62,7 @@ public class Fonal extends GameObject {
             new GombaTest(grid,getGombasz());
         }
         else{
-            throw new FailedMoveException("A gombatest növesztés nem sikerült!",this,Move.GombaTest_noveszt);
+            throw new FailedMoveException("A gombatest növesztés nem sikerült!", this, Move.GombaTest_noveszt);
         }
     }
 
@@ -76,7 +76,6 @@ public class Fonal extends GameObject {
             throw new FailedMoveException("A rovar elfogyasztasa nem sikerült!", this, Move.Fonal_fogyaszt);
         }
     }
-
 
     @Override
     protected String[] getData() {
