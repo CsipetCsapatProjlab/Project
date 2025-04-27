@@ -61,7 +61,7 @@ public class CommandLine {
                             Grid grid = fungorium.getGrid(gridCoord[0], gridCoord[1]);
 
                             if (!(grid instanceof TektonElem))
-                                out.println("A grid nem egy tektonElem nem helyezhető rá játékos");
+                                throw new IllegalArgumentException("A grid nem egy TektonElem nem helyezhető rá játékos");
 
                             TektonElem tElem = ((TektonElem) grid);
                             Jatekos j = switch (args[0]) {
@@ -278,7 +278,7 @@ public class CommandLine {
                             out.println("->" + name + "egy hibás lépés: " + e.getMessage());
                             return;
                         }
-                        out.println("->" + name + "sikeres");
+                        out.println("->" + name + " sikeres");
                     },
                     "<startX>x<startY> <endX>x<endY>"
             ));
@@ -292,7 +292,11 @@ public class CommandLine {
             System.out.print("> ");
             String cmd = scanner.nextLine();
             log.add(cmd);
-            executeCommand(cmd);
+            try {
+                executeCommand(cmd);
+            }catch (IllegalArgumentException e) {
+                out.println(e.getMessage());
+            }
         }
         quit = false;
     }

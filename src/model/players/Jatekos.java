@@ -1,6 +1,7 @@
 package model.players;
 
 import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
@@ -33,7 +34,7 @@ public abstract class Jatekos {
      * @param cel Hova
      * @param move Milyen modon
      */
-    public abstract void lepes(Grid kezdo, Grid cel, Move move) throws IncompatibleGameObjectException, InvalidMoveException;
+    public abstract void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException, FailedMoveException;
 
     /**
      * Jatekos megszuntetese

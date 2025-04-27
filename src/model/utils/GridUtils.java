@@ -2,6 +2,8 @@ package model.utils;
 
 import interfaces.IDiscoverLogic;
 import java.util.*;
+import java.util.function.Function;
+
 import model.grid.Grid;
 
 public class GridUtils {
@@ -11,6 +13,32 @@ public class GridUtils {
     private GridUtils(){}
 
     public static class GridPathFinder {
+
+        /**
+         * Kiszámítja egy útvonal súlyösszegét az IDiscoverLogic szabályai alapján.
+         *
+         * A metódus végighalad az útvonalon és minden elem között kiszámítja a mozgási költséget
+         * az előző elemhez képest. Az összes költség összegét adja vissza.
+         *
+         * @param path Az útvonal, amelyen végighaladunk. A Grid típusú elemek listája.
+         * @param discoverLogic A mozgási logika implementációja, amely meghatározza,
+         *                     hogy két elem között mennyi a mozgási költség
+         * @return A teljes útvonal súlyösszege. Ha az útvonal üres, akkor 0-t ad vissza.
+         *
+         * @see IDiscoverLogic#canMove(Grid, Grid)
+         */
+            public static double getPathWeightSum(LinkedList<Grid> path, IDiscoverLogic discoverLogic) {
+                if(path.isEmpty()) return 0;
+
+                double sum=0;
+                Grid previous = path.getFirst();
+                for (var element : path){
+                    sum+=discoverLogic.canMove(previous, element);
+                    previous = element;
+                }
+                return sum;
+            }
+
 
         /**
          * Megkeresi a legrövidebb utat két Grid között Dijkstra algoritmusával.

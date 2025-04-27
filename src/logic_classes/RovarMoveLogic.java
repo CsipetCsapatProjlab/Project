@@ -12,6 +12,7 @@ import model.grid.Lava;
 import model.grid.TektonElem;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RovarMoveLogic extends DiscoverLogic {
@@ -48,6 +49,7 @@ public class RovarMoveLogic extends DiscoverLogic {
     public void visit(TektonElem elem) {
         this.elem=elem;
     }
+
     @Override
     public double canMove(Grid from, Grid neighbour) {
         if(from==neighbour) return 0;
@@ -66,14 +68,8 @@ public class RovarMoveLogic extends DiscoverLogic {
     }
 
 
-    public boolean mozog(Grid celGrid){
-        List<Grid> path= GridUtils.GridPathFinder.gridPathFind(rovar.getPosition(),celGrid,rovar.getEnergia(),this);
-        if(!path.isEmpty()){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public LinkedList<Grid> mozog(Grid celGrid){
+       return GridUtils.GridPathFinder.gridPathFind(rovar.getPosition(),celGrid,rovar.getEnergia(),this);
     }
 
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
@@ -62,7 +63,7 @@ public class JatekMotor {
      * @param cel   Hova
      * @param move  Milyen modon
      */
-    public void kovetkezoLepes(Grid kezdo, Grid cel, Move move) throws IncompatibleGameObjectException, InvalidMoveException {
+    public void kovetkezoLepes(Grid kezdo, Grid cel, Move move) throws IncompatibleGameObjectException, InvalidMoveException, FailedMoveException {
         jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
         nextPlayer();
     }

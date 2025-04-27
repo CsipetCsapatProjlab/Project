@@ -1,4 +1,4 @@
-/load src\test_script
+/load src/test_script
 Fonal_noveszt 3x4 1x4
 Fonal_noveszt 1x4 1x2
 Rovar_mozog 3x4 1x4

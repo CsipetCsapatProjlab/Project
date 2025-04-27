@@ -53,25 +53,15 @@ public class Rovarasz extends Jatekos {
      */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
-        boolean OK=false;
-        for (Rovar r : rovarok) {
-            if(r.getPosition()==kezdo){
-                switch (move){
-                    case Rovar_vag, Rovar_eszik -> {
-                        r.consume();
-                        OK=true;
-                    }
-                    case Rovar_mozog -> {
-                        r.move(cel);
-                        OK=true;
-                    }
-                    default->{}
-                }
-            }
-        }
-        if(!OK){
-            throw new InvalidMoveException("Nincs olyan rovar a kezdő griden.",kezdo,cel,move);
-        }
+       var rovar=rovarok.stream().filter(x->x.isAt(kezdo)).findFirst();
+
+       if(rovar.isPresent()){
+           Rovar act=rovar.get();
+           switch (move){
+               case Rovar_vag, Rovar_eszik -> act.consume();
+               case Rovar_mozog -> act.move(cel);
+           }
+       }
     }
     @Override
     public String mentes(){

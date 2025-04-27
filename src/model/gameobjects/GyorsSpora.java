@@ -1,9 +1,10 @@
 package model.gameobjects;
 
-import model.utils.CONSTANTS;
+import model.utils.Constants;
 import model.enums.Hatas;
 import model.grid.Grid;
 import model.players.Gombasz;
+import model.utils.Constants;
 
 public class GyorsSpora extends Spora {
 
@@ -31,6 +32,6 @@ public class GyorsSpora extends Spora {
     @Override
     public void effektAktival(Rovar rovar) {
         super.effektAktival(rovar);
-        rovar.energia+= CONSTANTS.rnd.nextInt((int) Math.round(rovar.getEnergia()));
+        rovar.energia+= Constants.rnd.nextInt((int) Math.round(rovar.getEnergia()));
     }
 }

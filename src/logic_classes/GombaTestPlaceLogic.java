@@ -75,7 +75,7 @@ public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
                 return false;
             }
             else{
-                if(sporas.size()<num) return false;
+                if(sporas.size() < num) return false;
                 for (int i = 0; i < num; i++) {
                     Spora act=sporas.get(rand.nextInt(sporas.size()));
                     act.remove();

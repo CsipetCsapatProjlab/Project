@@ -7,7 +7,8 @@ import java.util.List;
 import model.enums.TektonelemTypes;
 import model.grid.Grid;
 import model.grid.TektonElem;
-import model.utils.CONSTANTS;
+import model.utils.Constants;
+import model.utils.Constants;
 
 public class Tekton {
     TektonelemTypes hatas; //Tekton hatása a rajta lévő elemkre
@@ -79,6 +80,6 @@ public class Tekton {
     }
 
     public TektonElem getRandomElement() {
-        return elemek.get(CONSTANTS.rnd.nextInt(elemek.size()));
+        return elemek.get(Constants.rnd.nextInt(elemek.size()));
     }
 }

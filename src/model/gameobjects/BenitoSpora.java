@@ -1,9 +1,10 @@
 package model.gameobjects;
 
-import model.utils.CONSTANTS;
+import model.utils.Constants;
 import model.enums.Hatas;
 import model.grid.Grid;
 import model.players.Gombasz;
+import model.utils.Constants;
 
 public class BenitoSpora extends Spora {
 
@@ -31,6 +32,6 @@ public class BenitoSpora extends Spora {
     @Override
     public void effektAktival(Rovar rovar) {
         super.effektAktival(rovar);
-        rovar.energia-=rovar.getEnergia()*CONSTANTS.rnd.nextInt(5) + 2;
+        rovar.energia-=rovar.getEnergia()* Constants.rnd.nextInt(5) + 2;
     }
 }

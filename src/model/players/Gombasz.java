@@ -2,13 +2,17 @@ package model.players;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import model.enums.Move;
+import model.exceptions.InvalidMoveException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.TektonElem;
+
+import static model.enums.Move.GombaTest_noveszt;
 
 public class Gombasz extends Jatekos {
     int kinottGombatest;
@@ -57,20 +61,26 @@ public class Gombasz extends Jatekos {
      * @param move a move
      */
     @Override
-    public void lepes(Grid kezdo, Grid cel, Move move) {
+    public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
         switch (move) {
             case Fonal_noveszt -> {
-                for(Fonal f : fonalak){
-                    if (f.isAt(kezdo)) {
-                        try{
-                            f.fonalNovesztes(cel);
-                        }
-                        catch (Exception e){}
-                        return;
+                Optional<Fonal> f=fonalak.stream().filter(cur->cur.isAt(kezdo)).findFirst();
+                Optional<GombaTest> gt=gombaTestek.stream().filter(cur->cur.isAt(kezdo)).findFirst();
+
+                if(f.isPresent()){
+                    f.get().fonalNovesztes(cel);
+                }
+                else{
+                    if(gt.isPresent()){
+                    //hackelős solution, egyenlőre jó lesz
+                        Fonal ujFonal=new Fonal(kezdo,this);
+                        ujFonal.fonalNovesztes(cel);
                     }
                 }
-                //később throw lesz
-                System.out.println("Innen nem lehet fonalat növeszteni");
+
+                if(!f.isPresent() && !gt.isPresent()){
+                    throw new InvalidMoveException("Hibas kezdo grid fonalnoveszteskor.",kezdo,cel,move);
+                }
             }
             case GombaTest_noveszt -> {
                 for(Fonal f : fonalak){

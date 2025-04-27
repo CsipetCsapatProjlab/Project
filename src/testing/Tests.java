@@ -176,7 +176,7 @@ public class Tests {
     void test2(){
         MyLogger.Visit("Betoltes");
         MyLogger.Visit("JatekMotor.betoltes()");
-        motor.betoltes();
+        //motor.betoltes();
         MyLogger.In("Betoltes siekres", false);
         MyLogger.Return("JatekMotor.betoltes()");
         MyLogger.Return("");

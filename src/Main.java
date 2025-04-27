@@ -6,6 +6,7 @@ import testing.CommandLine;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         Fungorium f = new Fungorium(10,10);
         Gombasz g = new Gombasz((TektonElem) f.getGrid(0, 0),"g");
         Rovarasz r = new Rovarasz((TektonElem) f.getGrid(0, 1),"r");
@@ -16,10 +17,11 @@ public class Main {
         f.ujKor();
         System.out.println(f);
         System.out.println(f.getSzigetSzam());
+         */
         Fungorium f2 = new Fungorium("src/test_script");
         System.out.println(f2);
         System.out.println(f2.getSzigetSzam());
-        CommandLine cl = new CommandLine(f);
+        CommandLine cl = new CommandLine(f2);
         cl.start();
     }
 }

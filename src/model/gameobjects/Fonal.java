@@ -5,8 +5,11 @@ import java.util.LinkedList;
 import logic_classes.FonalConsumeLogic;
 import logic_classes.FonalGrowLogic;
 import logic_classes.GombaTestPlaceLogic;
+import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.grid.Grid;
 import model.players.Gombasz;
+import model.utils.Constants;
 import model.utils.GridUtils;
 
 public class Fonal extends GameObject {
@@ -58,17 +61,16 @@ public class Fonal extends GameObject {
      * Noveszt egy fonalat a kivant gridre
      * @param destination Novesztes cel gridje
      */
-    public void fonalNovesztes(Grid destination) throws Exception {
-        LinkedList<Grid> path=GridUtils.GridPathFinder.gridPathFind(this.getPosition(),destination,10,fonalGrowLogic);
+    public void fonalNovesztes(Grid destination) throws FailedMoveException{
+        LinkedList<Grid> path=GridUtils.GridPathFinder.gridPathFind(this.getPosition(),destination, Constants.fonalNovesztesEnergia,fonalGrowLogic);
         if(!path.isEmpty()){
             path.removeFirst(); // Az első elem maga a kezdő fonál
             for (Grid g : path) {
                 Fonal sp=new Fonal(g, gombasz);
-                g.hozzaAd(sp);
             }
         }
         else{
-            throw new Exception("Nem tudtunk növeszteni!");
+            throw new FailedMoveException("A fonál növesztés nem sikerült!",this,Move.Fonal_noveszt);
         }
     }
 

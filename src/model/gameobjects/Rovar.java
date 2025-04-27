@@ -1,16 +1,22 @@
 package model.gameobjects;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import interfaces.GameObjectVisitor;
 import logic_classes.RovarConsumeLogic;
 import logic_classes.RovarMoveLogic;
-import model.utils.CONSTANTS;
+import model.enums.Move;
+import model.exceptions.FailedMoveException;
+import model.utils.Constants;
 import model.enums.Hatas;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.players.Rovarasz;
+import model.utils.Constants;
+import model.utils.GridUtils;
 
 public class Rovar extends GameObject{
     Rovarasz rovarasz;
@@ -21,17 +27,19 @@ public class Rovar extends GameObject{
     public Rovar(Rovar other) {
         super(other.grid,other.rovarasz);
         this.rovarasz = other.rovarasz;
-        energia = CONSTANTS.ROVARENERGIA;
+        energia = Constants.rovarMozgasEnergia;
         rovarConsumeLogic = new RovarConsumeLogic(this);
         rovarMoveLogic = new RovarMoveLogic(this);
     }
 
     public Rovar(Grid grid, Rovarasz r){
         super(grid, r);
-        Random rand = new Random();
         this.rovarasz = r;
-        energia = rand.nextInt(5);
+        energia = 5;
+        this.rovarConsumeLogic = new RovarConsumeLogic(this);
+        this.rovarMoveLogic = new RovarMoveLogic(this);
     }
+
     public Rovar(Grid grid, Rovarasz rovarasz, int energia) {
         super(grid, rovarasz);
         this.rovarasz = rovarasz;
@@ -75,15 +83,13 @@ public class Rovar extends GameObject{
         return energia;
     }
 
-    public void consume() throws InvalidMoveException {
-        try {
-            if (rovarConsumeLogic.eszik(grid)) {
-                energia--;
-            }
-        }catch (IncompatibleGameObjectException e) {
-            InvalidMoveException ime=new InvalidMoveException("Nem sikerült az evés.");
-            ime.initCause(e);
-            throw ime;
+    public void consume() throws FailedMoveException {
+        if (rovarConsumeLogic.eszik(grid)) {
+            //Csökkentjük az energiáját ha sikerült az evés
+            energia--;
+        }
+        else { // Ha .eszik nem sikerült
+            throw new FailedMoveException("Nem sikerült az evés.", this, Move.Rovar_eszik);
         }
     }
 
@@ -92,17 +98,16 @@ public class Rovar extends GameObject{
      * @param destination Melyik mezora mozogjon
      */
     public void move(Grid destination){
-        if(rovarMoveLogic.mozog(destination)){
+        LinkedList<Grid> path=rovarMoveLogic.mozog(destination);
+        double sum = GridUtils.GridPathFinder.getPathWeightSum(path, rovarMoveLogic);
+
+        if(sum > energia || sum<=0){
+            throw new FailedMoveException("A célba nem tud mozogni a rovar mert vagy nem létezik út, vagy nincs elég energiája",this,Move.Rovar_mozog);
+        }
+        else{
+            energia-=sum;
             atmozog(destination);
         }
-    }
-
-    /**
-     * Rovar ellatasa a kapott hatassal
-     * @param hatas Milyen hatas hasson ra
-     */
-    public void addHatas(Hatas hatas) {
-        // TODO
     }
 
     public Rovarasz getRovarasz(){return rovarasz;}
