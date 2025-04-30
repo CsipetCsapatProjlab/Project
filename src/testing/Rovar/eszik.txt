@@ -1,0 +1,7 @@
+/skip
+/adds normal m1 3x3
+/print
+/listgameobjects
+Rovar_eszik 3x4 3x3
+/print
+/listgameobjects

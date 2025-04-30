@@ -103,7 +103,9 @@ public class Gombasz extends Jatekos {
                 }
                 else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move);
             }
-
+            default -> {
+                throw new InvalidMoveException("Hibas move! " + move.name(), kezdo, cel, move);
+            }
 
         }
     }

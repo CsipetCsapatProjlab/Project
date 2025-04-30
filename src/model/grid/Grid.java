@@ -89,7 +89,11 @@ public abstract class Grid {
         return " ";
     }
 
-    public void forduloUtan(){}
+    public void forduloUtan(){
+        for (GameObject gameObject : gameObjects) {
+            gameObject.forduloUtan();
+        }
+    }
     public abstract void accept(GameObjectVisitor visitor);
     public abstract void accept(GridVisitor visitor);
 }
