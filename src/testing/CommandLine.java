@@ -275,7 +275,7 @@ public class CommandLine {
                         try {
                             fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move);
                         } catch (InvalidMoveException | IncompatibleGameObjectException e) {
-                            out.println("->" + name + "egy hibás lépés: " + e.getMessage());
+                            out.println("->" + name + " egy hibás lépés: " + e.getMessage());
                             return;
                         }
                         out.println("->" + name + " sikeres");

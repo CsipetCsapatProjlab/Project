@@ -59,8 +59,8 @@ public class Rovar extends GameObject{
         else{
             energia-=sum;
 
-            grid=destination;
             grid.torol(this);
+            grid=destination;
             destination.hozzaAd(this);
         }
     }
