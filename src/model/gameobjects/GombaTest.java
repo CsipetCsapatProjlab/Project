@@ -17,7 +17,6 @@ import java.util.List;
 public class GombaTest extends GameObject {
 
     LinkedList<Spora> storedSporas = new LinkedList<>();
-    int shootDelay=0;
     double sporaNoves=0.0;
     boolean fejlesztett = false;
     SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic(this);
@@ -58,8 +57,6 @@ public class GombaTest extends GameObject {
             sporaNoves-=1;
             storedSporas.add(new Spora(getGombasz()));
         }
-
-        shootDelay--;
     }
 
     /**

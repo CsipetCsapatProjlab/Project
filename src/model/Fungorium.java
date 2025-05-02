@@ -947,9 +947,18 @@ public class Fungorium {
         tektons = t;
     }
 
+    public void afterRound(){
+        for (int i = 0; i < sor; i++) {
+            for (int j = 0; j < oszlop; j++) {
+                map[i][j].forduloUtan();
+            }
+        }
+    }
+
     /// egy lépést regisztrál és lép meg
-    public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) throws IncompatibleGameObjectException, InvalidMoveException {
+    public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move, boolean skip) throws IncompatibleGameObjectException, InvalidMoveException {
         motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
+        afterRound();
     }
 
     /// skippeli a játékos körét

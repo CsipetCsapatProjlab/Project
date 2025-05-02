@@ -2,6 +2,7 @@ package testing;
 
 import model.Fungorium;
 import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.gameobjects.*;
@@ -206,6 +207,7 @@ public class CommandLine {
                         "/skip",
                         "Skippeli a soron lévő játékos körét játékos körét.",
                         a -> {
+                            fungorium.afterRound();
                             fungorium.nextPlayer();
                             out.println("->Következő jatekos sikeres");
                         }
@@ -251,7 +253,6 @@ public class CommandLine {
                                 default -> null;
                             };
                             if (spora != null) {
-                                grid.hozzaAd(spora);
                                 out.println("Spóra hozzáadás sikeres!");
                             } else out.println("Ilyen hatás nincs!");
                         },
@@ -273,8 +274,8 @@ public class CommandLine {
                         int[] startCoordinates = getCoordinates(args[0]);
                         int[] endCoordinates = getCoordinates(args[1]);
                         try {
-                            fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move);
-                        } catch (InvalidMoveException | IncompatibleGameObjectException e) {
+                            fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move,false);
+                        } catch (InvalidMoveException | FailedMoveException | IncompatibleGameObjectException e) {
                             out.println("->" + name + " egy hibás lépés: " + e.getMessage());
                             return;
                         }

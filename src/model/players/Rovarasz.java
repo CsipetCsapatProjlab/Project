@@ -54,9 +54,10 @@ public class Rovarasz extends Jatekos {
        if(rovar.isPresent()){
            Rovar act=rovar.get();
            switch (move){
-               case Rovar_vag -> act.vag();
-               case Rovar_eszik -> act.eszik();
+               case Rovar_vag -> act.vag(cel);
+               case Rovar_eszik -> act.eszik(cel);
                case Rovar_mozog -> act.mozog(cel);
+               default -> throw new InvalidMoveException("Hibas move, "+move.name(),kezdo,cel,move);
            }
        }
        else{

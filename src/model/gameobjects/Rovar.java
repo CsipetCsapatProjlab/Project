@@ -65,19 +65,22 @@ public class Rovar extends GameObject{
         }
     }
 
-    public void eszik() throws FailedMoveException {
-        var sp=rovarConsumeLogic.eszikSpora(grid); // amin jelenleg vagyunk, enni szeretnénk
+    public void eszik(Grid dest) throws FailedMoveException {
+        var sp=rovarConsumeLogic.eszikSpora(dest); // amin jelenleg vagyunk, enni szeretnénk
         if(sp.isPresent()) {
             sp.get().removeFromGrid();
             sp.get().effektAktival(this);
             energia--;
         }
     }
-    public void vag() throws FailedMoveException {
-        var fn=rovarConsumeLogic.vagFonal(grid);
+    public void vag(Grid dest) throws FailedMoveException {
+        var fn=rovarConsumeLogic.vagFonal(dest);
         if(fn.isPresent()) {
             fn.get().removeFromGrid();
             energia--;
+            if(grid==dest){ // meghal
+                removeFromGrid();
+            }
         }
     }
 
