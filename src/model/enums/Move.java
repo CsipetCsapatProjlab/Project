@@ -10,5 +10,6 @@ public enum Move{
     Spora_lo,
     Rovar_vag,
     Rovar_eszik,
-    Rovar_mozog
+    Rovar_mozog,
+    SEMMI
 }
