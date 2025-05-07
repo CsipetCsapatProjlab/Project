@@ -52,5 +52,8 @@ public abstract class GameObject {
         }
         return resultBuilder.toString();
     }
+
+    public abstract String toStringShort();
+
     public void forduloUtan(){}
 }

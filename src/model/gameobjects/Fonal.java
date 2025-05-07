@@ -83,4 +83,9 @@ public class Fonal extends GameObject {
                 getClass().getSimpleName() + ": " + observer.getNev(),
         };
     }
+
+    @Override
+    public String toStringShort() {
+        return "F";
+    }
 }

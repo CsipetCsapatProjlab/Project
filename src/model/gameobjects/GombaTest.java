@@ -51,6 +51,11 @@ public class GombaTest extends GameObject {
     }
 
     @Override
+    public String toStringShort() {
+        return "G";
+    }
+
+    @Override
     public void forduloUtan() {
         sporaNoves+= Constants.gombaTestSporaGenPerKor;
         if(sporaNoves>=1){

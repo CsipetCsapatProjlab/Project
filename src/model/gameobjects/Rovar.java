@@ -94,6 +94,11 @@ public class Rovar extends GameObject{
     }
 
     @Override
+    public String toStringShort() {
+        return "R";
+    }
+
+    @Override
     public void forduloUtan(){
         energia+=Constants.rovarMozgasEnergia;
     }

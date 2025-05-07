@@ -46,4 +46,10 @@ public class Spora extends GameObject {
                 "Tapertek: " + tapertek,
         };
     }
+
+    @Override
+    public String toStringShort() {
+        return "S";
+    }
+
 }
