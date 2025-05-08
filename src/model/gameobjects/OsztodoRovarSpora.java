@@ -9,8 +9,8 @@ public class OsztodoRovarSpora extends Spora{
         super(g, gombasz);
     }
 
-    public OsztodoRovarSpora(Grid grid, int tapErtek, Gombasz gombasz, Hatas hatas) {
-        super(grid, tapErtek, gombasz, hatas);
+    public OsztodoRovarSpora(Grid grid, int tapErtek, Gombasz gombasz) {
+        super(grid, gombasz, tapErtek);
     }
 
     @Override

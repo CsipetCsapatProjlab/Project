@@ -1,0 +1,14 @@
+->Beolvasas sikeres
+->Fonal novesztes sikeres lavara
+->Fonal novesztes sikeres lavara
+->Spora loves sikeres
+->Spora loves sikeres
+->GombaTest novesztes sikertelen
+->Tekton szakadas sikeres
+->GombaTest: m1; fejletlen; sporak: 2db; 3x2
+  GombaTest: m1; fejletlen; sporak: 5db; 1x4
+  Spora: m1; dupla_rovar; 5 tapertek; 1x2
+  Spora: m1; dupla_rovar; 5 tapertek; 4x2
+  Fonal: m1; 1x4
+  Fonal: m1; 1x2
+->GAME OVER

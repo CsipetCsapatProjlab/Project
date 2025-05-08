@@ -4,11 +4,7 @@ import java.util.List;
 
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
-import java.util.List;
 import model.Tekton;
-import model.enums.Hatas;
-import model.enums.TektonelemTypes;
-import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.GameObject;
 
 public class TektonElem extends Grid {
@@ -29,10 +25,6 @@ public class TektonElem extends Grid {
         this.tekton = tekton;
     }
 
-    public String toString(){
-        return " ";
-    }
-
     public Tekton getTekton(){return tekton;}
     public void setTekton(Tekton t){tekton = t;}
 
@@ -41,7 +33,9 @@ public class TektonElem extends Grid {
      */
     @Override
     public void accept(GameObjectVisitor visitor) {
-
+        for (var obj:gameObjects){
+            obj.accept(visitor);
+        }
     }
 
     @Override
@@ -54,6 +48,6 @@ public class TektonElem extends Grid {
      */
     @Override
     public void accept(GridVisitor visitor) {
-
+        visitor.visit(this);
     }
 }

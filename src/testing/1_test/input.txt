@@ -1,15 +1,19 @@
-/load
-Fonal_noveszt 3x4 1x4
+/load src/test_script
+Fonal_noveszt 3x2 1x4
+/skip
 Fonal_noveszt 1x4 1x2
 Rovar_mozog 3x4 1x4
+/skip
 Rovar_vag 1x4 2x4
-skip
-skip
-skip
+/skip
+/skip
+/skip
 Rovar_mozog 1x4 1x0
+/skip
 Rovar_eszik 1x0 0x0
 Fonal_eves 1x3 1x0
 /tekton_szakad
+/skip
 Spora_lo 3x2 1x2
-/listgameobjects
+/listgameobject
 /gameover

@@ -1,6 +1,8 @@
 package testing;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 import model.JatekMotor;
 import model.Tekton;
@@ -165,7 +167,7 @@ public class Tests {
     void test1(){
         MyLogger.Visit("Mentes");
         MyLogger.Visit("JatekMotor.mentes()");
-        motor.mentes();
+        motor.mentes("mentes");
         MyLogger.In("Mentes sikeres", false);
         MyLogger.Return("JatekMotor.mentes()");
         MyLogger.Return("");
@@ -174,7 +176,7 @@ public class Tests {
     void test2(){
         MyLogger.Visit("Betoltes");
         MyLogger.Visit("JatekMotor.betoltes()");
-        motor.betoltes();
+        //motor.betoltes();
         MyLogger.In("Betoltes siekres", false);
         MyLogger.Return("JatekMotor.betoltes()");
         MyLogger.Return("");
@@ -352,7 +354,7 @@ public class Tests {
             else MyLogger.In("Rovar spora eves sikertelen!", false);
         }else MyLogger.In("Rovar spora eves sikertelen!", false);
         MyLogger.Return("Rovar.consume()");
-        MyLogger.Return("JatekMoror.jelenlegiJatekos().lepes(Grid, Grid, Move)");
+        MyLogger.Return("JatekMotor.jelenlegiJatekos().lepes(Grid, Grid, Move)");
         MyLogger.Return("");
         grid[2][2].clear();
         start();

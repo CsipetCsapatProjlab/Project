@@ -7,9 +7,11 @@ import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
 
+import java.util.Optional;
+
 public class FonalConsumeLogic implements GameObjectVisitor {
     Fonal fonal;
-    boolean haveEaten=false;
+    Rovar rovar;
 
     public FonalConsumeLogic(Fonal fonal) {
         this.fonal = fonal;
@@ -22,23 +24,22 @@ public class FonalConsumeLogic implements GameObjectVisitor {
 
     @Override
     public void visit(Rovar rovar) {
-        if(Math.ceil(rovar.getEnergia())<=0 && !haveEaten){
-            rovar.remove();
-            haveEaten=true;
+        if(Math.ceil(rovar.getEnergia())<=0 ){
+            this.rovar=rovar;
         }
     }
-
     @Override
     public void visit(Fonal fonal) {}
 
-    public boolean egyel(Grid celGrid){
-        haveEaten=false;
+    public Optional<Rovar> getRovar(Grid celGrid){
+        rovar=null;
 
-        if(fonal.getPosition()==celGrid){
+        if(fonal.getPosition()!=celGrid)
+            return Optional.empty();
+        else{
             celGrid.accept(this);
-            return true;
+            return Optional.of(rovar);
         }
-        return false;
     }
 
 }

@@ -1,6 +1,7 @@
 package model.players;
 
 import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
@@ -8,21 +9,14 @@ import model.grid.Grid;
 public abstract class Jatekos {
     String nev;
     public static int jatekosokSzama = 0;
-    public int meik;
-    /**
-     * Letrehozza a jatekost
-     * @param nev
-     */
+    public int melyik;
+
     public Jatekos(String nev) {
         this.nev = nev;
+        melyik = jatekosokSzama;
         jatekosokSzama++;
-        meik = jatekosokSzama;
     }
 
-    /**
-     * Nev beallitasa
-     * @return
-     */
     public String getNev() {
         return nev;
     }
@@ -33,13 +27,22 @@ public abstract class Jatekos {
      * @param cel Hova
      * @param move Milyen modon
      */
-    public abstract void lepes(Grid kezdo, Grid cel, Move move) throws IncompatibleGameObjectException, InvalidMoveException;
+    public abstract void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException, FailedMoveException;
 
     /**
      * Jatekos megszuntetese
      */
-    public void meghal() {
-        // TODO
+    public void meghal() {}
+
+    public abstract int getPoints();
+
+    @Override
+    public String toString() {
+        return nev + ": " + getClass().getSimpleName() + "; " + getPoints();
+    }
+
+    public String mentes(){
+        return nev + ";" + Integer.toString(melyik);
     }
 
     public abstract int getPoints();

@@ -1,0 +1,9 @@
+Fonal_noveszt 3x2 1x2
+/print
+/listgameobjects
+Rovar_mozog 3x4 1x2
+/print
+/skip
+Rovar_vag 1x2 2x2
+/print
+/listgameobjects

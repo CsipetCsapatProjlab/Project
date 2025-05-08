@@ -2,76 +2,83 @@ package model.gameobjects;
 
 import interfaces.GameObjectVisitor;
 import logic_classes.SporaPlaceLogic;
+import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.players.Gombasz;
+import model.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GombaTest extends GameObject {
-    private Gombasz gombasz;
+
+    LinkedList<Spora> storedSporas = new LinkedList<>();
+    double sporaNoves=0.0;
     boolean fejlesztett = false;
     SporaPlaceLogic sporaPlaceLogic=new SporaPlaceLogic(this);
 
-    /**
-     * Letrehozza a testet
-     * @param grid Melyik mezore
-     * @param gombasz Ki birtokolja
-     */
+    public Gombasz getGombasz(){return (Gombasz)observer;}
+    public boolean getFejlesztett(){return fejlesztett;}
+    public void setFejlesztett() {fejlesztett = true;}
+
+    @Override
+    public void accept(GameObjectVisitor visitor) {visitor.visit(this);}
+
     public GombaTest(Grid grid, Gombasz gombasz) {
         super(grid, gombasz);
-        this.gombasz = gombasz;
+        fejlesztett = false;
+
+        gombasz.hozzaAd(this);
     }
 
-    /**
-     * Megvalositja a GameObject remove() fv.-et a sajat modjan
-     */
     @Override
-    public void remove() {
-        //TODO
+    public void removeFromGrid() {
+        super.removeFromGrid();
+        getGombasz().torol(this);
     }
 
-    /**
-     * Megvalositja a GameObject accept() fv.-et a sajat modjan
-     */
-    @Override
-    public void accept(GameObjectVisitor visitor) {
-        // TODO
-    }
 
     @Override
     protected String[] getData() {
         return new String[]{
-                getClass().getSimpleName() + ": " + gombasz.getNev(),
+                getClass().getSimpleName() + ": " + getGombasz().getNev(),
                 fejlesztett ? "fejlett" : "fejletlen",
         };
     }
 
-    /**
-     * Visszaadja a test fejlesztesi szintjet
-     * @return Fejlesztett-e a test
-     */
-    public boolean getFejlesztett(){return fejlesztett;}
+    @Override
+    public String toStringShort() {
+        return "G";
+    }
 
-    /**
-     * Fejleszti a testet
-     */
-    public void setFejlesztett() {
-        fejlesztett = true;
+    @Override
+    public void forduloUtan() {
+        sporaNoves+= Constants.gombaTestSporaGenPerKor;
+        if(sporaNoves>=1){
+            sporaNoves-=1;
+            storedSporas.add(new Spora(getGombasz()));
+        }
     }
 
     /**
      * Kivalasztott sporat kilovi a kivalasztott mezore
      * @param destination Hova lojje
-     * @param spora Melyik sporat
      */
-    public void sporaKilo(Grid destination, Spora spora) throws IncompatibleGameObjectException {
-        /*int a = 0;
-        for (int i = 0; i < gombasz.getSporas().size(); i++){
-            if(gombasz.getSporas() == spora) a++;
+    public void sporaKilo(Grid destination) throws FailedMoveException {
+        if(storedSporas.isEmpty()) return;
+
+        Spora sp=storedSporas.pop();
+        var grid=sporaPlaceLogic.placeSpora(destination);
+
+        if(grid.isPresent()){
+            grid.get().hozzaAd(sp);
+            sp.setPosition(grid.get());
         }
-        if(a < gombasz.getSporas().size()) return;
-        gombasz.getSporas().torol(gombasz.getSporas().get(a));*/
-        grid.torol(spora);
-        destination.hozzaAd(spora);
+        else throw new FailedMoveException("Nem sikerült a sporakilövés",this, Move.Spora_lo);
     }
-    public Gombasz getGombasz(){return gombasz;}
+
 }

@@ -12,6 +12,7 @@ import model.grid.Lava;
 import model.grid.TektonElem;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RovarMoveLogic extends DiscoverLogic {
@@ -20,21 +21,20 @@ public class RovarMoveLogic extends DiscoverLogic {
     TektonElem elem;
     Lava lava;
     Fonal fonal;
+
+    public RovarMoveLogic(Rovar r){
+        rovar=r;
+    }
+
     private void clearState(){
         elem=null; lava=null; fonal=null;
     }
     @Override
-    public void visit(Spora spora) {
-
-    }
+    public void visit(Spora spora) {}
     @Override
-    public void visit(GombaTest gombaTest) {
-
-    }
+    public void visit(GombaTest gombaTest) {}
     @Override
-    public void visit(Rovar rovar) {
-
-    }
+    public void visit(Rovar rovar) {}
     @Override
     public void visit(Fonal fonal) {
         this.fonal = fonal;
@@ -48,6 +48,8 @@ public class RovarMoveLogic extends DiscoverLogic {
     public void visit(TektonElem elem) {
         this.elem=elem;
     }
+
+
     @Override
     public double canMove(Grid from, Grid neighbour) {
         if(from==neighbour) return 0;
@@ -61,19 +63,6 @@ public class RovarMoveLogic extends DiscoverLogic {
         }
         return Double.POSITIVE_INFINITY;
     }
-    public RovarMoveLogic(Rovar r){
-        rovar=r;
-    }
 
-
-    public boolean mozog(Grid celGrid){
-        List<Grid> path= GridUtils.GridPathFinder.gridPathFind(rovar.getPosition(),celGrid,rovar.getEnergia(),this);
-        if(!path.isEmpty()){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
 }

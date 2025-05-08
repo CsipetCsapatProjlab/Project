@@ -1,6 +1,5 @@
 package testing;
 
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class Command {

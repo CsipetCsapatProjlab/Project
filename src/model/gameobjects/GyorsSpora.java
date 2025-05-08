@@ -1,7 +1,6 @@
 package model.gameobjects;
 
-import model.utils.CONSTANTS;
-import model.enums.Hatas;
+import model.utils.Constants;
 import model.grid.Grid;
 import model.players.Gombasz;
 
@@ -11,26 +10,17 @@ public class GyorsSpora extends Spora {
         super(g, gombasz);
     }
 
-    /**
-     * Letrehozza a sporat
-     *
-     * @param grid     Melyik mezore
-     * @param tapErtek Milyen taperteke van
-     * @param gombasz  Ki birtokolja
-     * @param hatas    Mi a hatasa
-     */
-    public GyorsSpora(Grid grid, int tapErtek, Gombasz gombasz, Hatas hatas) {
-        super(grid, tapErtek, gombasz, hatas);
+    public GyorsSpora(Grid grid, int tapErtek, Gombasz gombasz) {
+        super(grid, gombasz, tapErtek);
     }
 
     /**
      * Hatas aktivalasa az ot elfogyaszto rovaron
-     *
      * @param rovar Elfogyaszto rovar
      */
     @Override
     public void effektAktival(Rovar rovar) {
         super.effektAktival(rovar);
-        rovar.energia+= CONSTANTS.rnd.nextInt((int) Math.round(rovar.getEnergia()));
+        rovar.energia+= Constants.rnd.nextInt((int) Math.round(rovar.getEnergia()));
     }
 }

@@ -1,9 +1,10 @@
 package model.utils;
 
 import interfaces.IDiscoverLogic;
-import model.grid.Grid;
-
 import java.util.*;
+import java.util.function.Function;
+
+import model.grid.Grid;
 
 public class GridUtils {
     /**
@@ -12,6 +13,32 @@ public class GridUtils {
     private GridUtils(){}
 
     public static class GridPathFinder {
+
+        /**
+         * Kiszámítja egy útvonal súlyösszegét az IDiscoverLogic szabályai alapján.
+         *
+         * A metódus végighalad az útvonalon és minden elem között kiszámítja a mozgási költséget
+         * az előző elemhez képest. Az összes költség összegét adja vissza.
+         *
+         * @param path Az útvonal, amelyen végighaladunk. A Grid típusú elemek listája.
+         * @param discoverLogic A mozgási logika implementációja, amely meghatározza,
+         *                     hogy két elem között mennyi a mozgási költség
+         * @return A teljes útvonal súlyösszege. Ha az útvonal üres, akkor 0-t ad vissza.
+         *
+         * @see IDiscoverLogic#canMove(Grid, Grid)
+         */
+            public static double getPathWeightSum(LinkedList<Grid> path, IDiscoverLogic discoverLogic) {
+                if(path.isEmpty()) return 0;
+
+                double sum=0;
+                Grid previous = path.getFirst();
+                for (var element : path){
+                    sum+=discoverLogic.canMove(previous, element);
+                    previous = element;
+                }
+                return sum;
+            }
+
 
         /**
          * Megkeresi a legrövidebb utat két Grid között Dijkstra algoritmusával.
@@ -29,7 +56,7 @@ public class GridUtils {
          * Az út csak akkor épül fel, ha az összsúly nem haladja meg a megadott maximumot.
          * DIJKSTRA algoritmusa azért megfelelő, mert a gráfban nem lehet negatív összsúlyú kör!
          */
-        public static List<Grid> gridPathFind(Grid kezdo, Grid cel, double maxCumulativeWeight, IDiscoverLogic dLogic) {
+        public static LinkedList<Grid> gridPathFind(Grid kezdo, Grid cel, double maxCumulativeWeight, IDiscoverLogic dLogic) {
             PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.weight));
             Map<Grid, Double> distances = new HashMap<>();
             Map<Grid, Grid> previous = new HashMap<>();
@@ -60,7 +87,7 @@ public class GridUtils {
                 }
             }
 
-            return new ArrayList<>(); // No path found
+            return new LinkedList<>(); // No path found
         }
 
         /**
@@ -108,8 +135,8 @@ public class GridUtils {
         }
 
 
-        private static List<Grid> reconstructPath(Map<Grid, Grid> previous, Grid cel) {
-            List<Grid> path = new LinkedList<>();
+        private static LinkedList<Grid> reconstructPath(Map<Grid, Grid> previous, Grid cel) {
+            LinkedList<Grid> path = new LinkedList<>();
             for (Grid at = cel; at != null; at = previous.get(at)) {
                 path.add(0, at);
             }

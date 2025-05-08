@@ -43,7 +43,9 @@ public class Lava extends Grid {
      */
     @Override
     public void accept(GameObjectVisitor visitor) {
-
+        for(GameObject gameObject : gameObjects){
+            gameObject.accept(visitor);
+        }
     }
 
     /**
@@ -51,6 +53,6 @@ public class Lava extends Grid {
      */
     @Override
     public void accept(GridVisitor visitor) {
-
+        visitor.visit(this);
     }
 }

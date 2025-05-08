@@ -1,0 +1,15 @@
+->Fonal_noveszt sikeres
+BenitoSpora: m1; Tapertek: 1; 0x0
+Fonal: m1; 1x2
+Fonal: m1; 2x2
+GombaTest: m1; fejletlen; 3x2
+Fonal: m1; 3x2
+Rovar: r; Energia: 5.0; 3x4
+->Rovar_mozog sikeres
+->Következő jatekos sikeres
+->Rovar_vag sikeres
+BenitoSpora: m1; Tapertek: 1; 0x0
+Fonal: m1; 1x2
+Rovar: r; Energia: 0.0; 1x2
+GombaTest: m1; fejletlen; 3x2
+Fonal: m1; 3x2

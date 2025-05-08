@@ -1,17 +1,16 @@
+import GUI.FungoriumGUI;
 import model.Fungorium;
-import model.Fungorium;
+import model.utils.Constants;
 import testing.CommandLine;
-import testing.Tests;
-
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Fungorium f = new Fungorium(10,10);
-        System.out.println(f);
-        System.out.println(f.getSzigetSzam());
-        f.ujKor();
-        CommandLine cl = new CommandLine(f);
+        Constants.loadConstants();
+        Fungorium f2 = new Fungorium("src/test_script");
+        FungoriumGUI fg = new FungoriumGUI(f2);
+        System.out.println(f2);
+        System.out.println(f2.getSzigetSzam());
+        CommandLine cl = new CommandLine(f2);
         cl.start();
     }
 }

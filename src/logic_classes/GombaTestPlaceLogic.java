@@ -10,17 +10,13 @@ import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
-    boolean vanGombaTest;
     Fonal fonal;
-    List<Spora> sporas;
+    boolean vanGombaTest=false;
+    List<Spora> sporas=new ArrayList<>();
     TektonElem tektonelem;
-    static Random rand = new Random();
 
     @Override
     public void visit(Spora spora) {
@@ -28,33 +24,20 @@ public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
             sporas.add(spora);
         }
     }
-
     @Override
     public void visit(GombaTest gombaTest) {
-        if(Objects.equals(gombaTest.getObserver().getNev(), fonal.getObserver().getNev())){
+        if (Objects.equals(gombaTest.getObserver().getNev(), fonal.getObserver().getNev())) {
             vanGombaTest = true;
         }
     }
-
     @Override
-    public void visit(Rovar rovar) {
-
-    }
-
+    public void visit(Rovar rovar) {}
     @Override
-    public void visit(Fonal fonal) {
-
-    }
-
+    public void visit(Fonal fonal) {}
     @Override
-    public void visit(Lava lava) {
-
-    }
-
+    public void visit(Lava lava) {}
     @Override
-    public void visit(TektonElem elem) {
-
-    }
+    public void visit(TektonElem elem) {}
 
     void clearState(){
         vanGombaTest = false;
@@ -67,29 +50,18 @@ public class GombaTestPlaceLogic implements GridVisitor, GameObjectVisitor {
         clearState();
     }
 
-    public boolean placeGombaTest(Grid celgrid, int num){
+    public Optional<List<Spora>> getGombaTestPlacement(Grid celgrid, int num) {
+        clearState();
+
         celgrid.accept((GridVisitor) this);
-        if(tektonelem != null){
-            tektonelem.getTekton().visitElements(this);
-            if(vanGombaTest){
-                return false;
-            }
-            else{
-                if(sporas.size()<num) return false;
-                for (int i = 0; i < num; i++) {
-                    Spora act=sporas.get(rand.nextInt(sporas.size()));
-                    act.remove();
-                    sporas.remove(act);
-                }
-                return true;
+        if (tektonelem != null) {
+            tektonelem.getTekton().visitElements(this); // Ha gombatestre bukkanunk a tektonon, vagy ha spórára, ekkor pedig hozzáadjuk a listához
+            if (!vanGombaTest && sporas.size() >= num) {
+                return Optional.of(sporas);
             }
         }
-        return false;
+        return Optional.empty();
     }
-
-
-
-
 
 
 }

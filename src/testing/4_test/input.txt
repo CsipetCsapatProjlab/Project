@@ -1,0 +1,5 @@
+/load src\test_script
+/setjatekos m1 15
+/setjatekos r 10
+/listjatekos
+/gameover

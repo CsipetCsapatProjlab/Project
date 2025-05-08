@@ -15,14 +15,13 @@ public class FonalEvo extends TektonElem{
     int felszivodasigForduloAlap;
 
     @Override
-    void forduloUtan() {
+    public void forduloUtan() {
         if (felszivodasigFordulo > 0) {
             felszivodasigFordulo--;
         }
-        if (felszivodasigFordulo == 0) {
-
-            this.torol(fonals.peek());
-
+        if (felszivodasigFordulo == 0 && !fonals.isEmpty()) {
+            this.torol(fonals.pop());
+            felszivodasigFordulo=felszivodasigForduloAlap;
         }
         super.forduloUtan();
     }
@@ -45,7 +44,7 @@ public class FonalEvo extends TektonElem{
                 felszivodasigFordulo=felszivodasigForduloAlap;
             }
             Fonal f=(Fonal)gameObject;
-            fonals.add(f);
+            fonals.push(f);
         }
         return super.hozzaAd(gameObject);
     }
@@ -53,11 +52,11 @@ public class FonalEvo extends TektonElem{
     @Override
     public boolean torol(GameObject g) {
         if (g instanceof Fonal) {
-            if (fonals.isEmpty()) {
-                felszivodasigFordulo = -1;
+            if (!fonals.isEmpty()) {
+                felszivodasigFordulo = 0;
+                Fonal f = (Fonal) g;
+                fonals.pop();
             }
-            Fonal f = (Fonal) g;
-            fonals.pop();
         }
         super.torol(g);
         return true;
