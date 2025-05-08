@@ -3,31 +3,23 @@ package GUI;
 import javax.swing.*;
 
 import model.Fungorium;
-import model.gameobjects.Rovar;
-import model.players.Gombasz;
-import model.players.Rovarasz;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class StartMenuGUI extends JFrame {
 
     private JTextField widthField;
     private JTextField heightField;
-    private JSpinner rovarSpinner;
-    private JSpinner gombaSpinner;
-    private JButton startButton;
-
-    private java.util.List<CustomPanel> playerPanels;
+    PlayerSelectionPanel  playerSelectionPanel = new PlayerSelectionPanel(5);
 
     public StartMenuGUI() {
         setTitle("Fungi Mungi 2000");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        add(createLeftPanel(), BorderLayout.WEST);
         add(createRightPanel(), BorderLayout.CENTER);
-
+        add(createLeftPanel(), BorderLayout.WEST);
         pack();
         setLocationRelativeTo(null); // középre helyezi
         setVisible(true);
@@ -53,40 +45,21 @@ public class StartMenuGUI extends JFrame {
         sizePanel.add(heightField);
         panel.add(sizePanel);
 
-        panel.add(Box.createRigidArea(new Dimension(0, 10)));
-
-        rovarSpinner = new JSpinner(new SpinnerNumberModel(3, 0, 10, 1));
-        gombaSpinner = new JSpinner(new SpinnerNumberModel(2, 0, 10, 1));
-
-        panel.add(new JLabel("rovarászok"));
-        panel.add(rovarSpinner);
-        panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        panel.add(new JLabel("gombászok"));
-        panel.add(gombaSpinner);
-
+        JSpinner jatekosSpinner = new JSpinner(new SpinnerNumberModel(playerSelectionPanel.getNumPlayers(), 0, 100, 1));
+        jatekosSpinner.addChangeListener(x -> playerSelectionPanel.resizeTo((int) jatekosSpinner.getValue()));
+        panel.add(new  JLabel("Jatekosok Száma:"));
+        panel.add(jatekosSpinner);
         return panel;
     }
 
     private JPanel createRightPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        // Player Panels
-        JPanel playersPanel = new JPanel();
-        playersPanel.setLayout(new BoxLayout(playersPanel, BoxLayout.Y_AXIS));
-        playerPanels = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            CustomPanel p = new CustomPanel();
-            playersPanel.add(p);
-            playersPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-            playerPanels.add(p);
-        }
-
-        JScrollPane scrollPane = new JScrollPane(playersPanel);
+        JScrollPane scrollPane = new JScrollPane(playerSelectionPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // Start button
-        startButton = new JButton("Start");
+        JButton startButton = new JButton("Start");
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.add(startButton);
@@ -98,43 +71,34 @@ public class StartMenuGUI extends JFrame {
     }
 
     private void onStartPressed() {
-        java.util.List<String> validPlayers = new ArrayList<>();
-        int sor = Integer.parseInt(heightField.getText().trim());
-        int oszlop = Integer.parseInt(heightField.getText().trim());
+        List<PlayerGUI> jatekosokGui = playerSelectionPanel.getJatekosok();
 
-        Fungorium f = new Fungorium(sor, oszlop);
-        for (CustomPanel panel : playerPanels) {
-            String name = panel.getName();
-            String type = panel.getSelection();
-            Color color = panel.getColor();
-    
-            boolean isValid = name != null && !name.trim().isEmpty() && type != null && color != null;
-    
-            if (isValid) {
-                validPlayers.add(name + " - " + type + " - " + color.toString());
-                if(name == "Gombasz"){
-                    f.addJatekos(new Gombasz(name));
-                }else{
-                    f.addJatekos(new Rovarasz(name));
-                }
-            }
-        }
-        FungoriumGUI GUI = new FungoriumGUI(f);
-    
-        if (validPlayers.size() < 2) {
+        if (jatekosokGui.size() < 2) {
             JOptionPane.showMessageDialog(this,
                 "Legalább két érvényes játékost kell megadni!",
                 "Hiba",
                 JOptionPane.ERROR_MESSAGE);
             return;
+        } else {
+            int sor = Integer.parseInt(heightField.getText().trim());
+            int oszlop = Integer.parseInt(widthField.getText().trim());
+
+            Fungorium f = new Fungorium(sor, oszlop);
+            jatekosokGui.stream()
+                    .map(gui -> gui.jatekos)
+                    .forEach(f::addJatekos);
+            FungoriumGUI GUI = new FungoriumGUI(f);
         }
     
         System.out.println("Játék indul ezekkel a játékosokkal:");
-        for (String info : validPlayers) {
-            System.out.println(info);
+        for (var jatekosGui : jatekosokGui) {
+            System.out.println(jatekosGui);
         }
-    
+
+
         // Továbblépés például új ablak vagy játék logika elindítása itt
+
+        this.setVisible(false);
     }
     
 }

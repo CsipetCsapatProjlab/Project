@@ -2,7 +2,6 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class CustomPanel extends JPanel {
     private JTextField nameField;
@@ -21,7 +20,7 @@ public class CustomPanel extends JPanel {
         add(nameField);
 
         // Szöveg választó
-        String[] items = {"Gombasz", "Rovarasz"};
+        String[] items = {"Gombász", "Rovarász"};
         comboBox = new JComboBox<>(items);
         comboBox.setSelectedItem("Gomba");
         comboBox.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));

@@ -2,7 +2,6 @@ package model.players;
 
 import model.enums.Move;
 import model.exceptions.FailedMoveException;
-import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 
@@ -42,13 +41,6 @@ public abstract class Jatekos {
     }
 
     public String mentes(){
-        return nev + ";" + Integer.toString(melyik);
-    }
-
-    public abstract int getPoints();
-
-    @Override
-    public String toString() {
-        return nev + ": " + getClass().getSimpleName() + "; " + getPoints();
+        return nev + ";" + melyik;
     }
 }
