@@ -4,10 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,62 +24,13 @@ import model.grid.Grid;
 import model.players.Jatekos;
 
 public class FungoriumGUI {
-    Fungorium model;
-    FungoriumController controller;
-    Map<Jatekos,Color> jatekosSzin;
-    PalyaPanel palyaPanel;
-    JatekosValasztoPanel jatekosValasztoPanel;
-    // Csak nem lesz több mint 12 játékos, nem?
-    private static Map<Jatekos,Color> generateColors(Map<Jatekos,Color> current, List<Jatekos> jatekosok){
-         Color[] DISTINCT_COLORS = {
-                Color.RED,
-                Color.BLUE,
-                Color.GREEN,
-                Color.ORANGE,
-                Color.MAGENTA,
-                Color.CYAN,
-                Color.PINK,
-                Color.YELLOW,
-                new Color(0, 128, 0), // Dark green
-                new Color(128, 0, 128), // Purple
-                new Color(0, 128, 128), // Teal
-                new Color(128, 128, 0)  // Olive
-        };
-         if(current==null) {current = new HashMap<>();}
-         for(Jatekos j:jatekosok){
-             if(!current.containsKey(j)){
-                 for (Color distinctColor : DISTINCT_COLORS) {
-                     if (!current.containsValue(distinctColor)) {
-                         current.put(j, distinctColor);
-                     }
-                 }
-             }
-         }
-         return current;
-    }
+    private Fungorium f;
 
     public FungoriumGUI(Fungorium f2) {
-        model = f2;
-        FungoriumController controller = new FungoriumController(model);
-        jatekosSzin = generateColors(null,model.getMotor().getJatekosok());
-        palyaPanel = new PalyaPanel(model,controller::onGridClicked,jatekosSzin);
-        jatekosValasztoPanel = new JatekosValasztoPanel(model);
-
+        f = f2;
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Fungorium Grid");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLayout(new BorderLayout());
-
-
-            //frame.add(palyaPanel, BorderLayout.CENTER);
-            frame.add(jatekosValasztoPanel, BorderLayout.CENTER);
-
-            frame.pack();
-            frame.setVisible(true);
-
-            /*
-            char[][] test = getTestField(model);
-            Grid[][] map = getMapField(model);
+            char[][] test = getTestField(f);
+            Grid[][] map = getMapField(f);
 
             int rows = test.length;
             int cols = test[0].length;
@@ -94,7 +42,7 @@ public class FungoriumGUI {
             // --------- BAL PANEL: lépés lehetőségek ---------
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-            Jatekos current = model.getCurrentPlayer();
+            Jatekos current = f.getCurrentPlayer();
 
             JLabel leftTitle = new JLabel("Lehetséges lépések:");
             leftPanel.add(leftTitle);
@@ -117,7 +65,7 @@ public class FungoriumGUI {
             rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
             JLabel rightTitle = new JLabel("    Játékosok:  ");
             rightPanel.add(rightTitle);
-            for (Jatekos j : model.getPlayers()) {
+            for (Jatekos j : f.getPlayers()) {
                 JPanel playerRow = new JPanel(new BorderLayout());
                 JLabel nameLabel = new JLabel("   " + j.getNev());
                 JLabel scoreLabel = new JLabel(String.valueOf(j.getPoints() + "   "), SwingConstants.RIGHT);
@@ -155,7 +103,7 @@ public class FungoriumGUI {
             frame.add(rightPanel, BorderLayout.EAST);
 
             frame.pack();
-            frame.setVisible(true)*/
+            frame.setVisible(true);
         });
     }
 
