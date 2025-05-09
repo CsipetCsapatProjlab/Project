@@ -65,6 +65,11 @@ public class Rovarasz extends Jatekos {
        }
     }
     @Override
-    public String mentes(){return nev + " ; " + Integer.toString(melyik) + " ; " + Integer.toString(szerzettTapanyag) + " ; " + "Rovarasz";}
+    public String mentes(){return nev + " ; " + melyik + " ; " + szerzettTapanyag + " ; " + "Rovarasz";}
+
+    @Override
+    public Move[] getMoveTypes() {
+        return new Move[] {Move.Rovar_eszik, Move.Rovar_vag, Move.Rovar_mozog};
+    }
 
 }

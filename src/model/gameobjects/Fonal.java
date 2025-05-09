@@ -8,7 +8,6 @@ import logic_classes.GombaTestPlaceLogic;
 import model.enums.Move;
 import model.exceptions.FailedMoveException;
 import model.grid.Grid;
-import model.grid.TektonElem;
 import model.players.Gombasz;
 import model.utils.Constants;
 import model.utils.GridUtils;
@@ -62,7 +61,7 @@ public class Fonal extends GameObject {
             new GombaTest(grid,getGombasz());
         }
         else{
-            throw new FailedMoveException("A gombatest növesztés nem sikerült!", this, Move.GombaTest_noveszt);
+            throw new FailedMoveException("A gombatest növesztés nem sikerült!", this, Move.Gombatest_noveszt);
         }
     }
 

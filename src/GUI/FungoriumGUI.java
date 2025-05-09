@@ -47,17 +47,8 @@ public class FungoriumGUI {
             JLabel leftTitle = new JLabel("Lehetséges lépések:");
             leftPanel.add(leftTitle);
 
-            if (current instanceof model.players.Rovarasz) {
-                leftPanel.add(new JLabel("Lépés"));
-                leftPanel.add(new JLabel("Evés"));
-                leftPanel.add(new JLabel("Vágás"));
-            } else if (current instanceof model.players.Gombasz) {
-                leftPanel.add(new JLabel("Fonál növesztés"));
-                leftPanel.add(new JLabel("Spóra lövés"));
-                leftPanel.add(new JLabel("Gombatest növesztés"));
-                leftPanel.add(new JLabel("Rovar evés"));
-            } else {
-                leftPanel.add(new JLabel("(Ismeretlen játékostípus)"));
+            for (var moveType : current.getMoveTypes()) {
+                leftPanel.add(new JLabel(moveType.toString()));
             }
 
             // --------- JOBB PANEL: játékosok és pontszámaik ---------
@@ -68,7 +59,7 @@ public class FungoriumGUI {
             for (Jatekos j : f.getPlayers()) {
                 JPanel playerRow = new JPanel(new BorderLayout());
                 JLabel nameLabel = new JLabel("   " + j.getNev());
-                JLabel scoreLabel = new JLabel(String.valueOf(j.getPoints() + "   "), SwingConstants.RIGHT);
+                JLabel scoreLabel = new JLabel(j.getPoints() + "   ", SwingConstants.RIGHT);
 
                 nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
                 scoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);

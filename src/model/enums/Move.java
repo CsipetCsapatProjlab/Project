@@ -4,12 +4,23 @@ package model.enums;
  * Mozgasi formak
  */
 public enum Move{
-    Fonal_noveszt,
-    GombaTest_noveszt,
-    Fonal_fogyaszt,
-    Spora_lo,
-    Rovar_vag,
-    Rovar_eszik,
-    Rovar_mozog,
-    SEMMI
+    Fonal_noveszt("Fonál Növesztés"),
+    Gombatest_noveszt("Gombatest növesztés"),
+    Gombatest_fejleszt("Gombatest fejlesztés"),
+    Fonal_fogyaszt("Fonalal rovar megevése"),
+    Spora_lo ("Spóra lövés"),
+    Rovar_vag ("Rovar vágás"),
+    Rovar_eszik ("Rovar evés"),
+    Rovar_mozog ("Rovar mozogás");
+
+    private final String niceName;
+
+    Move(String niceName) {
+        this.niceName = niceName;
+    }
+
+    @Override
+    public String toString() {
+        return niceName;
+    }
 }

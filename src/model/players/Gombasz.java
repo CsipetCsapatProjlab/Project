@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import logic_classes.SporaPlaceLogic;
 import model.enums.Move;
 import model.exceptions.InvalidMoveException;
 import model.gameobjects.Fonal;
@@ -13,7 +12,7 @@ import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.TektonElem;
 
-import static model.enums.Move.GombaTest_noveszt;
+import static model.enums.Move.*;
 
 public class Gombasz extends Jatekos {
     int kinottGombatest;
@@ -80,7 +79,7 @@ public class Gombasz extends Jatekos {
                 }
             }
 
-            case GombaTest_noveszt -> {
+            case Gombatest_noveszt -> {
                 var fn=fonalak.stream().filter(cur->cur.isAt(kezdo)).findFirst();
                 if(fn.isPresent()){
                     fn.get().gombaTestNovesztes(cel);
@@ -103,9 +102,7 @@ public class Gombasz extends Jatekos {
                 }
                 else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move);
             }
-            default -> {
-                throw new InvalidMoveException("Hibas move! " + move.name(), kezdo, cel, move);
-            }
+            default -> throw new InvalidMoveException("Hibas move! " + move.name(), kezdo, cel, move);
 
         }
     }
@@ -121,5 +118,10 @@ public class Gombasz extends Jatekos {
     public void torol(Fonal s){fonalak.remove(s);}
 
     @Override
-    public String mentes(){return nev + " ; " + Integer.toString(melyik) + " ; " + Integer.toString(kinottGombatest) + " ; " + "Gombasz";}
+    public String mentes(){return nev + " ; " + melyik + " ; " + kinottGombatest + " ; " + "Gombasz";}
+
+    @Override
+    public Move[] getMoveTypes() {
+        return new Move[] {Fonal_noveszt, Spora_lo, Fonal_fogyaszt, Gombatest_noveszt, Gombatest_fejleszt };
+    }
 }

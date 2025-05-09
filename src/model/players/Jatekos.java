@@ -43,4 +43,6 @@ public abstract class Jatekos {
     public String mentes(){
         return nev + ";" + melyik;
     }
+
+    public abstract Move[] getMoveTypes();
 }
