@@ -74,7 +74,7 @@ public class Gombasz extends Jatekos {
                     }
                 }
 
-                if(!f.isPresent() && !gt.isPresent()){
+                if(f.isEmpty() && gt.isEmpty()){
                     throw new InvalidMoveException("Hibas kezdo grid, " +move.name(), kezdo, cel, move);
                 }
             }
