@@ -50,6 +50,33 @@ public class Gombasz extends Jatekos {
         gombaTestek = g;
     }
 
+    /**
+     * Vissaadja a azt a fonalat (ha nincs akkor InvalidMoveException), ami a megadott griden található
+     * @param grid a megadott grid
+     * @param exception az exception, amit dobunk
+     * @return A fonal
+     */
+    private Fonal findFonalOnGrid(Grid grid, InvalidMoveException exception) throws InvalidMoveException {
+        return fonalak.stream()
+                .filter(cur->cur.isAt(grid))
+                .findFirst()
+                .orElseThrow(() -> exception);
+    }
+
+    /**
+     * Vissaadja a azt a Gombatestet (ha nincs akkor InvalidMoveException), ami a megadott griden található
+     * @param grid a megadott grid
+     * @param exception az exception, amit dobunk
+     * @return A gombatest
+     */
+    private GombaTest findGombaTestOnGrid(Grid grid, InvalidMoveException exception) throws InvalidMoveException {
+        return gombaTestek.stream()
+                .filter(cur->cur.isAt(grid))
+                .findFirst()
+                .orElseThrow(() -> exception);
+    }
+
+
 
     /**
      * Fonal novesztes kezdo mezorol cel mezore, megadott modon
@@ -59,7 +86,10 @@ public class Gombasz extends Jatekos {
      */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
+        InvalidMoveException exception = new InvalidMoveException("Hibas kezdo grid, " +move.name(), kezdo, cel, move);
         switch (move) {
+
+            // Elméletileg az volt, hogy ahol gombatest van ott fonal is de nem akarok belenyúlni
             case Fonal_noveszt -> {
                 Optional<Fonal> f=fonalak.stream().filter(cur->cur.isAt(kezdo)).findFirst();
                 Optional<GombaTest> gt=gombaTestek.stream().filter(cur->cur.isAt(kezdo)).findFirst();
@@ -67,46 +97,21 @@ public class Gombasz extends Jatekos {
                 if(f.isPresent()){
                     f.get().fonalNovesztes(cel);
                 }
-                else{
-                    if(gt.isPresent()){
+                else if(gt.isPresent()){
                     //hackelős solution, egyenlőre jó lesz
-                        Fonal ujFonal=new Fonal(kezdo,this);
-                        ujFonal.fonalNovesztes(cel);
-                    }
+                    Fonal ujFonal=new Fonal(kezdo,this);
+                    ujFonal.fonalNovesztes(cel);
                 }
 
                 if(f.isEmpty() && gt.isEmpty()){
-                    throw new InvalidMoveException("Hibas kezdo grid, " +move.name(), kezdo, cel, move);
+                    throw exception;
                 }
             }
-
-            case Gombatest_noveszt -> {
-                var fn=fonalak.stream().filter(cur->cur.isAt(kezdo)).findFirst();
-                if(fn.isPresent()){
-                    fn.get().gombaTestNovesztes(cel);
-                }
-                else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(),kezdo,cel,move);
-            }
-
-            case Fonal_fogyaszt -> {
-                var fn = fonalak.stream().filter(cur->cur.isAt(kezdo)).findFirst();
-                if(fn.isPresent()){
-                    fn.get().rovarFogyasztas();
-                }
-                else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move);
-            }
-
-            case Spora_lo ->  {
-                var gt=gombaTestek.stream().filter(cur->cur.isAt(kezdo)).findFirst();
-                if(gt.isPresent()){
-                    gt.get().sporaKilo(cel);
-                }
-                else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move);
-            }
+            case Gombatest_noveszt -> findFonalOnGrid(kezdo, exception).gombaTestNovesztes(cel);
+            case Fonal_fogyaszt -> findFonalOnGrid(kezdo, exception).rovarFogyasztas();
+            case Spora_lo ->  findGombaTestOnGrid(kezdo, exception).sporaKilo(cel);
             case Gombatest_fejleszt -> {
-                var gtOptional=gombaTestek.stream().filter(cur->cur.isAt(kezdo)).findFirst();
-                var gt = gtOptional.orElseThrow(() -> new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move));
-
+                var gt=findGombaTestOnGrid(kezdo, exception);
                 if (gt.getFejlesztett()) throw new FailedMoveException("A gombatest már fejlesztve van", gt, move);
                 else gt.setFejlesztett();
             }
