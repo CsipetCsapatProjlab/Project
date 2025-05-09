@@ -80,9 +80,17 @@ public class StartMenuGUI extends JFrame {
                 JOptionPane.ERROR_MESSAGE);
             return;
         } else {
-            int sor = Integer.parseInt(heightField.getText().trim());
-            int oszlop = Integer.parseInt(widthField.getText().trim());
-
+            int sor, oszlop;
+            try {
+                sor = Integer.parseInt(heightField.getText().trim());
+                oszlop = Integer.parseInt(widthField.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                        "2 egész számot kell megadni pályaméretnek.",
+                        "Hibás pályaméret!",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             Fungorium f = new Fungorium(sor, oszlop);
             jatekosokGui.stream()
                     .map(gui -> gui.jatekos)
