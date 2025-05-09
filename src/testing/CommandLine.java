@@ -61,10 +61,9 @@ public class CommandLine {
                             int[] gridCoord = getCoordinates(args[2]);
                             Grid grid = fungorium.getGrid(gridCoord[0], gridCoord[1]);
 
-                            if (!(grid instanceof TektonElem))
+                            if (!(grid instanceof TektonElem tElem))
                                 throw new IllegalArgumentException("A grid nem egy TektonElem nem helyezhető rá játékos");
 
-                            TektonElem tElem = ((TektonElem) grid);
                             Jatekos j = switch (args[0]) {
                                 case "r" -> new Rovarasz(tElem, name);
                                 case "g" -> new Gombasz(tElem, name);
@@ -239,22 +238,20 @@ public class CommandLine {
                                 return;
                             }
 
-                            if (jatekos instanceof Gombasz gombasz) gombasz = (Gombasz) jatekos;
-                            else {
-                                out.println("A játékos nem gombász");
-                                return;
-                            }
-                            Spora spora = switch (hatas) {
-                                case "benito" -> new BenitoSpora(grid, gombasz);
-                                case "osztodo" -> new OsztodoRovarSpora(grid, gombasz);
-                                case "lassito" -> new LassitoSpora(grid, gombasz);
-                                case "gyors" -> new GyorsSpora(grid, gombasz);
-                                case "normal" -> new Spora(grid, gombasz);
-                                default -> null;
-                            };
-                            if (spora != null) {
-                                out.println("Spóra hozzáadás sikeres!");
-                            } else out.println("Ilyen hatás nincs!");
+                            if (jatekos instanceof Gombasz gombasz) {
+                                Spora spora = switch (hatas) {
+                                    case "benito" -> new BenitoSpora(grid, gombasz);
+                                    case "osztodo" -> new OsztodoRovarSpora(grid, gombasz);
+                                    case "lassito" -> new LassitoSpora(grid, gombasz);
+                                    case "gyors" -> new GyorsSpora(grid, gombasz);
+                                    case "normal" -> new Spora(grid, gombasz);
+                                    default -> null;
+                                };
+
+                                if (spora != null) out.println("Spóra hozzáadás sikeres!");
+                                else out.println("Ilyen hatás nincs!");
+
+                            } else out.println("A játékos nem gombász");
                         },
                         "[benito/osztodo/lassito/gyors/normal] gombász_név <startX>x<startY>"
                 )
@@ -274,7 +271,7 @@ public class CommandLine {
                         int[] startCoordinates = getCoordinates(args[0]);
                         int[] endCoordinates = getCoordinates(args[1]);
                         try {
-                            fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move,false);
+                            fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move);
                         } catch (InvalidMoveException | FailedMoveException | IncompatibleGameObjectException e) {
                             out.println("->" + name + " egy hibás lépés: " + e.getMessage());
                             return;

@@ -114,14 +114,15 @@ public class Fungorium {
         return result.toString();
     }
 
-    void generateMaze(int x, int y) { // legenerálja a pályát
-        if (szigetekKeret[x][y]) { // ellenőrzi hogy voltunk-e már azon a mezőn
-            return;
-        }
+    void generateMaze(int x, int y) { // legenerálja a
         if (x < 0 || y < 0 || x >= this.sor || y >= this.oszlop) {
             return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
         }
-        int merre = -1;
+        if (szigetekKeret[x][y]) { // ellenőrzi hogy voltunk-e már azon a mezőn
+            return;
+        }
+
+        int merre;
         int elozo = -1;
         if (lavaPlace(x, y)) {
             test[x][y] = '#';
@@ -150,28 +151,20 @@ public class Fungorium {
     // Egy ellenőrző hogy ne alakulhasson ki 2x2 es láva rész
     private boolean lavaPlace(int x, int y) {
         if (x > 0 && y > 0) {
-            if (test[x - 1][y - 1] == '#' && test[x - 1][y - 1] == test[x - 1][y]
-                    && test[x - 1][y - 1] == test[x][y - 1]) {
-                return false;
-            }
+            return !(test[x - 1][y - 1] == '#' && test[x - 1][y - 1] == test[x - 1][y]
+                    && test[x - 1][y - 1] == test[x][y - 1]);
         }
         if (x < this.sor - 1 && y > 0) {
-            if (test[x + 1][y - 1] == '#' && test[x + 1][y - 1] == test[x + 1][y]
-                    && test[x + 1][y - 1] == test[x][y - 1]) {
-                return false;
-            }
+            return !(test[x + 1][y - 1] == '#' && test[x + 1][y - 1] == test[x + 1][y]
+                    && test[x + 1][y - 1] == test[x][y - 1]);
         }
         if (x > 0 && y < this.oszlop - 1) {
-            if (test[x - 1][y + 1] == '#' && test[x - 1][y + 1] == test[x - 1][y]
-                    && test[x - 1][y + 1] == test[x][y + 1]) {
-                return false;
-            }
+            return !(test[x - 1][y + 1] == '#' && test[x - 1][y + 1] == test[x - 1][y]
+                    && test[x - 1][y + 1] == test[x][y + 1]);
         }
         if (x < this.sor - 1 && y < this.oszlop - 1) {
-            if (test[x + 1][y + 1] == '#' && test[x + 1][y + 1] == test[x + 1][y]
-                    && test[x + 1][y + 1] == test[x][y + 1]) {
-                return false;
-            }
+            return test[x + 1][y + 1] != '#' || test[x + 1][y + 1] != test[x + 1][y]
+                    || test[x + 1][y + 1] != test[x][y + 1];
         }
         return true;
     }
@@ -203,11 +196,7 @@ public class Fungorium {
         // Beállítjuk a tömböt a keresés segítéséhez
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
-                if (test[i][j] == '#') {
-                    szigetekKeret[i][j] = true;
-                } else {
-                    szigetekKeret[i][j] = false;
-                }
+                szigetekKeret[i][j] = test[i][j] == '#';
             }
         }
 
@@ -469,11 +458,7 @@ public class Fungorium {
         szigetekSzama = 0;
         for (int i = 0; i < sor; i++) {
             for (int j = 0; j < oszlop; j++) {
-                if (test[i][j] == '#') {
-                    szigetekKeret[i][j] = true;
-                } else {
-                    szigetekKeret[i][j] = false;
-                }
+                szigetekKeret[i][j] = test[i][j] == '#';
             }
         }
         for (int i = 0; i < this.sor; i++) {
@@ -626,19 +611,19 @@ public class Fungorium {
             for (int i = 0; i < sor; i++) {
                 for (int j = 0; j < oszlop; j++) {
                     elemek = map[i][j].getGameObject();
-                    char meik = '-';
+                    char melyik = '-';
                     for (GameObject gameObject : elemek) {
                         if (gameObject instanceof BenitoSpora) {
-                            meik = '1';
+                            melyik = '1';
                         } else if (gameObject instanceof GyorsSpora) {
-                            meik = '2';
+                            melyik = '2';
                         } else if (gameObject instanceof LassitoSpora) {
-                            meik = '3';
+                            melyik = '3';
                         } else if (gameObject instanceof OsztodoRovarSpora) {
-                            meik = '4';
+                            melyik = '4';
                         }
                     }
-                    writer.write(meik);
+                    writer.write(melyik);
                 }
                 writer.newLine();
             }
@@ -820,7 +805,7 @@ public class Fungorium {
                         if (Character.isDigit(currentChar)) {
                             int index = currentChar - '0';
                             if (index >= 0 && index < jatekosok.size()) {
-                                GombaTest g = new GombaTest(map[i][j], (Gombasz) jatekosok.get(index));
+                                new GombaTest(map[i][j], (Gombasz) jatekosok.get(index));
                             } else {
                                 System.err.println("Érvénytelen index: " + index + " a " + i + "." + j + " pozícióban.");
                             }
@@ -852,7 +837,7 @@ public class Fungorium {
                         if (Character.isDigit(currentChar)) {
                             int index = currentChar - '0';
                             if (index >= 0 && index < jatekosok.size()) {
-                                Fonal f = new Fonal(map[i][j], (Gombasz) jatekosok.get(index));
+                                new Fonal(map[i][j], (Gombasz) jatekosok.get(index));
                             } else {
                                 System.err.println("Érvénytelen index: " + index + " a " + i + "." + j + " pozícióban.");
                             }
@@ -887,13 +872,12 @@ public class Fungorium {
                         if (Character.isDigit(kihez)) {
                             int index = kihez - '0';
                             if (index >= 0 && index < jatekosok.size()) {
-                                Spora s = switch (tipus) {
+                                switch (tipus) {
                                     case '1' -> new BenitoSpora(map[i][j],(Gombasz) jatekosok.get(index));
                                     case '2' -> new GyorsSpora(map[i][j],(Gombasz) jatekosok.get(index));
                                     case '3' -> new LassitoSpora(map[i][j],(Gombasz) jatekosok.get(index));
                                     case '4' -> new OsztodoRovarSpora(map[i][j],(Gombasz) jatekosok.get(index));
-                                    default -> null;
-                                };
+                                }
                             } else {
                                 System.err.println("Érvénytelen kihez index: " + index + " a " + i + "." + j + " pozícióban.");
                             }

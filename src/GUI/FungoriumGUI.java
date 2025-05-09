@@ -21,7 +21,7 @@ import model.players.Jatekos;
 
 public class FungoriumGUI {
     private final Fungorium fungorium;
-    private List<PlayerGUI> jatekosokGUI;
+    private final List<PlayerGUI> jatekosokGUI;
 
     public FungoriumGUI(int sor, int oszlop, List<PlayerGUI> playerGUIs) {
         this.jatekosokGUI = playerGUIs;
