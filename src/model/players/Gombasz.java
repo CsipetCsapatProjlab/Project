@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.enums.Move;
+import model.exceptions.FailedMoveException;
 import model.exceptions.InvalidMoveException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
@@ -101,6 +102,13 @@ public class Gombasz extends Jatekos {
                     gt.get().sporaKilo(cel);
                 }
                 else throw new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move);
+            }
+            case Gombatest_fejleszt -> {
+                var gtOptional=gombaTestek.stream().filter(cur->cur.isAt(kezdo)).findFirst();
+                var gt = gtOptional.orElseThrow(() -> new InvalidMoveException("Hibas kezdo grid, " + move.name(), kezdo, cel, move));
+
+                if (gt.getFejlesztett()) throw new FailedMoveException("A gombatest már fejlesztve van", gt, move);
+                else gt.setFejlesztett();
             }
             default -> throw new InvalidMoveException("Hibas move! " + move.name(), kezdo, cel, move);
 
