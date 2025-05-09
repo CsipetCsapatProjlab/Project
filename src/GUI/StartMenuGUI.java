@@ -2,8 +2,6 @@ package GUI;
 
 import javax.swing.*;
 
-import model.Fungorium;
-
 import java.awt.*;
 import java.util.List;
 
@@ -91,11 +89,7 @@ public class StartMenuGUI extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Fungorium f = new Fungorium(sor, oszlop);
-            jatekosokGui.stream()
-                    .map(gui -> gui.jatekos)
-                    .forEach(f::addJatekos);
-            FungoriumGUI GUI = new FungoriumGUI(f);
+            FungoriumGUI GUI = new FungoriumGUI(sor, oszlop, jatekosokGui);
         }
     
         System.out.println("Játék indul ezekkel a játékosokkal:");

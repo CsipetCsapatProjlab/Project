@@ -3,37 +3,36 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.lang.reflect.Field;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import model.Fungorium;
+import model.enums.Move;
 import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
+import model.grid.Lava;
+import model.grid.TektonElem;
 import model.players.Jatekos;
 
 public class FungoriumGUI {
-    private Fungorium f;
+    private final Fungorium fungorium;
+    private List<PlayerGUI> jatekosokGUI;
 
-    public FungoriumGUI(Fungorium f2) {
-        f = f2;
+    public FungoriumGUI(int sor, int oszlop, List<PlayerGUI> playerGUIs) {
+        this.jatekosokGUI = playerGUIs;
+        this.fungorium = new Fungorium(sor, oszlop);
+        addPlayers();
+
         SwingUtilities.invokeLater(() -> {
-            char[][] test = getTestField(f);
-            Grid[][] map = getMapField(f);
+            Grid[][] map = fungorium.getMap();
 
-            int rows = test.length;
-            int cols = test[0].length;
+            int rows = map.length;
+            int cols = map[0].length;
 
             JFrame frame = new JFrame("Fungorium Grid");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,49 +41,37 @@ public class FungoriumGUI {
             // --------- BAL PANEL: lépés lehetőségek ---------
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-            Jatekos current = f.getCurrentPlayer();
+            Jatekos current = fungorium.getCurrentPlayer();
 
             JLabel leftTitle = new JLabel("Lehetséges lépések:");
             leftPanel.add(leftTitle);
 
-            for (var moveType : current.getMoveTypes()) {
-                leftPanel.add(new JLabel(moveType.toString()));
-            }
+            JList<Move> possibleMoves = new JList<>(current.getMoveTypes());
+            leftPanel.add(possibleMoves);
 
             // --------- JOBB PANEL: játékosok és pontszámaik ---------
             JPanel rightPanel = new JPanel();
+            rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 20));
             rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-            JLabel rightTitle = new JLabel("    Játékosok:  ");
+            JLabel rightTitle = new JLabel("Játékosok:");
             rightPanel.add(rightTitle);
-            for (Jatekos j : f.getPlayers()) {
-                JPanel playerRow = new JPanel(new BorderLayout());
-                JLabel nameLabel = new JLabel("   " + j.getNev());
-                JLabel scoreLabel = new JLabel(j.getPoints() + "   ", SwingConstants.RIGHT);
+            jatekosokGUI.forEach(rightPanel::add);
 
-                nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-                scoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-
-                playerRow.add(nameLabel, BorderLayout.WEST);
-                playerRow.add(scoreLabel, BorderLayout.EAST);
-
-                rightPanel.add(playerRow);
-            }
             // --------- KÖZÉPSŐ GRID: pálya gombokkal ---------
             JPanel centerPanel = new JPanel();
             centerPanel.setLayout(new GridLayout(rows, cols));
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    JButton button = new JButton(getLabel(map[i][j]));
-                    char cell = test[i][j];
-                    if (cell == '#') {
+            for (Grid[] gridRow : map) {
+                for (Grid currentGrid : gridRow) {
+                    JButton button = new JButton(getLabel(currentGrid));
+                    if (currentGrid instanceof Lava) {
                         button.setBackground(Color.RED);
-                    } else if (cell >= '1' && cell <= '4') {
+                    } else if (currentGrid instanceof TektonElem) {
                         button.setBackground(Color.LIGHT_GRAY);
                     } else {
                         button.setBackground(Color.WHITE);
                     }
                     button.setOpaque(true);
-                    button.setBorderPainted(false);
+                    button.setBorderPainted(true);
                     centerPanel.add(button);
                 }
             }
@@ -111,25 +98,9 @@ public class FungoriumGUI {
         return label.toString();
     }
 
-    private static char[][] getTestField(Fungorium f) {
-        try {
-            Field field = Fungorium.class.getDeclaredField("test");
-            field.setAccessible(true);
-            return (char[][]) field.get(f);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new char[0][0];
-        }
-    }
-
-    private static Grid[][] getMapField(Fungorium f) {
-        try {
-            Field field = Fungorium.class.getDeclaredField("map");
-            field.setAccessible(true);
-            return (Grid[][]) field.get(f);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Grid[0][0];
-        }
+    private void addPlayers() {
+        jatekosokGUI.stream()
+                .map(gui -> gui.jatekos)
+                .forEach(fungorium::addJatekos);
     }
 }

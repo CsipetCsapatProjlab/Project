@@ -81,6 +81,11 @@ public class Fungorium {
         this.findszomszed();
     }
 
+    /// Visszaadja a mapet
+    public Grid[][] getMap() {
+        return map;
+    }
+
     /// Visszaadja a sor és oszlpszámot
     public int[] getShape() {
         return new int[] { sor, oszlop };
@@ -956,7 +961,7 @@ public class Fungorium {
     }
 
     /// egy lépést regisztrál és lép meg
-    public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move, boolean skip) throws IncompatibleGameObjectException, InvalidMoveException {
+    public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) throws IncompatibleGameObjectException, InvalidMoveException {
         motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
         afterRound();
     }

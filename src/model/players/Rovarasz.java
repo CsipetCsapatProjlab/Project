@@ -35,8 +35,8 @@ public class Rovarasz extends Jatekos {
         szerzettTapanyag=0;
     }
     
-    public void hozzaAd(Rovar rovarúj){
-        rovarok.add(rovarúj);
+    public void hozzaAd(Rovar newRovar){
+        rovarok.add(newRovar);
     }
     public void torol(Rovar regi){
         rovarok.remove(regi);

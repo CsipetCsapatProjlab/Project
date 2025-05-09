@@ -1,17 +1,23 @@
 package GUI;
 
+import model.players.Gombasz;
+import model.players.Jatekos;
+import model.players.Rovarasz;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
+import java.util.Random;
 
 public class CustomPanel extends JPanel {
-    private JTextField nameField;
-    private JComboBox<String> comboBox;
-    private JButton colorButton;
-    private Color selectedColor;
-    private JButton confirmButton;
+    private final JTextField nameField;
+    private final JComboBox<String> comboBox;
+    private final JButton colorButton;
+    private final Random rand = new Random();
+    private Color selectedColor = new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
 
     public CustomPanel() {
-        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        super(new FlowLayout(FlowLayout.LEFT, 10, 10));
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         // Név beviteli mező
@@ -27,7 +33,6 @@ public class CustomPanel extends JPanel {
         add(comboBox);
 
         // Színválasztó gomb
-        selectedColor = Color.YELLOW;
         colorButton = new JButton();
         colorButton.setPreferredSize(new Dimension(30, 30));
         colorButton.setBackground(selectedColor);
@@ -41,31 +46,44 @@ public class CustomPanel extends JPanel {
         });
         add(colorButton);
 
-        // Zöld pipa (ikonos gomb)
-        confirmButton = new JButton("✔");
-        confirmButton.setForeground(new Color(0, 180, 0));
-        confirmButton.setFont(new Font("Arial", Font.BOLD, 18));
-        confirmButton.setBorderPainted(false);
-        confirmButton.setContentAreaFilled(false);
-        confirmButton.setFocusPainted(false);
-        add(confirmButton);
+        // Zöld pipa (ikonos label)
+        JLabel confirmLabel = new JLabel("✔");
+        confirmLabel.setForeground(new Color(0, 180, 0));
+        confirmLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        add(confirmLabel);
     }
 
-    // Getterek az adatokhoz
-    public String getName() {
+    /// Visszaadja a nevet
+    private String getJatekosName() {
         return nameField.getText();
     }
 
-    public String getSelection() {
-        return (String) comboBox.getSelectedItem();
+    /// Visszaadja a tipust
+    private String getSelectedType() {
+        return Objects.requireNonNull(comboBox.getSelectedItem()).toString();
     }
 
-    public Color getColor() {
-        return selectedColor;
+    /// Teszteli, helyes-e a név
+    public boolean isValidName() {
+        var name = getJatekosName();
+        return name != null && !name.trim().isEmpty();
     }
 
-    public JButton getConfirmButton() {
-        return confirmButton;
+    /**
+     * Megcsinálja a PlayerGUI-kat az állapotából, ha nem jó a név, akkor IlligalArgumentException
+     * @return PlayerGUI, amit csinált
+     */
+    public PlayerGUI createPlayerGUI() {
+        if (isValidName()) {
+            var name = getJatekosName();
+            var type = getSelectedType();
+            Jatekos jatekos = switch (type) {
+                case "Gombász" -> new Gombasz(name);
+                case "Rovarász" -> new Rovarasz(name);
+                default -> throw new RuntimeException();
+            };
+            return new PlayerGUI(jatekos, selectedColor);
+        } else throw new IllegalArgumentException("Nem megfelelő a név");
     }
 }
 
