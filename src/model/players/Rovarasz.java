@@ -56,6 +56,7 @@ public class Rovarasz extends Jatekos {
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
         if(kezdo instanceof TektonElem elem && kezdo==cel && rovarok.isEmpty()){ // Feltéve hogy első lépés
             firstMove(elem);
+            return;
         }
 
        var rovar=rovarok.stream().filter(x->x.isAt(kezdo)).findFirst();

@@ -87,6 +87,7 @@ public class Gombasz extends Jatekos {
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
         if(kezdo instanceof TektonElem elem && kezdo==cel && gombaTestek.isEmpty()){ // Feltéve hogy első lépés
             firstMove(elem);
+            return;
         }
 
         InvalidMoveException exception = new InvalidMoveException("Hibas kezdo grid, " +move.name(), kezdo, cel, move);

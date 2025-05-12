@@ -3,12 +3,20 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import model.Fungorium;
 import model.enums.Move;
+import model.exceptions.FailedMoveException;
+import model.exceptions.IncompatibleGameObjectException;
+import model.exceptions.InvalidMoveException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
 import model.gameobjects.GombaTest;
@@ -23,10 +31,27 @@ import model.utils.ColorUtils;
 public class FungoriumGUI {
     private final Fungorium fungorium;
     private List<PlayerGUI> jatekosokGUI;
+
     private JButton[][] viewGrid;
+    private DefaultListModel<Move> possibleMoves;
+    private JList<Move> possibleMovesList;
+    private Lepes actualisLepes=new Lepes();
 
     private int rows;
     private int cols;
+
+    public class GridButton extends JButton {
+        public int x, y;
+        public GridButton(int x, int y) {
+            this.x = x;
+            this.y = y;
+            this.addActionListener(this::onButtonPressed);
+        }
+        public void onButtonPressed(ActionEvent event) {
+            actualisLepes.addLepes(x,y);
+            performMoveIfPossible();
+        }
+    }
 
     private class Lepes{
         public int startx=-1,starty=-1,endx=-1,endy=-1;
@@ -58,6 +83,31 @@ public class FungoriumGUI {
         }
     }
 
+    private void performMoveIfPossible(){
+        if(actualisLepes.isDone()){
+            int x1=actualisLepes.startx,x2=actualisLepes.endx,y1=actualisLepes.starty,y2=actualisLepes.endy;
+            Move move=actualisLepes.move;
+            actualisLepes=new Lepes();
+            try{
+                fungorium.makeMove(x1,y1,x2,y2,move);
+            } catch (IncompatibleGameObjectException | InvalidMoveException | FailedMoveException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+            viewFrissit();
+        }
+    }
+
+
+    private void viewFrissit(){
+        palyaFrissit();
+        moveListaFrissit();
+    }
+
+    private void moveListaFrissit(){
+        possibleMoves.removeAllElements();
+        possibleMoves.addAll(Arrays.stream(fungorium.getCurrentPlayer().getMoveTypes()).toList());
+    }
+
     private void palyaFrissit(){
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
@@ -65,12 +115,14 @@ public class FungoriumGUI {
                 List<GameObject> objs = currentGrid.getGameObject();
                 StringBuilder label = new StringBuilder();
 
+                label.append("<html>");
                 for (GameObject obj : objs) {
                     Jatekos gameObjectOwner=obj.getObserver();
                     var color = jatekosokGUI.stream().filter(e->gameObjectOwner==e.jatekos).findFirst();
                     Color jatekosColor=color.isPresent()?color.get().colorOfJatekos:Color.BLACK;
                     label.append(wrapInColor(obj.toStringShort(),jatekosColor));
                 }
+                label.append("</html>");
 
                 viewGrid[y][x].setText(label.toString());
                 if (currentGrid instanceof Lava) {
@@ -83,19 +135,23 @@ public class FungoriumGUI {
             }
         }
     }
+    public void MoveListSelectionChanged(ListSelectionEvent evt) {
+        int selectedIx = evt.getFirstIndex();
+        if(selectedIx>=0 && selectedIx<possibleMoves.getSize()){
+            actualisLepes.addMove(possibleMoves.get(selectedIx));
+            performMoveIfPossible();
+        }
+    }
 
     public FungoriumGUI(int sor, int oszlop, List<PlayerGUI> playerGUIs) {
         this.jatekosokGUI = playerGUIs;
         this.fungorium = new Fungorium(sor, oszlop);
         addPlayers();
 
+        rows = fungorium.getMap().length;
+        cols = fungorium.getMap()[0].length;
+
         SwingUtilities.invokeLater(() -> {
-            Grid[][] map = fungorium.getMap();
-
-            rows = map.length;
-            cols = map[0].length;
-
-
             JFrame frame = new JFrame("Fungorium Grid");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new BorderLayout());
@@ -103,13 +159,14 @@ public class FungoriumGUI {
             // --------- BAL PANEL: lépés lehetőségek ---------
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-            Jatekos current = fungorium.getCurrentPlayer();
-
             JLabel leftTitle = new JLabel("Lehetséges lépések:");
             leftPanel.add(leftTitle);
 
-            JList<Move> possibleMoves = new JList<>(current.getMoveTypes());
-            leftPanel.add(possibleMoves);
+            possibleMoves=new DefaultListModel<Move>();
+            possibleMovesList=new JList<>(possibleMoves);
+            leftPanel.add(possibleMovesList);
+
+            possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
 
             // --------- JOBB PANEL: játékosok és pontszámaik ---------
             JPanel rightPanel = new JPanel();
@@ -125,27 +182,20 @@ public class FungoriumGUI {
             centerPanel.setLayout(new GridLayout(rows, cols));
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < cols; x++) {
-                    Grid currentGrid=map[y][x];
-                    viewGrid[y][x] = new JButton(getLabel(currentGrid));
-                    if (currentGrid instanceof Lava) {
-                        viewGrid[y][x].setBackground(Color.RED);
-                    } else if (currentGrid instanceof TektonElem) {
-                        viewGrid[y][x].setBackground(Color.LIGHT_GRAY);
-                    } else {
-                        viewGrid[y][x].setBackground(Color.WHITE);
-                    }
+                    viewGrid[y][x] = new GridButton(x,y);
                     viewGrid[y][x].setOpaque(true);
                     viewGrid[y][x].setBorderPainted(true);
                     centerPanel.add(viewGrid[y][x]);
                 }
             }
-
             frame.add(leftPanel, BorderLayout.WEST);
             frame.add(centerPanel, BorderLayout.CENTER);
             frame.add(rightPanel, BorderLayout.EAST);
 
             frame.pack();
             frame.setVisible(true);
+
+            viewFrissit();
         });
     }
 
