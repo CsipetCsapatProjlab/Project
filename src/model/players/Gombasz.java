@@ -85,10 +85,6 @@ public class Gombasz extends Jatekos {
      */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
-        if(kezdo instanceof TektonElem elem && kezdo==cel && gombaTestek.isEmpty()){ // Feltéve hogy első lépés
-            firstMove(elem);
-            return;
-        }
 
         InvalidMoveException exception = new InvalidMoveException("Hibas kezdo grid, " +move.name(), kezdo, cel, move);
         switch (move) {
@@ -119,6 +115,10 @@ public class Gombasz extends Jatekos {
                 if (gt.getFejlesztett()) throw new FailedMoveException("A gombatest már fejlesztve van", gt, move);
                 else gt.setFejlesztett();
             }
+            case Kezdo_lepes -> {
+                if(kezdo instanceof TektonElem e) firstMove(e);
+                else throw new InvalidMoveException("Csak TektonElemre lehet lerakni gombatestet!",kezdo,cel,move);
+            }
             default -> throw new InvalidMoveException("Hibas move! " + move.name(), kezdo, cel, move);
 
         }
@@ -143,6 +143,9 @@ public class Gombasz extends Jatekos {
 
     @Override
     public Move[] getMoveTypes() {
-        return new Move[] {Fonal_noveszt, Spora_lo, Fonal_fogyaszt, Gombatest_noveszt, Gombatest_fejleszt };
+       List<Move> arr= new ArrayList<>(List.of(Fonal_noveszt, Spora_lo, Fonal_fogyaszt, Gombatest_noveszt, Gombatest_fejleszt));
+       if(gombaTestek.isEmpty())
+           arr.add(Kezdo_lepes);
+       return arr.toArray(new Move[arr.size()]);
     }
 }

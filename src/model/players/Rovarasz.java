@@ -10,6 +10,9 @@ import model.grid.TektonElem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.enums.Move.*;
+import static model.enums.Move.Kezdo_lepes;
+
 public class Rovarasz extends Jatekos {
     int szerzettTapanyag;
     List<Rovar> rovarok;
@@ -54,13 +57,13 @@ public class Rovarasz extends Jatekos {
 
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
-        if(kezdo instanceof TektonElem elem && kezdo==cel && rovarok.isEmpty()){ // Feltéve hogy első lépés
-            firstMove(elem);
-            return;
-        }
-
        var rovar=rovarok.stream().filter(x->x.isAt(kezdo)).findFirst();
 
+        if(move==Move.Kezdo_lepes){
+            if(kezdo instanceof TektonElem e) firstMove(e);
+            else throw new InvalidMoveException("Csak TektonElemre lehet lerakni gombatestet!",kezdo,cel,move);
+            return;
+        }
        if(rovar.isPresent()){
            Rovar act=rovar.get();
            switch (move){
@@ -79,7 +82,10 @@ public class Rovarasz extends Jatekos {
 
     @Override
     public Move[] getMoveTypes() {
-        return new Move[] {Move.Rovar_eszik, Move.Rovar_vag, Move.Rovar_mozog};
+        List<Move> arr=new ArrayList<>(List.of(Rovar_mozog, Rovar_eszik, Rovar_vag));
+        if(rovarok.isEmpty())
+            arr.add(Kezdo_lepes);
+        return arr.toArray(new Move[arr.size()]);
     }
 
 }

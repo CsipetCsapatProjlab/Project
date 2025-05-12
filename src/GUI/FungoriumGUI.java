@@ -1,8 +1,6 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -120,7 +118,7 @@ public class FungoriumGUI {
                     Jatekos gameObjectOwner=obj.getObserver();
                     var color = jatekosokGUI.stream().filter(e->gameObjectOwner==e.jatekos).findFirst();
                     Color jatekosColor=color.isPresent()?color.get().colorOfJatekos:Color.BLACK;
-                    label.append(wrapInColor(obj.toStringShort(),jatekosColor));
+                    label.append(wrapInColor(obj.toStringShort(),jatekosColor,20));
                 }
                 label.append("</html>");
 
@@ -182,12 +180,14 @@ public class FungoriumGUI {
             centerPanel.setLayout(new GridLayout(rows, cols));
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < cols; x++) {
-                    viewGrid[y][x] = new GridButton(x,y);
+                    viewGrid[y][x] = new GridButton(y,x);
                     viewGrid[y][x].setOpaque(true);
                     viewGrid[y][x].setBorderPainted(true);
                     centerPanel.add(viewGrid[y][x]);
                 }
             }
+            centerPanel.setMinimumSize(new Dimension(800,600));
+
             frame.add(leftPanel, BorderLayout.WEST);
             frame.add(centerPanel, BorderLayout.CENTER);
             frame.add(rightPanel, BorderLayout.EAST);
@@ -212,8 +212,8 @@ public class FungoriumGUI {
         return label.toString();
     }
 
-    private static String wrapInColor(String label, Color color) {
-        return String.format("<font color='%s'>%s</font>", ColorUtils.colorToHex(color),label);
+    private static String wrapInColor(String label, Color color, int size) {
+        return String.format("<font size='%s' color='%s'>%s</font>", size,ColorUtils.colorToHex(color),label);
     }
 
     private void addPlayers() {

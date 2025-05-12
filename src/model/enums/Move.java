@@ -4,6 +4,7 @@ package model.enums;
  * Mozgasi formak
  */
 public enum Move{
+    Kezdo_lepes("Kezdő lépés"),
     Fonal_noveszt("Fonál Növesztés"),
     Gombatest_noveszt("Gombatest növesztés"),
     Gombatest_fejleszt("Gombatest fejlesztés"),
