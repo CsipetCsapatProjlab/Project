@@ -16,7 +16,7 @@ import model.grid.TektonElem;
 import static model.enums.Move.*;
 
 public class Gombasz extends Jatekos {
-    int kinottGombatest;
+    int kinottGombatest=0;
     List<Spora> sporak=new ArrayList<>();
     List<Fonal> fonalak=new ArrayList<>();
     List<GombaTest> gombaTestek=new ArrayList<>();
@@ -35,12 +35,11 @@ public class Gombasz extends Jatekos {
      */
     public Gombasz(TektonElem grid, String nev) {
         super(nev);
-        gombaTestek.add(new GombaTest(grid, this));
-        kinottGombatest=0;
+        hozzaAd(new GombaTest(grid, this));
     }
+
     public Gombasz(String nev) {
         super(nev);
-        kinottGombatest=0;
     }
 
     public Gombasz(List<Spora> s, List<Fonal> f, List<GombaTest> g){
@@ -86,6 +85,10 @@ public class Gombasz extends Jatekos {
      */
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
+        if(kezdo instanceof TektonElem elem && kezdo==cel && gombaTestek.isEmpty()){ // Feltéve hogy első lépés
+            firstMove(elem);
+        }
+
         InvalidMoveException exception = new InvalidMoveException("Hibas kezdo grid, " +move.name(), kezdo, cel, move);
         switch (move) {
 
@@ -118,6 +121,10 @@ public class Gombasz extends Jatekos {
             default -> throw new InvalidMoveException("Hibas move! " + move.name(), kezdo, cel, move);
 
         }
+    }
+
+    private void firstMove(TektonElem elem) {
+        hozzaAd(new GombaTest(elem,this));
     }
 
     public void hozzaAd(GombaTest g){
