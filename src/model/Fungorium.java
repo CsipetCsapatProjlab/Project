@@ -47,7 +47,7 @@ public class Fungorium {
     int szigetekSzama = 0;// Tektonok száma
 
     public Fungorium(int ujsor, int ujoszlop) { // A pályát létrehozó konstruktor meghív minden fügvényt ami ahoz kell
-                                                // hogy a pálya létrejöjjön
+        // hogy a pálya létrejöjjön
         sor = ujsor;
         oszlop = ujoszlop;
         tektons = new ArrayList<>();
@@ -151,24 +151,31 @@ public class Fungorium {
     // Egy ellenőrző hogy ne alakulhasson ki 2x2 es láva rész
     private boolean lavaPlace(int x, int y) {
         if (x > 0 && y > 0) {
-            return !(test[x - 1][y - 1] == '#' && test[x - 1][y - 1] == test[x - 1][y]
-                    && test[x - 1][y - 1] == test[x][y - 1]);
+            if (test[x - 1][y - 1] == '#' && test[x - 1][y - 1] == test[x - 1][y]
+                    && test[x - 1][y - 1] == test[x][y - 1]) {
+                return false;
+            }
         }
         if (x < this.sor - 1 && y > 0) {
-            return !(test[x + 1][y - 1] == '#' && test[x + 1][y - 1] == test[x + 1][y]
-                    && test[x + 1][y - 1] == test[x][y - 1]);
+            if (test[x + 1][y - 1] == '#' && test[x + 1][y - 1] == test[x + 1][y]
+                    && test[x + 1][y - 1] == test[x][y - 1]) {
+                return false;
+            }
         }
         if (x > 0 && y < this.oszlop - 1) {
-            return !(test[x - 1][y + 1] == '#' && test[x - 1][y + 1] == test[x - 1][y]
-                    && test[x - 1][y + 1] == test[x][y + 1]);
+            if (test[x - 1][y + 1] == '#' && test[x - 1][y + 1] == test[x - 1][y]
+                    && test[x - 1][y + 1] == test[x][y + 1]) {
+                return false;
+            }
         }
         if (x < this.sor - 1 && y < this.oszlop - 1) {
-            return test[x + 1][y + 1] != '#' || test[x + 1][y + 1] != test[x + 1][y]
-                    || test[x + 1][y + 1] != test[x][y + 1];
+            if (test[x + 1][y + 1] == '#' && test[x + 1][y + 1] == test[x + 1][y]
+                    && test[x + 1][y + 1] == test[x][y + 1]) {
+                return false;
+            }
         }
         return true;
     }
-
     // A generálásnál a generálás irányába folytatja a rekurziót
     private void irany(int merre, int x, int y) {
         switch (merre) {
@@ -818,7 +825,7 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a gombákat: " + e.getMessage());
         }
-    }    
+    }
 
     /// betölti a fonalakat és hozzá rendeli őket a játékosaikhoz
     private void betoltFonalak(String path) {
@@ -856,8 +863,8 @@ public class Fungorium {
     private void betoltSporak(String tipusPath, String kihezPath) {
         List<Jatekos> jatekosok = motor.getJatekosok();
         try (
-            BufferedReader tipusReader = new BufferedReader(new FileReader(tipusPath));
-            BufferedReader kihezReader = new BufferedReader(new FileReader(kihezPath))) {
+                BufferedReader tipusReader = new BufferedReader(new FileReader(tipusPath));
+                BufferedReader kihezReader = new BufferedReader(new FileReader(kihezPath))) {
             for (int i = 0; i < sor; i++) {
                 String tipusSor = tipusReader.readLine();
                 String kihezSor = kihezReader.readLine();
@@ -891,7 +898,7 @@ public class Fungorium {
             System.err.println("Nem sikerült betölteni a spórákat: " + e.getMessage());
         }
     }
-    
+
 
     /// betölti a rovarakat és hozzá rendeli őket a játékosaikhoz
     private void betoltRovarok(String path) {
@@ -924,7 +931,7 @@ public class Fungorium {
         } catch (IOException e) {
             System.err.println("Nem sikerült betölteni a rovarokat: " + e.getMessage());
         }
-    }    
+    }
 
     /// beállítja a pályát egy másik pálya alapján
     public void setMap(Grid[][] g) {
