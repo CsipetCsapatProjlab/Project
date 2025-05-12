@@ -1,22 +1,13 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.*;
 
 import model.Fungorium;
 import model.enums.Move;
-import model.gameobjects.Fonal;
-import model.gameobjects.GameObject;
-import model.gameobjects.GombaTest;
-import model.gameobjects.Rovar;
-import model.gameobjects.Spora;
 import model.grid.Grid;
-import model.grid.Lava;
-import model.grid.TektonElem;
 import model.players.Jatekos;
 
 public class FungoriumGUI {
@@ -30,9 +21,6 @@ public class FungoriumGUI {
 
         SwingUtilities.invokeLater(() -> {
             Grid[][] map = fungorium.getMap();
-
-            int rows = map.length;
-            int cols = map[0].length;
 
             JFrame frame = new JFrame("Fungorium Grid");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -8,12 +8,14 @@ import model.grid.TektonElem;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class FieldPanel extends JPanel {
     Optional<Grid> selected1 = Optional.empty();
     Optional<Grid> selected2 = Optional.empty();
+    List<JToggleButton> buttons = new ArrayList<>();
 
     public FieldPanel(Grid[][] map) {
         super(new GridLayout(map.length, map[0].length));
@@ -21,6 +23,7 @@ public class FieldPanel extends JPanel {
         for (Grid[] gridRow : map) {
             for (Grid currentGrid : gridRow) {
                 var button = new JToggleButton(getLabel(currentGrid));
+                buttons.add(button);
 
                 Color color;
                 if (currentGrid instanceof Lava) {
@@ -39,9 +42,7 @@ public class FieldPanel extends JPanel {
                         return color.darker();
                     }
                 });
-                button.addActionListener(e -> {
-                    addSelected(currentGrid);
-                });
+                button.addActionListener(e -> addSelected(currentGrid));
 
                 add(button);
             }
@@ -62,6 +63,9 @@ public class FieldPanel extends JPanel {
 
     private void addSelected(Grid grid) {
         if (selected1.isEmpty()) selected1 = Optional.of(grid);
-        else if (selected2.isEmpty()) selected2 = Optional.of(grid);
+        else if (selected2.isEmpty()) {
+            selected2 = Optional.of(grid);
+            buttons.stream().filter(o -> !o.isSelected()).forEach(o -> o.setEnabled(false));
+        }
     }
 }
