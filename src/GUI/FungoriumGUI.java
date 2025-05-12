@@ -1,14 +1,25 @@
 package GUI;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import model.Fungorium;
 import model.enums.Move;
@@ -172,8 +183,16 @@ public class FungoriumGUI {
             rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
             JLabel rightTitle = new JLabel("Játékosok:");
             rightPanel.add(rightTitle);
-            jatekosokGUI.forEach(rightPanel::add);
-
+            rightPanel.add(Box.createVerticalStrut(5));
+            for (PlayerGUI playerGUI : jatekosokGUI) {
+                rightPanel.add(playerGUI);
+                rightPanel.add(Box.createVerticalStrut(10));
+            }
+            if (!jatekosokGUI.isEmpty()) {
+                rightPanel.remove(rightPanel.getComponentCount() - 1);
+            }
+            rightPanel.add(Box.createVerticalGlue());
+            
             // --------- KÖZÉPSŐ GRID: pálya gombokkal ---------
             viewGrid = new JButton[rows][cols];
             JPanel centerPanel = new JPanel();
