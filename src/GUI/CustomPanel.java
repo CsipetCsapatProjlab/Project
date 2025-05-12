@@ -78,6 +78,7 @@ public class CustomPanel extends JPanel {
             var name = getJatekosName();
             var type = getSelectedType();
             Jatekos jatekos = switch (type) {
+                // Hol van a kiinduló grid? jatekos.lepesben null kiinduló lépés?
                 case "Gombász" -> new Gombasz(name);
                 case "Rovarász" -> new Rovarasz(name);
                 default -> throw new RuntimeException();

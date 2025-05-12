@@ -1,5 +1,6 @@
 package model.players;
 
+import model.Tekton;
 import model.enums.Move;
 import model.exceptions.InvalidMoveException;
 import model.gameobjects.Rovar;
@@ -25,7 +26,7 @@ public class Rovarasz extends Jatekos {
     public Rovarasz(TektonElem grid, String nev) {
         super(nev);
         rovarok=new ArrayList<>();
-        rovarok.add(new Rovar(grid,this));
+        firstMove(grid);
         szerzettTapanyag=0;
     }
 
@@ -47,8 +48,16 @@ public class Rovarasz extends Jatekos {
         super("");
         rovarok= r;}
 
+    private void firstMove(TektonElem from){
+        rovarok.add(new Rovar(from,this));
+    }
+
     @Override
     public void lepes(Grid kezdo, Grid cel, Move move) throws InvalidMoveException {
+        if(kezdo instanceof TektonElem elem && kezdo==cel && rovarok.isEmpty()){ // Feltéve hogy első lépés
+            firstMove(elem);
+        }
+
        var rovar=rovarok.stream().filter(x->x.isAt(kezdo)).findFirst();
 
        if(rovar.isPresent()){

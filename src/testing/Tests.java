@@ -210,7 +210,7 @@ public class Tests {
             if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
                 try{f.fonalNovesztes(grid[1][2]);}
                 catch (Exception e){}
-                if(grid[1][2].getGameObjects().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
                 else MyLogger.In("Fonal novesztes sikeres tektonra!", false);
             }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
         }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
@@ -219,7 +219,7 @@ public class Tests {
         if(MyLogger.In("Van eleg spora a tektonon? [y/n]", true).equals(y)){
             if(MyLogger.In("A tektonra lehet noveszteni testet (nincsen mas gombatest vagy olyan tipusu a tekton) [y/n]", true).equals(y)){
                 f.gombaTestNovesztes(grid[1][2]);
-                if(grid[1][2].getGameObjects().isEmpty()) MyLogger.In("Gombates novesztes sikertelen!", false);
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Gombates novesztes sikertelen!", false);
                 else MyLogger.In("Gombatest novesztes sikeres!", false);
             }else MyLogger.In("Gombates novesztes sikertelen!", false);
         }else MyLogger.In("Gombates novesztes sikertelen!", false);
@@ -239,7 +239,7 @@ public class Tests {
             if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
                 try{f.fonalNovesztes(grid[1][2]);}
                 catch (Exception e){}
-                if(grid[1][2].getGameObjects().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
                 else MyLogger.In("Fonal novesztes sikeres tektonra!", false);
             }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
         }else MyLogger.In("Fonal novesztes sikertelen tektonra!", false);
@@ -251,7 +251,7 @@ public class Tests {
             if(MyLogger.In("Van eleg spora? [y/n]", true).equals(y)) {
                 try{f2.fonalNovesztes(grid[0][2]);}
                 catch (Exception e){}
-                if(grid[0][2].getGameObjects().isEmpty()) MyLogger.In("Fonal novesztes sikertelen lavara!", false);
+                if(grid[0][2].getGameObject().isEmpty()) MyLogger.In("Fonal novesztes sikertelen lavara!", false);
                 else MyLogger.In("Fonal novesztes sikeres lavara!", false);
             } else MyLogger.In("Fonal novesztes sikertelen lavara!", false);
         } else MyLogger.In("Fonal novesztes sikertelen lavara!", false);
@@ -271,7 +271,7 @@ public class Tests {
         if(MyLogger.In("Van eleg spora a kiindulo gombatestben? [y/n]", true).equals(y)){
             if(MyLogger.In("Szomszedos a kijelolt tekton? [y/n]", true).equals(y)){
                 //gt.sporaKilo(grid[1][2], s1);
-                if(grid[1][2].getGameObjects().isEmpty()) MyLogger.In("Spora loves sikertelen!", false);
+                if(grid[1][2].getGameObject().isEmpty()) MyLogger.In("Spora loves sikertelen!", false);
                 else MyLogger.In("Spora loves sikeres!", false);
             }else MyLogger.In("Spora loves sikertelen!", false);
         }else MyLogger.In("Spora loves sikertelen!", false);
@@ -304,7 +304,7 @@ public class Tests {
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
             //rv.lepes(grid[2][1],grid[2][2], Move.Rovar_mozog);
-            if(grid[2][2].getGameObjects().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
+            if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
@@ -320,14 +320,14 @@ public class Tests {
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
             //rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
-            if(grid[2][2].getGameObjects().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
+            if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
         MyLogger.Visit("Rovar.consume()");
         if(MyLogger.In("Van ott fonal? [y/n]", true).equals(y)){
             //rv.lepes(grid[2][2],grid[2][2],Move.Rovar_vag);
-            if(grid[2][2].getGameObjects().size() == 1) MyLogger.In("Rovar fonal eves sikeres!", false);
+            if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar fonal eves sikeres!", false);
             else MyLogger.In("Rovar fonal eves sikertelen!", false);
         }else MyLogger.In("Rovar fonal eves sikertelen!", false);
         MyLogger.Return("Rovar.consume()");
@@ -343,14 +343,14 @@ public class Tests {
         MyLogger.Visit("Rovar.move(Grid)");
         if(MyLogger.In("Van odavezeto ut? [y/n]", true).equals(y)){
             //rv.lepes(grid[2][1],grid[2][2],Move.Rovar_mozog);
-            if(grid[2][2].getGameObjects().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
+            if(grid[2][2].getGameObject().isEmpty()) MyLogger.In("Rovar mozgas sikertelen!", false);
             else MyLogger.In("Rovar mozgas sikeres!", false);
         }else MyLogger.In("Rovar mozgas sikertelen!", false);
         MyLogger.Return("Rovar.move(Grid)");
         MyLogger.Visit("Rovar.consume()");
         if(MyLogger.In("Van ott spora? [y/n]", true).equals(y)){
             //rv.lepes(grid[2][2],grid[2][2],Move.Rovar_eszik);
-            if(grid[2][2].getGameObjects().size() == 1) MyLogger.In("Rovar spora eves sikeres!", false);
+            if(grid[2][2].getGameObject().size() == 1) MyLogger.In("Rovar spora eves sikeres!", false);
             else MyLogger.In("Rovar spora eves sikertelen!", false);
         }else MyLogger.In("Rovar spora eves sikertelen!", false);
         MyLogger.Return("Rovar.consume()");

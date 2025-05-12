@@ -274,7 +274,7 @@ public class CommandLine {
                         int[] startCoordinates = getCoordinates(args[0]);
                         int[] endCoordinates = getCoordinates(args[1]);
                         try {
-                            fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move,false);
+                            fungorium.makeMove(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], move);
                         } catch (InvalidMoveException | FailedMoveException | IncompatibleGameObjectException e) {
                             out.println("->" + name + " egy hibás lépés: " + e.getMessage());
                             return;
