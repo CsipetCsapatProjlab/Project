@@ -58,23 +58,7 @@ public class FungoriumGUI {
             jatekosokGUI.forEach(rightPanel::add);
 
             // --------- KÖZÉPSŐ GRID: pálya gombokkal ---------
-            JPanel centerPanel = new JPanel();
-            centerPanel.setLayout(new GridLayout(rows, cols));
-            for (Grid[] gridRow : map) {
-                for (Grid currentGrid : gridRow) {
-                    JButton button = new JButton(getLabel(currentGrid));
-                    if (currentGrid instanceof Lava) {
-                        button.setBackground(Color.RED);
-                    } else if (currentGrid instanceof TektonElem) {
-                        button.setBackground(Color.LIGHT_GRAY);
-                    } else {
-                        button.setBackground(Color.WHITE);
-                    }
-                    button.setOpaque(true);
-                    button.setBorderPainted(true);
-                    centerPanel.add(button);
-                }
-            }
+            var centerPanel = new FieldPanel(map);
 
             frame.add(leftPanel, BorderLayout.WEST);
             frame.add(centerPanel, BorderLayout.CENTER);
@@ -83,19 +67,6 @@ public class FungoriumGUI {
             frame.pack();
             frame.setVisible(true);
         });
-    }
-
-    private static String getLabel(Grid grid) {
-        if (grid == null) return "";
-        List<GameObject> objs = grid.getGameObject();
-        StringBuilder label = new StringBuilder();
-        for (GameObject obj : objs) {
-            if (obj instanceof Rovar) label.append("R");
-            else if (obj instanceof GombaTest) label.append("G");
-            else if (obj instanceof Spora) label.append("S");
-            else if (obj instanceof Fonal) label.append("F");
-        }
-        return label.toString();
     }
 
     private void addPlayers() {
