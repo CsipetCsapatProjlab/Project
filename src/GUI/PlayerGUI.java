@@ -9,14 +9,16 @@ import java.awt.*;
 public class PlayerGUI extends JPanel {
     Color colorOfJatekos;
     Jatekos jatekos;
+    JLabel nameLabel;
+    JLabel scoreLabel;
 
     public PlayerGUI(Jatekos jatekos, Color colorOfJatekos) {
         super(new BorderLayout());
         this.jatekos = jatekos;
         this.colorOfJatekos = colorOfJatekos;
 
-        JLabel nameLabel = new JLabel(jatekos.getNev(), SwingConstants.LEFT);
-        JLabel scoreLabel = new JLabel(Integer.toString(jatekos.getPoints()), SwingConstants.RIGHT);
+        nameLabel = new JLabel(jatekos.getNev(), SwingConstants.LEFT);
+        scoreLabel = new JLabel(Integer.toString(jatekos.getPoints()), SwingConstants.RIGHT);
 
         nameLabel.setForeground(colorOfJatekos);
         scoreLabel.setForeground(colorOfJatekos);
@@ -29,11 +31,8 @@ public class PlayerGUI extends JPanel {
         super(new BorderLayout());
         this.jatekos = jatekos;
 
-        JLabel nameLabel = new JLabel(jatekos.getNev(), SwingConstants.LEFT);
-        JLabel scoreLabel = new JLabel(Integer.toString(jatekos.getPoints()), SwingConstants.RIGHT);
-
-        nameLabel.setForeground(colorOfJatekos);
-        scoreLabel.setForeground(colorOfJatekos);
+        nameLabel = new JLabel(jatekos.getNev(), SwingConstants.LEFT);
+        scoreLabel = new JLabel(Integer.toString(jatekos.getPoints()), SwingConstants.RIGHT);
 
         add(nameLabel, BorderLayout.WEST);
         add(scoreLabel, BorderLayout.EAST);
@@ -42,5 +41,16 @@ public class PlayerGUI extends JPanel {
     @Override
     public String toString() {
         return jatekos.toString() + " color: " + colorOfJatekos;
+    }
+
+    public Color getszin(){
+        return colorOfJatekos;
+    }
+
+    public void setszin(Color uj){
+        colorOfJatekos = uj;
+        nameLabel.setForeground(colorOfJatekos);
+        scoreLabel.setForeground(colorOfJatekos);
+        this.repaint();
     }
 }

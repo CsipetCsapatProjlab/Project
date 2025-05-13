@@ -5,6 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -174,6 +179,7 @@ public class FungoriumGUI {
                     try {
                         fungorium.mentes(filename.trim());
                         JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
+                        mentes(filename.trim() + "/szinek.txt");
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
                     }
@@ -241,6 +247,7 @@ public class FungoriumGUI {
             .map(j -> new PlayerGUI(j))
             .toList();
         addPlayers();
+        betultszin(betolString + "/szinek.txt");
 
         rows = fungorium.getMap().length;
         cols = fungorium.getMap()[0].length;
@@ -260,6 +267,7 @@ public class FungoriumGUI {
                     try {
                         fungorium.mentes(filename.trim());
                         JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
+                        mentes(filename.trim() + "/szinek.txt");
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
                     }
@@ -342,5 +350,32 @@ public class FungoriumGUI {
         jatekosokGUI.stream()
                 .map(gui -> gui.jatekos)
                 .forEach(fungorium::addJatekos);
+    }
+
+    public void mentes(String filename) throws IOException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            for (PlayerGUI j : jatekosokGUI) {
+                Color c = j.getszin(); // Feltételezve, hogy van ilyen getter
+                writer.printf("%d;%d;%d%n", c.getRed(), c.getGreen(), c.getBlue());
+            }
+        }
+    }
+
+    public void betultszin(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            int index = 0;
+            while ((line = reader.readLine()) != null && index < jatekosokGUI.size()) {
+                String[] parts = line.split(";");
+                int r = Integer.parseInt(parts[0]);
+                int g = Integer.parseInt(parts[1]);
+                int b = Integer.parseInt(parts[2]);
+                Color color = new Color(r, g, b);
+                jatekosokGUI.get(index).setszin(color); 
+                index++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Hiba a fájl betöltésekor: " + e.getMessage(), e);
+        }
     }
 }
