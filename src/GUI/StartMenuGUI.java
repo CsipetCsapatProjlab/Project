@@ -10,6 +10,7 @@ public class StartMenuGUI extends JFrame {
     private JTextField widthField;
     private JTextField heightField;
     PlayerSelectionPanel  playerSelectionPanel = new PlayerSelectionPanel(5);
+    private String betoltes;
 
     public StartMenuGUI() {
         setTitle("Fungi Mungi 2000");
@@ -56,16 +57,40 @@ public class StartMenuGUI extends JFrame {
         JScrollPane scrollPane = new JScrollPane(playerSelectionPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Start button
+        // Gombok létrehozása
         JButton startButton = new JButton("Start");
+        JButton loadButton = new JButton("Betöltés");
+        JButton folderButton = new JButton("Mappa kiválasztása");
+
+        // Eseménykezelők
+        startButton.addActionListener(e -> onStartPressed());
+        loadButton.addActionListener(e -> onLoadPressed());
+        folderButton.addActionListener(e -> onSelectFolder());
+
+        // Gombok hozzáadása egy alsó panelhez
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        bottomPanel.add(folderButton);
+        bottomPanel.add(loadButton);
         bottomPanel.add(startButton);
-        startButton.addActionListener(e -> onStartPressed());
 
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
         return panel;
+    }
+
+    private void onLoadPressed() {
+        FungoriumGUI GUI = new FungoriumGUI(betoltes);
+    }
+
+    private void onSelectFolder() {
+        JFileChooser folderChooser = new JFileChooser();
+        folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = folderChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String selectedFolder = folderChooser.getSelectedFile().getAbsolutePath();
+            betoltes = selectedFolder;
+        }
     }
 
     private void onStartPressed() {

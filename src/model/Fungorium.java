@@ -990,4 +990,9 @@ public class Fungorium {
     public void addJatekos(Jatekos j) {
         motor.jatekosHozzaAd(j);
     }
+
+    public List<Jatekos> getPlayerslist() {
+        return this.motor.getJatekosok();
+    }
+
 }

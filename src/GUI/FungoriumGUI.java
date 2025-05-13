@@ -106,7 +106,6 @@ public class FungoriumGUI {
         }
     }
 
-
     private void viewFrissit(){
         palyaFrissit();
         moveListaFrissit();
@@ -164,7 +163,22 @@ public class FungoriumGUI {
             JFrame frame = new JFrame("Fungorium Grid");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new BorderLayout());
+            // Alsó sáv létrehozása BorderLayout-tal
+            JPanel bottomPanel = new JPanel(new BorderLayout());
+            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // fix magasság
 
+            JButton saveButton = new JButton("Mentés");
+            saveButton.addActionListener(e -> {
+                String filename = JOptionPane.showInputDialog(null, "Add meg a fájlnevet a mentéshez:");
+                if (filename != null && !filename.trim().isEmpty()) {
+                    try {
+                        fungorium.mentes(filename.trim());
+                        JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
+                    }
+                }
+            });
             // --------- BAL PANEL: lépés lehetőségek ---------
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
@@ -183,6 +197,7 @@ public class FungoriumGUI {
             rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
             JLabel rightTitle = new JLabel("Játékosok:");
             rightPanel.add(rightTitle);
+
             rightPanel.add(Box.createVerticalStrut(5));
             for (PlayerGUI playerGUI : jatekosokGUI) {
                 rightPanel.add(playerGUI);
@@ -206,7 +221,95 @@ public class FungoriumGUI {
                 }
             }
             centerPanel.setMinimumSize(new Dimension(800,600));
+            // A bal alsó sarokba helyezzük a gombot
+            bottomPanel.add(saveButton, BorderLayout.WEST);
+            rightPanel.add(bottomPanel);
+            frame.add(leftPanel, BorderLayout.WEST);
+            frame.add(centerPanel, BorderLayout.CENTER);
+            frame.add(rightPanel, BorderLayout.EAST);
 
+            frame.pack();
+            frame.setVisible(true);
+
+            viewFrissit();
+        });
+    }
+
+    public FungoriumGUI(String betolString) {
+        this.fungorium = new Fungorium(betolString);
+        this.jatekosokGUI = fungorium.getPlayerslist().stream()
+            .map(j -> new PlayerGUI(j))
+            .toList();
+        addPlayers();
+
+        rows = fungorium.getMap().length;
+        cols = fungorium.getMap()[0].length;
+
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Fungorium Grid");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLayout(new BorderLayout());
+            // Alsó sáv létrehozása BorderLayout-tal
+            JPanel bottomPanel = new JPanel(new BorderLayout());
+            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // fix magasság
+
+            JButton saveButton = new JButton("Mentés");
+            saveButton.addActionListener(e -> {
+                String filename = JOptionPane.showInputDialog(null, "Add meg a fájlnevet a mentéshez:");
+                if (filename != null && !filename.trim().isEmpty()) {
+                    try {
+                        fungorium.mentes(filename.trim());
+                        JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
+                    }
+                }
+            });
+            // --------- BAL PANEL: lépés lehetőségek ---------
+            JPanel leftPanel = new JPanel();
+            leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+            JLabel leftTitle = new JLabel("Lehetséges lépések:");
+            leftPanel.add(leftTitle);
+
+            possibleMoves=new DefaultListModel<Move>();
+            possibleMovesList=new JList<>(possibleMoves);
+            leftPanel.add(possibleMovesList);
+
+            possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
+
+            // --------- JOBB PANEL: játékosok és pontszámaik ---------
+            JPanel rightPanel = new JPanel();
+            rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 20));
+            rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+            JLabel rightTitle = new JLabel("Játékosok:");
+            rightPanel.add(rightTitle);
+
+            rightPanel.add(Box.createVerticalStrut(5));
+            for (PlayerGUI playerGUI : jatekosokGUI) {
+                rightPanel.add(playerGUI);
+                rightPanel.add(Box.createVerticalStrut(10));
+            }
+            if (!jatekosokGUI.isEmpty()) {
+                rightPanel.remove(rightPanel.getComponentCount() - 1);
+            }
+            rightPanel.add(Box.createVerticalGlue());
+            
+            // --------- KÖZÉPSŐ GRID: pálya gombokkal ---------
+            viewGrid = new JButton[rows][cols];
+            JPanel centerPanel = new JPanel();
+            centerPanel.setLayout(new GridLayout(rows, cols));
+            for (int y = 0; y < rows; y++) {
+                for (int x = 0; x < cols; x++) {
+                    viewGrid[y][x] = new GridButton(y,x);
+                    viewGrid[y][x].setOpaque(true);
+                    viewGrid[y][x].setBorderPainted(true);
+                    centerPanel.add(viewGrid[y][x]);
+                }
+            }
+            centerPanel.setMinimumSize(new Dimension(800,600));
+            // A bal alsó sarokba helyezzük a gombot
+            bottomPanel.add(saveButton, BorderLayout.WEST);
+            rightPanel.add(bottomPanel);
             frame.add(leftPanel, BorderLayout.WEST);
             frame.add(centerPanel, BorderLayout.CENTER);
             frame.add(rightPanel, BorderLayout.EAST);

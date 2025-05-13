@@ -25,6 +25,20 @@ public class PlayerGUI extends JPanel {
         add(scoreLabel, BorderLayout.EAST);
     }
 
+    public PlayerGUI(Jatekos jatekos) {
+        super(new BorderLayout());
+        this.jatekos = jatekos;
+
+        JLabel nameLabel = new JLabel(jatekos.getNev(), SwingConstants.LEFT);
+        JLabel scoreLabel = new JLabel(Integer.toString(jatekos.getPoints()), SwingConstants.RIGHT);
+
+        nameLabel.setForeground(colorOfJatekos);
+        scoreLabel.setForeground(colorOfJatekos);
+
+        add(nameLabel, BorderLayout.WEST);
+        add(scoreLabel, BorderLayout.EAST);
+    }
+
     @Override
     public String toString() {
         return jatekos.toString() + " color: " + colorOfJatekos;
