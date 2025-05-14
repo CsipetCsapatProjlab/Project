@@ -3,14 +3,17 @@ package GUI;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class StartMenuGUI extends JFrame {
 
     private JTextField widthField;
     private JTextField heightField;
     PlayerSelectionPanel  playerSelectionPanel = new PlayerSelectionPanel(5);
-    private String betoltes;
+    private String betoltes = null;
 
     public StartMenuGUI() {
         setTitle("Fungi Mungi 2000");
@@ -80,16 +83,60 @@ public class StartMenuGUI extends JFrame {
     }
 
     private void onLoadPressed() {
-        FungoriumGUI GUI = new FungoriumGUI(betoltes);
+        if(betoltes != null){
+            FungoriumGUI GUI = new FungoriumGUI(betoltes);
+        }
     }
 
     private void onSelectFolder() {
-        JFileChooser folderChooser = new JFileChooser();
-        folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int result = folderChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            String selectedFolder = folderChooser.getSelectedFile().getAbsolutePath();
-            betoltes = selectedFolder;
+        File srcDir = new File(System.getProperty("user.dir") + File.separator);
+
+        if (!srcDir.exists() || !srcDir.isDirectory()) {
+            JOptionPane.showMessageDialog(this, "A 'src' mappa nem található!", "Hiba", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Kizárt mappanevek és fájlok
+        String[] excludedNames = {
+            "GUI", "interfaces", "logic_classes", "model", "testing", "test_script", "Main.class", "Main.java"
+        };
+
+        File[] files = srcDir.listFiles(File::isDirectory);
+        if (files == null) {
+            JOptionPane.showMessageDialog(this, "Nem sikerült beolvasni a mappákat!", "Hiba", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Elérhető mappák, amiket nem zárunk ki
+        Set<String> availableFolders = new HashSet<>();
+        for (File f : files) {
+            String name = f.getName();
+            boolean isExcluded = false;
+            for (String excluded : excludedNames) {
+                if (excluded.equals(name)) {
+                    isExcluded = true;
+                    break;
+                }
+            }
+            if (!isExcluded) {
+                availableFolders.add(name);
+            }
+        }
+
+        // Megjelenítjük a felhasználónak az elérhető mappák nevét
+        String folderName = JOptionPane.showInputDialog(this,
+                "Korábban mentett játékok kérem addja meg a mappa nevét a betöltéshez:\n-" + String.join("\n-", availableFolders) + "\n Meik legyen:");
+
+        if (folderName != null && !folderName.trim().isEmpty()) {
+            if (availableFolders.contains(folderName.trim())) {
+                betoltes = srcDir.getAbsolutePath() + File.separator + folderName.trim();
+                JOptionPane.showMessageDialog(this, "Mappa kiválasztva: " + betoltes);
+            } else {
+                // Ha a mappa nem található
+                JOptionPane.showMessageDialog(this, "A megadott mappa nem található.", "Hiba", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Nem adtál meg mappát!", "Hiba", JOptionPane.ERROR_MESSAGE);
         }
     }
 
