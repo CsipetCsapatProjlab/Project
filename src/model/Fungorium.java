@@ -397,6 +397,9 @@ public class Fungorium {
     }
 
     private void szakadjon(int kezdosor, int kezdooszlop) {
+        if (kezdosor < 0 || kezdooszlop < 0 || kezdosor >= this.sor || kezdooszlop >= this.oszlop) {
+            return; // Ha már fal van, vagy a határokon kívül vagyunk, lépjünk ki
+        }
         if (lavaPlace(kezdosor, kezdooszlop)) {
             test[kezdosor][kezdooszlop] = '#';
             map[kezdosor][kezdooszlop] = new Lava();
@@ -954,7 +957,7 @@ public class Fungorium {
     public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) throws IncompatibleGameObjectException, InvalidMoveException {
         motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
         afterRound();
-        this.ujKor();
+        //this.ujKor();
     }
 
     /// skippeli a játékos körét
