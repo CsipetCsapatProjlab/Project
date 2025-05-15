@@ -47,6 +47,7 @@ public class FungoriumGUI extends JFrame {
     private DefaultListModel<Move> possibleMoves;
     private JList<Move> possibleMovesList;
     private Lepes actualisLepes = new Lepes();
+    JLabel current;
 
     private int rows;
     private int cols;
@@ -151,7 +152,7 @@ public class FungoriumGUI extends JFrame {
                 }
             }
         }
-        //current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
+        current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
     }
     public void MoveListSelectionChanged(ListSelectionEvent evt) {
         int selectedIx = evt.getFirstIndex();
@@ -180,6 +181,10 @@ public class FungoriumGUI extends JFrame {
         JLabel leftTitle = new JLabel("Lehetséges lépések:");
         leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(leftTitle);
+
+        current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
+        current.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(current);
 
         possibleMoves = new DefaultListModel<Move>();
         possibleMovesList = new JList<>(possibleMoves);
