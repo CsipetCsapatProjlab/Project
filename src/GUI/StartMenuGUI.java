@@ -89,12 +89,23 @@ public class StartMenuGUI extends JFrame {
     }
 
     private void onSelectFolder() {
-        File srcDir = new File(System.getProperty("user.dir") + File.separator);
+        File rootDir = new File(System.getProperty("user.dir"));
+        File srcDir = new File(rootDir, "src");
+        System.out.println("user.dir: " + System.getProperty("user.dir"));
+        System.out.println("srcDir: " + srcDir.getAbsolutePath());
+
+        // Ha nincs benne `src`, akkor próbáld meg a rootot
+        if (!srcDir.exists() || !srcDir.isDirectory()) {
+            // Talán eleve a src-ben vagyunk
+            srcDir = rootDir;
+        }
 
         if (!srcDir.exists() || !srcDir.isDirectory()) {
-            JOptionPane.showMessageDialog(this, "A 'src' mappa nem található!", "Hiba", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "'src' mappa nem található!", "Hiba", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        System.out.println("Használt mappa: " + srcDir.getAbsolutePath());
 
         // Kizárt mappanevek és fájlok
         String[] excludedNames = {
