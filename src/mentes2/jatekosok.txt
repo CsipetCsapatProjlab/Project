@@ -1,5 +1,5 @@
-Sanyi ; 0 ; 0 ; Gombasz
-Sanyi ; 1 ; 0 ; Gombasz
-Sanyi ; 2 ; 0 ; Gombasz
-Sanyi ; 3 ; 0 ; Gombasz
-Sanyi ; 4 ; 0 ; Gombasz
+Sanyi ; 0 ; 3 ; Gombasz
+Gaspar ; 1 ; 3 ; Gombasz
+Menyhert ; 2 ; 3 ; Gombasz
+Aladar ; 3 ; 3 ; Gombasz
+Boldizsar ; 4 ; 4 ; Gombasz

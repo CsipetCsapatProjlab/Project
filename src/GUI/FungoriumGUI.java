@@ -47,6 +47,7 @@ public class FungoriumGUI {
     private DefaultListModel<Move> possibleMoves;
     private JList<Move> possibleMovesList;
     private Lepes actualisLepes=new Lepes();
+    private JLabel current;
 
     private int rows;
     private int cols;
@@ -118,6 +119,7 @@ public class FungoriumGUI {
     private void viewFrissit(){
         palyaFrissit();
         moveListaFrissit();
+        current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
     }
 
     private void moveListaFrissit(){
@@ -197,7 +199,7 @@ public class FungoriumGUI {
             leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftPanel.add(leftTitle);
 
-            JLabel current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
+            current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
             current.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftPanel.add(current);
 
@@ -283,6 +285,11 @@ public class FungoriumGUI {
                     }
                 }
             });
+            JButton skipButton = new JButton("SKIP");
+            skipButton.addActionListener(e -> {
+                fungorium.getMotor().kovetkezoJatekos();
+                viewFrissit();
+            });
             // --------- BAL PANEL: lépés lehetőségek ---------
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
@@ -291,7 +298,7 @@ public class FungoriumGUI {
             leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftPanel.add(leftTitle);
 
-            JLabel current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
+            current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
             current.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftPanel.add(current);
 
@@ -332,7 +339,13 @@ public class FungoriumGUI {
             }
             centerPanel.setMinimumSize(new Dimension(800,600));
             // A jobb alsó sarokba helyezzük a gombot
-            bottomPanel.add(saveButton, BorderLayout.WEST);
+            JPanel leftButtonsPanel = new JPanel();
+            leftButtonsPanel.setLayout(new BoxLayout(leftButtonsPanel, BoxLayout.X_AXIS));
+            leftButtonsPanel.add(saveButton);
+            leftButtonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+            leftButtonsPanel.add(skipButton);
+
+            bottomPanel.add(leftButtonsPanel, BorderLayout.WEST);
             rightPanel.add(bottomPanel);
             frame.add(leftPanel, BorderLayout.WEST);
             frame.add(centerPanel, BorderLayout.CENTER);

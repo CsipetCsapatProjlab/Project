@@ -73,7 +73,6 @@ public class Tekton {
     public List<TektonElem> getTektonElems(){return elemek;}
     public void resetTektonelemek(){elemek.clear();}
     public Grid[] getRandomPath() {
-        // TODO
         return null;
     }
 

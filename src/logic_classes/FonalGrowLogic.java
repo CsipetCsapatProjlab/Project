@@ -72,7 +72,6 @@ public class FonalGrowLogic extends DiscoverLogic{
     }
 
     /**
-     * TODO
      * @param sporaszam
      * @return
      */

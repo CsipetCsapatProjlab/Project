@@ -1,12 +1,26 @@
 package GUI;
 
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 public class StartMenuGUI extends JFrame {
 
@@ -89,12 +103,21 @@ public class StartMenuGUI extends JFrame {
     }
 
     private void onSelectFolder() {
-        File srcDir = new File(System.getProperty("user.dir") + File.separator);
+        File rootDir = new File(System.getProperty("user.dir"));
+        File srcDir = new File(rootDir, "src");
+
+        // Ha nincs benne `src`, akkor próbáld meg a rootot
+        if (!srcDir.exists() || !srcDir.isDirectory()) {
+            // Talán eleve a src-ben vagyunk
+            srcDir = rootDir;
+        }
 
         if (!srcDir.exists() || !srcDir.isDirectory()) {
-            JOptionPane.showMessageDialog(this, "A 'src' mappa nem található!", "Hiba", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "'src' mappa nem található!", "Hiba", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        System.out.println("Használt mappa: " + srcDir.getAbsolutePath());
 
         // Kizárt mappanevek és fájlok
         String[] excludedNames = {

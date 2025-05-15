@@ -4,7 +4,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 
 import model.enums.Move;
 import model.exceptions.FailedMoveException;
@@ -179,7 +182,6 @@ public class JatekMotor {
                     throw new IllegalArgumentException("Rossz jatekostipus!");
             }
         } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
