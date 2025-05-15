@@ -396,13 +396,13 @@ public class Fungorium {
         }
     }
 
-    // a szakadást végző fügvény
     private void szakadjon(int kezdosor, int kezdooszlop) {
         if (lavaPlace(kezdosor, kezdooszlop)) {
             test[kezdosor][kezdooszlop] = '#';
             map[kezdosor][kezdooszlop] = new Lava();
         }
         System.out.println(kezdosor + " " + kezdooszlop);
+
         if (kezdosor - 1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2) {
             if (test[kezdosor - 1][kezdooszlop] != '#') {
                 szakadjon(kezdosor - 1, kezdooszlop);
@@ -414,13 +414,13 @@ public class Fungorium {
             }
         }
         if (kezdooszlop - 1 >= 0 && szomszedLava(kezdosor, kezdooszlop) <= 2) {
-            if (test[kezdosor - 1][kezdooszlop] != '#') {
+            if (test[kezdosor][kezdooszlop - 1] != '#') {
                 szakadjon(kezdosor, kezdooszlop - 1);
             }
         }
         if (kezdooszlop + 1 < this.oszlop && szomszedLava(kezdosor, kezdooszlop) <= 2) {
-            if (test[kezdosor - 1][kezdooszlop] != '#') {
-                szakadjon(kezdosor, kezdooszlop - 1);
+            if (test[kezdosor][kezdooszlop + 1] != '#') {
+                szakadjon(kezdosor, kezdooszlop + 1);
             }
         }
     }
@@ -516,7 +516,6 @@ public class Fungorium {
     /// új kört kezeli megpróbálja szakadást előállítani és menti az állást
     public void ujKor() {
         szakad();
-        mentes("mentes");
     }
 
     /// Menti a pálya állását a kijelölt mappába és abba létrehozza a a filokat vagy ha létezik felülírja
