@@ -151,6 +151,7 @@ public class FungoriumGUI extends JFrame {
                 }
             }
         }
+        //current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
     }
     public void MoveListSelectionChanged(ListSelectionEvent evt) {
         int selectedIx = evt.getFirstIndex();
@@ -163,7 +164,12 @@ public class FungoriumGUI extends JFrame {
     public JPanel initBottomPanel(){
         var bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        bottomPanel.add(initSaveButton(), BorderLayout.WEST);
+        JPanel leftButtonsPanel = new JPanel();
+            leftButtonsPanel.setLayout(new BoxLayout(leftButtonsPanel, BoxLayout.X_AXIS));
+            leftButtonsPanel.add(initSaveButton());
+            leftButtonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+            leftButtonsPanel.add(initSkipButton());
+            bottomPanel.add(leftButtonsPanel, BorderLayout.WEST);
         return bottomPanel;
     }
 
@@ -274,6 +280,14 @@ public class FungoriumGUI extends JFrame {
             }
         });
         return saveButton;
+    }
+    private JButton initSkipButton(){
+        JButton skipButton = new JButton("SKIP");
+            skipButton.addActionListener(e -> {
+                fungorium.getMotor().kovetkezoJatekos();
+                viewFrissit();
+            });
+        return skipButton;
     }
 
     public FungoriumGUI(String betolString) {
