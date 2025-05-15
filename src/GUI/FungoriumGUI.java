@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -51,21 +52,25 @@ public class FungoriumGUI {
     private int cols;
 
     public class GridButton extends JButton {
-        public int x, y;
+        private int gridx;
+        private int gridy;
         public GridButton(int x, int y) {
-            this.x = x;
-            this.y = y;
+            gridx = x;
+            gridy = y;
             this.addActionListener(this::onButtonPressed);
         }
         public void onButtonPressed(ActionEvent event) {
-            actualisLepes.addLepes(x,y);
+            actualisLepes.addLepes(gridx,gridy);
             performMoveIfPossible();
         }
     }
 
     private class Lepes{
-        public int startx=-1,starty=-1,endx=-1,endy=-1;
-        public Move move;
+        private int startx=-1;
+        private int starty=-1;
+        private int endx=-1;
+        private int endy=-1;
+        private Move move;
         boolean isMoveSet=false;
 
         public void addLepes(int x, int y){
@@ -95,7 +100,10 @@ public class FungoriumGUI {
 
     private void performMoveIfPossible(){
         if(actualisLepes.isDone()){
-            int x1=actualisLepes.startx,x2=actualisLepes.endx,y1=actualisLepes.starty,y2=actualisLepes.endy;
+            int x1=actualisLepes.startx;
+            int x2=actualisLepes.endx;
+            int y1=actualisLepes.starty;
+            int y2=actualisLepes.endy;
             Move move=actualisLepes.move;
             actualisLepes=new Lepes();
             try{
@@ -184,11 +192,17 @@ public class FungoriumGUI {
             // --------- BAL PANEL: lépés lehetőségek ---------
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+
             JLabel leftTitle = new JLabel("Lehetséges lépések:");
+            leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftPanel.add(leftTitle);
 
-            possibleMoves=new DefaultListModel<Move>();
-            possibleMovesList=new JList<>(possibleMoves);
+            JLabel current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
+            current.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftPanel.add(current);
+
+            possibleMoves = new DefaultListModel<Move>();
+            possibleMovesList = new JList<>(possibleMoves);
             leftPanel.add(possibleMovesList);
 
             possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
@@ -223,7 +237,7 @@ public class FungoriumGUI {
                 }
             }
             centerPanel.setMinimumSize(new Dimension(800,600));
-            // A bal alsó sarokba helyezzük a gombot
+            // A jobb alsó sarokba helyezzük a gombot
             bottomPanel.add(saveButton, BorderLayout.WEST);
             rightPanel.add(bottomPanel);
             frame.add(leftPanel, BorderLayout.WEST);
@@ -272,11 +286,17 @@ public class FungoriumGUI {
             // --------- BAL PANEL: lépés lehetőségek ---------
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+
             JLabel leftTitle = new JLabel("Lehetséges lépések:");
+            leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftPanel.add(leftTitle);
 
-            possibleMoves=new DefaultListModel<Move>();
-            possibleMovesList=new JList<>(possibleMoves);
+            JLabel current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
+            current.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftPanel.add(current);
+
+            possibleMoves = new DefaultListModel<Move>();
+            possibleMovesList = new JList<>(possibleMoves);
             leftPanel.add(possibleMovesList);
 
             possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
@@ -311,7 +331,7 @@ public class FungoriumGUI {
                 }
             }
             centerPanel.setMinimumSize(new Dimension(800,600));
-            // A bal alsó sarokba helyezzük a gombot
+            // A jobb alsó sarokba helyezzük a gombot
             bottomPanel.add(saveButton, BorderLayout.WEST);
             rightPanel.add(bottomPanel);
             frame.add(leftPanel, BorderLayout.WEST);
@@ -354,7 +374,7 @@ public class FungoriumGUI {
                 int g = Integer.parseInt(parts[1]);
                 int b = Integer.parseInt(parts[2]);
                 Color color = new Color(r, g, b);
-                jatekosokGUI.get(index).setszin(color); 
+                jatekosokGUI.get(index).setszin(color);
                 index++;
             }
         } catch (IOException e) {

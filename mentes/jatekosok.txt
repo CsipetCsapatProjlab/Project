@@ -1,2 +1,5 @@
 Sanyi ; 0 ; 2 ; Gombasz
-Sanyi ; 1 ; 0 ; Rovarasz
+Sanyi ; 1 ; 2 ; Gombasz
+Sanyi ; 2 ; 2 ; Gombasz
+Sanyi ; 3 ; 2 ; Gombasz
+Sanyi ; 4 ; 2 ; Gombasz

@@ -1,9 +1,9 @@
 package logic_classes;
 
+import java.util.Objects;
+
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
-import java.util.LinkedList;
-import java.util.Objects;
 import model.Tekton;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
@@ -12,8 +12,6 @@ import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
-import model.players.Gombasz;
-import model.utils.GridUtils;
 
 
 

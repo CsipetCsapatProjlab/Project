@@ -1,21 +1,30 @@
 package testing;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 import model.Fungorium;
 import model.enums.Move;
 import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
-import model.gameobjects.*;
+import model.gameobjects.BenitoSpora;
+import model.gameobjects.GyorsSpora;
+import model.gameobjects.LassitoSpora;
+import model.gameobjects.OsztodoRovarSpora;
+import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.TektonElem;
 import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.util.*;
 
 public class CommandLine {
     Fungorium fungorium;
@@ -199,6 +208,7 @@ public class CommandLine {
                                 log.add(cmd);
                                 executeCommand(cmd);
                             }
+                        scanner.close();
                         },
                         "path"
                 ),
@@ -297,6 +307,7 @@ public class CommandLine {
             }
         }
         quit = false;
+        scanner.close();
     }
 
     private void executeCommand(String commandList){

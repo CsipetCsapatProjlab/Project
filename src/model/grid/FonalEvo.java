@@ -1,13 +1,11 @@
 package model.grid;
 
 import java.util.List;
+import java.util.Stack;
 
 import model.Tekton;
-import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
-
-import java.util.Stack;
 
 public class FonalEvo extends TektonElem{
     Stack<Fonal> fonals= new Stack<>();
@@ -54,7 +52,6 @@ public class FonalEvo extends TektonElem{
         if (g instanceof Fonal) {
             if (!fonals.isEmpty()) {
                 felszivodasigFordulo = 0;
-                Fonal f = (Fonal) g;
                 fonals.pop();
             }
         }

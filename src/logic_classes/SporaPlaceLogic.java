@@ -1,9 +1,13 @@
 package logic_classes;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import model.Tekton;
-import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
@@ -11,8 +15,6 @@ import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
-
-import java.util.*;
 
 public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
     GombaTest gt;

@@ -1,9 +1,9 @@
 package model.grid;
 
+import java.util.List;
+
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
-import java.util.List;
-import model.enums.Hatas;
 import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
 import model.gameobjects.Rovar;
@@ -19,6 +19,7 @@ public class Lava extends Grid {
         super(gameObjects);
     }
 
+    @Override
     public String toString(){ //kiírja a pályára hogy mi van rajta
         if(gameObjects.size() == 1){
             return "~";

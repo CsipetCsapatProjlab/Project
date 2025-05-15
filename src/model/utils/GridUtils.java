@@ -18,10 +18,11 @@ public class GridUtils {
     /**
      * Ez egy static class, nem tudjuk instanciálni
      */
-    private GridUtils(){}
+    public GridUtils(){}
 
     public static class GridPathFinder {
 
+        public GridPathFinder(){}
         /**
          * Kiszámítja egy útvonal súlyösszegét az IDiscoverLogic szabályai alapján.
          *
