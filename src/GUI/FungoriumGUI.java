@@ -119,12 +119,14 @@ public class FungoriumGUI extends JFrame {
     private void viewFrissit(){
         palyaFrissit();
         moveListaFrissit();
+        current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
     }
 
     private void moveListaFrissit(){
         possibleMoves.removeAllElements();
         possibleMoves.addAll(Arrays.stream(fungorium.getCurrentPlayer().getMoveTypes()).toList());
     }
+
 
     private void palyaFrissit(){
         for (int y = 0; y < rows; y++) {
@@ -152,7 +154,6 @@ public class FungoriumGUI extends JFrame {
                 }
             }
         }
-        current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
     }
     public void MoveListSelectionChanged(ListSelectionEvent evt) {
         int selectedIx = evt.getFirstIndex();
@@ -186,8 +187,9 @@ public class FungoriumGUI extends JFrame {
         current.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(current);
 
-        possibleMoves = new DefaultListModel<Move>();
+        possibleMoves = new DefaultListModel<>();
         possibleMovesList = new JList<>(possibleMoves);
+        leftPanel.add(getCurrentPlayerGUI());
         leftPanel.add(possibleMovesList);
 
         possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
@@ -297,6 +299,9 @@ public class FungoriumGUI extends JFrame {
 
     public FungoriumGUI(String betolString) {
         this.fungorium = new Fungorium(betolString);
+        this.jatekosokGUI = fungorium.getPlayerslist().stream()
+                .map(PlayerGUI::new)
+                .toList();
         addPlayers();
         betultszin(betolString + "/szinek.txt");
 
@@ -326,7 +331,7 @@ public class FungoriumGUI extends JFrame {
         }
     }
 
-    public PlayerGUI getCurrentPlayerGUI(List<PlayerGUI> jatekosokGUI) {
+    public PlayerGUI getCurrentPlayerGUI() {
         var currentPlayer = fungorium.getMotor().getCurrentPlayer();
         return jatekosokGUI.stream()
                 .filter(jatekosGUI -> jatekosGUI.getJatekos() == currentPlayer)
