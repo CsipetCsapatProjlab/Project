@@ -5,6 +5,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -103,59 +106,46 @@ public class StartMenuGUI extends JFrame {
     }
 
     private void onSelectFolder() {
-        File rootDir = new File(System.getProperty("user.dir"));
-        File srcDir = new File(rootDir, "src");
+        // Meghatározza a projekt gyökerét
+        Path currentDir = Paths.get("").toAbsolutePath();
+        Path projectRoot = currentDir;
 
-        // Ha nincs benne `src`, akkor próbáld meg a rootot
-        if (!srcDir.exists() || !srcDir.isDirectory()) {
-            // Talán eleve a src-ben vagyunk
-            srcDir = rootDir;
+        // Ha a working dir "src", visszalépünk a Project gyökérbe
+        if (currentDir.getFileName().toString().equals("src")) {
+            projectRoot = currentDir.getParent();
         }
 
+        // Mentesek mappa elérési útvonala
+        Path mentesekDir = projectRoot.resolve("Mentesek");
+        File srcDir = mentesekDir.toFile();
+
         if (!srcDir.exists() || !srcDir.isDirectory()) {
-            JOptionPane.showMessageDialog(this, "'src' mappa nem található!", "Hiba", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "'Mentesek' mappa nem található!", "Hiba", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         System.out.println("Használt mappa: " + srcDir.getAbsolutePath());
 
-        // Kizárt mappanevek és fájlok
-        String[] excludedNames = {
-            "GUI", "interfaces", "logic_classes", "model", "testing", "test_script", "Main.class", "Main.java"
-        };
-
         File[] files = srcDir.listFiles(File::isDirectory);
-        if (files == null) {
-            JOptionPane.showMessageDialog(this, "Nem sikerült beolvasni a mappákat!", "Hiba", JOptionPane.ERROR_MESSAGE);
+        if (files == null || files.length == 0) {
+            JOptionPane.showMessageDialog(this, "Nincsenek elérhető mentések!", "Hiba", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Elérhető mappák, amiket nem zárunk ki
         Set<String> availableFolders = new HashSet<>();
         for (File f : files) {
-            String name = f.getName();
-            boolean isExcluded = false;
-            for (String excluded : excludedNames) {
-                if (excluded.equals(name)) {
-                    isExcluded = true;
-                    break;
-                }
-            }
-            if (!isExcluded) {
-                availableFolders.add(name);
-            }
+            availableFolders.add(f.getName());
         }
 
-        // Megjelenítjük a felhasználónak az elérhető mappák nevét
         String folderName = JOptionPane.showInputDialog(this,
-                "Korábban mentett játékok kérem addja meg a mappa nevét a betöltéshez:\n-" + String.join("\n-", availableFolders) + "\n Meik legyen:");
+            "Korábban mentett játékok – add meg a mappa nevét a betöltéshez:\n-" + String.join("\n-", availableFolders) + "\nMelyik legyen:");
 
         if (folderName != null && !folderName.trim().isEmpty()) {
-            if (availableFolders.contains(folderName.trim())) {
-                betoltes = srcDir.getAbsolutePath() + File.separator + folderName.trim();
+            folderName = folderName.trim();
+            if (availableFolders.contains(folderName)) {
+                betoltes = srcDir.getAbsolutePath() + File.separator + folderName;
                 JOptionPane.showMessageDialog(this, "Mappa kiválasztva: " + betoltes);
             } else {
-                // Ha a mappa nem található
                 JOptionPane.showMessageDialog(this, "A megadott mappa nem található.", "Hiba", JOptionPane.ERROR_MESSAGE);
             }
         } else {

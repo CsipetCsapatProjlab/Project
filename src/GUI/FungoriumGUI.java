@@ -7,10 +7,14 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -278,9 +282,8 @@ public class FungoriumGUI extends JFrame {
             String filename = JOptionPane.showInputDialog(null, "Add meg a fájlnevet a mentéshez:");
             if (filename != null && !filename.trim().isEmpty()) {
                 try {
-                    fungorium.mentes(filename.trim());
                     JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
-                    mentes(filename.trim() + "/szinek.txt");
+                    mentes(filename.trim());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
                 }
@@ -323,7 +326,24 @@ public class FungoriumGUI extends JFrame {
     }
 
     public void mentes(String filename) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+        // Meghatározza a projekt gyökerét a forrásmappa (src) alapján
+        Path currentDir = Paths.get("").toAbsolutePath(); // ez a working dir, pl. Project/src
+        Path projectRoot = currentDir;
+
+        // Ha a working dir véletlenül a src, akkor visszalépünk egyet a Project gyökérbe
+        if (currentDir.getFileName().toString().equals("src")) {
+            projectRoot = currentDir.getParent();
+        }
+
+        // Létrehozza a teljes mentési útvonalat: Project/Mentesek/filename
+        Path saveDir = projectRoot.resolve("Mentesek").resolve(filename);
+        Files.createDirectories(saveDir); // biztosítja, hogy létezik
+
+        // Hívja a fungorium mentést a megfelelő útvonallal
+        fungorium.mentes(saveDir.toString());
+
+        // Színek mentése
+        try (PrintWriter writer = new PrintWriter(new FileWriter(saveDir.resolve("szinek.txt").toFile()))) {
             for (PlayerGUI j : jatekosokGUI) {
                 Color c = j.getszin(); // Feltételezve, hogy van ilyen getter
                 writer.printf("%d;%d;%d%n", c.getRed(), c.getGreen(), c.getBlue());
