@@ -3,7 +3,6 @@ package model.grid;
 import java.util.List;
 
 import model.Tekton;
-import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
 

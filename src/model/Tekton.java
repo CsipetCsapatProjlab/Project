@@ -1,13 +1,12 @@
 package model;
 
-import interfaces.GameObjectVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.GameObjectVisitor;
 import model.enums.TektonelemTypes;
 import model.grid.Grid;
 import model.grid.TektonElem;
-import model.utils.Constants;
 import model.utils.Constants;
 
 public class Tekton {
@@ -37,7 +36,6 @@ public class Tekton {
         this.elemek = elemek;
         neighbours = null;
         fonalAr = 0;
-        int tektonszam = 0; //a tekton elemeinek a száma
         elemek = new ArrayList<>();
     }
 

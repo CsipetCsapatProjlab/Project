@@ -1,7 +1,6 @@
 package model.gameobjects;
 
 import interfaces.GameObjectVisitor;
-import model.enums.Hatas;
 import model.grid.Grid;
 import model.players.Gombasz;
 import model.utils.Constants;

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\BME\\4. félév\\projlab\\Project\\ConsoleApp1.csproj": {}
+    "C:\\BME\\4_felev\\projlab\\Project\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "C:\\BME\\4. félév\\projlab\\Project\\ConsoleApp1.csproj": {
+    "C:\\BME\\4_felev\\projlab\\Project\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\BME\\4. félév\\projlab\\Project\\ConsoleApp1.csproj",
+        "projectUniqueName": "C:\\BME\\4_felev\\projlab\\Project\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "C:\\BME\\4. félév\\projlab\\Project\\ConsoleApp1.csproj",
+        "projectPath": "C:\\BME\\4_felev\\projlab\\Project\\ConsoleApp1.csproj",
         "packagesPath": "C:\\Users\\fausz\\.nuget\\packages\\",
-        "outputPath": "C:\\BME\\4. félév\\projlab\\Project\\obj\\",
+        "outputPath": "C:\\BME\\4_felev\\projlab\\Project\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -31,11 +31,7 @@ import model.enums.Move;
 import model.exceptions.FailedMoveException;
 import model.exceptions.IncompatibleGameObjectException;
 import model.exceptions.InvalidMoveException;
-import model.gameobjects.Fonal;
 import model.gameobjects.GameObject;
-import model.gameobjects.GombaTest;
-import model.gameobjects.Rovar;
-import model.gameobjects.Spora;
 import model.grid.Grid;
 import model.grid.Lava;
 import model.grid.TektonElem;
@@ -327,19 +323,6 @@ public class FungoriumGUI {
 
             viewFrissit();
         });
-    }
-
-    private static String getLabel(Grid grid) {
-        if (grid == null) return "";
-        List<GameObject> objs = grid.getGameObject();
-        StringBuilder label = new StringBuilder();
-        for (GameObject obj : objs) {
-            if (obj instanceof Rovar) label.append("R");
-            else if (obj instanceof GombaTest) label.append("G");
-            else if (obj instanceof Spora) label.append("S");
-            else if (obj instanceof Fonal) label.append("F");
-        }
-        return label.toString();
     }
 
     private static String wrapInColor(String label, Color color, int size) {

@@ -1,5 +1,7 @@
 package logic_classes;
 
+import java.util.Arrays;
+
 import interfaces.GameObjectVisitor;
 import interfaces.GridVisitor;
 import model.gameobjects.Fonal;
@@ -7,13 +9,8 @@ import model.gameobjects.GombaTest;
 import model.gameobjects.Rovar;
 import model.gameobjects.Spora;
 import model.grid.Grid;
-import model.utils.GridUtils;
 import model.grid.Lava;
 import model.grid.TektonElem;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class RovarMoveLogic extends DiscoverLogic {
 

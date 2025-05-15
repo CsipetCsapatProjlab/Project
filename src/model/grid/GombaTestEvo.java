@@ -1,7 +1,6 @@
 package model.grid;
 
 import model.Tekton;
-import model.exceptions.IncompatibleGameObjectException;
 import model.gameobjects.GameObject;
 import model.gameobjects.GombaTest;
 

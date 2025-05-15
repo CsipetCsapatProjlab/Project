@@ -1,6 +1,5 @@
 package model.gameobjects;
 
-import model.enums.Hatas;
 import model.grid.Grid;
 import model.players.Gombasz;
 

@@ -1,18 +1,14 @@
 package model.gameobjects;
 
+import java.util.LinkedList;
+
 import interfaces.GameObjectVisitor;
 import logic_classes.SporaPlaceLogic;
 import model.enums.Move;
 import model.exceptions.FailedMoveException;
-import model.exceptions.IncompatibleGameObjectException;
-import model.exceptions.InvalidMoveException;
 import model.grid.Grid;
 import model.players.Gombasz;
 import model.utils.Constants;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class GombaTest extends GameObject {
 

@@ -1,17 +1,15 @@
 package model.players;
 
-import model.Tekton;
+import static model.enums.Move.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import model.enums.Move;
 import model.exceptions.InvalidMoveException;
 import model.gameobjects.Rovar;
 import model.grid.Grid;
 import model.grid.TektonElem;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static model.enums.Move.*;
-import static model.enums.Move.Kezdo_lepes;
 
 public class Rovarasz extends Jatekos {
     int szerzettTapanyag;
