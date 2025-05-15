@@ -39,15 +39,14 @@ import model.grid.TektonElem;
 import model.players.Jatekos;
 import model.utils.ColorUtils;
 
-public class FungoriumGUI {
+public class FungoriumGUI extends JFrame {
     private final Fungorium fungorium;
     private List<PlayerGUI> jatekosokGUI;
 
     private JButton[][] viewGrid;
     private DefaultListModel<Move> possibleMoves;
     private JList<Move> possibleMovesList;
-    private Lepes actualisLepes=new Lepes();
-    private JLabel current;
+    private Lepes actualisLepes = new Lepes();
 
     private int rows;
     private int cols;
@@ -119,7 +118,6 @@ public class FungoriumGUI {
     private void viewFrissit(){
         palyaFrissit();
         moveListaFrissit();
-        current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
     }
 
     private void moveListaFrissit(){
@@ -162,200 +160,132 @@ public class FungoriumGUI {
         }
     }
 
+    public JPanel initBottomPanel(){
+        var bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        bottomPanel.add(initSaveButton(), BorderLayout.WEST);
+        return bottomPanel;
+    }
+
+    public JPanel initLeftPanel(){
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+
+        JLabel leftTitle = new JLabel("Lehetséges lépések:");
+        leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(leftTitle);
+
+        possibleMoves = new DefaultListModel<Move>();
+        possibleMovesList = new JList<>(possibleMoves);
+        leftPanel.add(possibleMovesList);
+
+        possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
+
+        return leftPanel;
+    }
+
+    public JPanel initRightPanel(){
+        JPanel rightPanel = new JPanel();
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 20));
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        JLabel rightTitle = new JLabel("Játékosok:");
+        rightPanel.add(rightTitle);
+
+        rightPanel.add(Box.createVerticalStrut(5));
+        for (PlayerGUI playerGUI : jatekosokGUI) {
+            rightPanel.add(playerGUI);
+            rightPanel.add(Box.createVerticalStrut(10));
+        }
+        if (!jatekosokGUI.isEmpty()) {
+            rightPanel.remove(rightPanel.getComponentCount() - 1);
+        }
+        rightPanel.add(Box.createVerticalGlue());
+
+        rightPanel.add(initBottomPanel());
+
+        return rightPanel;
+    }
+
+    public JPanel initCenterPanel(){
+        viewGrid = new JButton[rows][cols];
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(rows, cols));
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
+                viewGrid[y][x] = new GridButton(y,x);
+                viewGrid[y][x].setOpaque(true);
+                viewGrid[y][x].setBorderPainted(true);
+                centerPanel.add(viewGrid[y][x]);
+            }
+        }
+        centerPanel.setMinimumSize(new Dimension(800,600));
+
+        return centerPanel;
+    }
+
     public FungoriumGUI(int sor, int oszlop, List<PlayerGUI> playerGUIs) {
+        super("Fungorium");
         this.jatekosokGUI = playerGUIs;
         this.fungorium = new Fungorium(sor, oszlop);
+        this.rows = sor;
+        this.cols = oszlop;
         addPlayers();
 
-        rows = fungorium.getMap().length;
-        cols = fungorium.getMap()[0].length;
+        initFrame();
+    }
+
+    private void initFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
 
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Fungorium Grid");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLayout(new BorderLayout());
-            // Alsó sáv létrehozása BorderLayout-tal
-            JPanel bottomPanel = new JPanel(new BorderLayout());
-            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // fix magasság
-
-            JButton saveButton = new JButton("Mentés");
-            saveButton.addActionListener(e -> {
-                String filename = JOptionPane.showInputDialog(null, "Add meg a fájlnevet a mentéshez:");
-                if (filename != null && !filename.trim().isEmpty()) {
-                    try {
-                        fungorium.mentes(filename.trim());
-                        JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
-                        mentes(filename.trim() + "/szinek.txt");
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
-                    }
-                }
-            });
             // --------- BAL PANEL: lépés lehetőségek ---------
-            JPanel leftPanel = new JPanel();
-            leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-
-            JLabel leftTitle = new JLabel("Lehetséges lépések:");
-            leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-            leftPanel.add(leftTitle);
-
-            current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
-            current.setAlignmentX(Component.CENTER_ALIGNMENT);
-            leftPanel.add(current);
-
-            possibleMoves = new DefaultListModel<Move>();
-            possibleMovesList = new JList<>(possibleMoves);
-            leftPanel.add(possibleMovesList);
-
-            possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
+            JPanel leftPanel = initLeftPanel();
 
             // --------- JOBB PANEL: játékosok és pontszámaik ---------
-            JPanel rightPanel = new JPanel();
-            rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 20));
-            rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-            JLabel rightTitle = new JLabel("Játékosok:");
-            rightPanel.add(rightTitle);
+            JPanel rightPanel = initRightPanel();
 
-            rightPanel.add(Box.createVerticalStrut(5));
-            for (PlayerGUI playerGUI : jatekosokGUI) {
-                rightPanel.add(playerGUI);
-                rightPanel.add(Box.createVerticalStrut(10));
-            }
-            if (!jatekosokGUI.isEmpty()) {
-                rightPanel.remove(rightPanel.getComponentCount() - 1);
-            }
-            rightPanel.add(Box.createVerticalGlue());
-            
             // --------- KÖZÉPSŐ GRID: pálya gombokkal ---------
-            viewGrid = new JButton[rows][cols];
-            JPanel centerPanel = new JPanel();
-            centerPanel.setLayout(new GridLayout(rows, cols));
-            for (int y = 0; y < rows; y++) {
-                for (int x = 0; x < cols; x++) {
-                    viewGrid[y][x] = new GridButton(y,x);
-                    viewGrid[y][x].setOpaque(true);
-                    viewGrid[y][x].setBorderPainted(true);
-                    centerPanel.add(viewGrid[y][x]);
-                }
-            }
-            centerPanel.setMinimumSize(new Dimension(800,600));
-            // A jobb alsó sarokba helyezzük a gombot
-            bottomPanel.add(saveButton, BorderLayout.WEST);
-            rightPanel.add(bottomPanel);
-            frame.add(leftPanel, BorderLayout.WEST);
-            frame.add(centerPanel, BorderLayout.CENTER);
-            frame.add(rightPanel, BorderLayout.EAST);
+            JPanel centerPanel = initCenterPanel();
 
-            frame.pack();
-            frame.setVisible(true);
+            add(leftPanel, BorderLayout.WEST);
+            add(centerPanel, BorderLayout.CENTER);
+            add(rightPanel, BorderLayout.EAST);
+
+            pack();
+            setVisible(true);
 
             viewFrissit();
         });
     }
 
+    private JButton initSaveButton() {
+        JButton saveButton = new JButton("Mentés");
+        saveButton.addActionListener(e -> {
+            String filename = JOptionPane.showInputDialog(null, "Add meg a fájlnevet a mentéshez:");
+            if (filename != null && !filename.trim().isEmpty()) {
+                try {
+                    fungorium.mentes(filename.trim());
+                    JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
+                    mentes(filename.trim() + "/szinek.txt");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
+                }
+            }
+        });
+        return saveButton;
+    }
+
     public FungoriumGUI(String betolString) {
         this.fungorium = new Fungorium(betolString);
-        this.jatekosokGUI = fungorium.getPlayerslist().stream()
-            .map(j -> new PlayerGUI(j))
-            .toList();
         addPlayers();
         betultszin(betolString + "/szinek.txt");
 
-        rows = fungorium.getMap().length;
-        cols = fungorium.getMap()[0].length;
+        var shape = fungorium.getShape();
+        rows = shape[0];
+        cols = shape[1];
 
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Fungorium Grid");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLayout(new BorderLayout());
-            // Alsó sáv létrehozása BorderLayout-tal
-            JPanel bottomPanel = new JPanel(new BorderLayout());
-            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // fix magasság
-
-            JButton saveButton = new JButton("Mentés");
-            saveButton.addActionListener(e -> {
-                String filename = JOptionPane.showInputDialog(null, "Add meg a fájlnevet a mentéshez:");
-                if (filename != null && !filename.trim().isEmpty()) {
-                    try {
-                        fungorium.mentes(filename.trim());
-                        JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
-                        mentes(filename.trim() + "/szinek.txt");
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
-                    }
-                }
-            });
-            JButton skipButton = new JButton("SKIP");
-            skipButton.addActionListener(e -> {
-                fungorium.getMotor().kovetkezoJatekos();
-                viewFrissit();
-            });
-            // --------- BAL PANEL: lépés lehetőségek ---------
-            JPanel leftPanel = new JPanel();
-            leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-
-            JLabel leftTitle = new JLabel("Lehetséges lépések:");
-            leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-            leftPanel.add(leftTitle);
-
-            current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
-            current.setAlignmentX(Component.CENTER_ALIGNMENT);
-            leftPanel.add(current);
-
-            possibleMoves = new DefaultListModel<Move>();
-            possibleMovesList = new JList<>(possibleMoves);
-            leftPanel.add(possibleMovesList);
-
-            possibleMovesList.addListSelectionListener(this::MoveListSelectionChanged);
-
-            // --------- JOBB PANEL: játékosok és pontszámaik ---------
-            JPanel rightPanel = new JPanel();
-            rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 20));
-            rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-            JLabel rightTitle = new JLabel("Játékosok:");
-            rightPanel.add(rightTitle);
-
-            rightPanel.add(Box.createVerticalStrut(5));
-            for (PlayerGUI playerGUI : jatekosokGUI) {
-                rightPanel.add(playerGUI);
-                rightPanel.add(Box.createVerticalStrut(10));
-            }
-            if (!jatekosokGUI.isEmpty()) {
-                rightPanel.remove(rightPanel.getComponentCount() - 1);
-            }
-            rightPanel.add(Box.createVerticalGlue());
-            
-            // --------- KÖZÉPSŐ GRID: pálya gombokkal ---------
-            viewGrid = new JButton[rows][cols];
-            JPanel centerPanel = new JPanel();
-            centerPanel.setLayout(new GridLayout(rows, cols));
-            for (int y = 0; y < rows; y++) {
-                for (int x = 0; x < cols; x++) {
-                    viewGrid[y][x] = new GridButton(y,x);
-                    viewGrid[y][x].setOpaque(true);
-                    viewGrid[y][x].setBorderPainted(true);
-                    centerPanel.add(viewGrid[y][x]);
-                }
-            }
-            centerPanel.setMinimumSize(new Dimension(800,600));
-            // A jobb alsó sarokba helyezzük a gombot
-            JPanel leftButtonsPanel = new JPanel();
-            leftButtonsPanel.setLayout(new BoxLayout(leftButtonsPanel, BoxLayout.X_AXIS));
-            leftButtonsPanel.add(saveButton);
-            leftButtonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-            leftButtonsPanel.add(skipButton);
-
-            bottomPanel.add(leftButtonsPanel, BorderLayout.WEST);
-            rightPanel.add(bottomPanel);
-            frame.add(leftPanel, BorderLayout.WEST);
-            frame.add(centerPanel, BorderLayout.CENTER);
-            frame.add(rightPanel, BorderLayout.EAST);
-
-            frame.pack();
-            frame.setVisible(true);
-
-            viewFrissit();
-        });
+        initFrame();
     }
 
     private static String wrapInColor(String label, Color color, int size) {
@@ -375,6 +305,14 @@ public class FungoriumGUI {
                 writer.printf("%d;%d;%d%n", c.getRed(), c.getGreen(), c.getBlue());
             }
         }
+    }
+
+    public PlayerGUI getCurrentPlayerGUI(List<PlayerGUI> jatekosokGUI) {
+        var currentPlayer = fungorium.getMotor().getCurrentPlayer();
+        return jatekosokGUI.stream()
+                .filter(jatekosGUI -> jatekosGUI.getJatekos() == currentPlayer)
+                .findAny()
+                .get();
     }
 
     public void betultszin(String filename) {

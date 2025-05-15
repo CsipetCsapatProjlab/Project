@@ -53,4 +53,8 @@ public class PlayerGUI extends JPanel {
         scoreLabel.setForeground(colorOfJatekos);
         this.repaint();
     }
+
+    public Jatekos getJatekos() {
+        return jatekos;
+    }
 }
