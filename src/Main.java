@@ -5,3 +5,5 @@ public class Main {
         new StartMenuGUI();
     }
 }
+
+//javac -d bin -cp src src/**/*.java

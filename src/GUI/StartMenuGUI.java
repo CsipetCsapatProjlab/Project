@@ -31,6 +31,8 @@ public class StartMenuGUI extends JFrame {
     private JTextField heightField;
     PlayerSelectionPanel  playerSelectionPanel = new PlayerSelectionPanel(5);
     private String betoltes = null;
+    private JSpinner korokSpinner;
+    private JTextField jatekNevField;
 
     public StartMenuGUI() {
         setTitle("Fungi Mungi 2000");
@@ -54,6 +56,14 @@ public class StartMenuGUI extends JFrame {
         panel.add(titleLabel);
 
         panel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        panel.add(new JLabel("A játék neve:"));
+        jatekNevField = new JTextField(15);
+        panel.add(jatekNevField);
+
+        panel.add(new JLabel("Körök száma:"));
+        korokSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 1000, 1)); // alapértelmezett 10, min 1, max 1000
+        panel.add(korokSpinner);
 
         panel.add(new JLabel("Pályaméret:"));
         JPanel sizePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -154,6 +164,8 @@ public class StartMenuGUI extends JFrame {
     }
 
     private void onStartPressed() {
+        int korokSzama = (int) korokSpinner.getValue();
+        String jatekNev = jatekNevField.getText().trim();
         List<PlayerGUI> jatekosokGui = playerSelectionPanel.getJatekosok();
 
         if (jatekosokGui.size() < 2) {
@@ -174,7 +186,7 @@ public class StartMenuGUI extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            FungoriumGUI GUI = new FungoriumGUI(sor, oszlop, jatekosokGui);
+            FungoriumGUI GUI = new FungoriumGUI(sor, oszlop, korokSzama, jatekNev, jatekosokGui);
         }
     
         System.out.println("Játék indul ezekkel a játékosokkal:");

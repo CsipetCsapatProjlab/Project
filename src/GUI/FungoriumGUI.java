@@ -46,6 +46,9 @@ import model.utils.ColorUtils;
 public class FungoriumGUI extends JFrame {
     private final Fungorium fungorium;
     private List<PlayerGUI> jatekosokGUI;
+    private int korokszama;
+    private int jelenlegikorokszama = 1;
+    private String jatekNev;
 
     private JButton[][] viewGrid;
     private DefaultListModel<Move> possibleMoves;
@@ -113,9 +116,29 @@ public class FungoriumGUI extends JFrame {
             actualisLepes=new Lepes();
             try{
                 fungorium.makeMove(x1,y1,x2,y2,move);
+
+                fungorium.getMotor().kovetkezoJatekos();
+                int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
+
+                // Ha visszaértünk az első játékoshoz, nő a kör
+                if (kovetkezoJatekos == 0) {
+                    jelenlegikorokszama++;
+                    try {
+                        mentes(jatekNev);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Ha vége, jelezzük
+                if (jelenlegikorokszama == korokszama) {
+                    JOptionPane.showMessageDialog(this, "Játék vége! A játékosok győztek!");
+                }
+
             } catch (IncompatibleGameObjectException | InvalidMoveException | FailedMoveException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
+
             viewFrissit();
         }
     }
@@ -240,8 +263,10 @@ public class FungoriumGUI extends JFrame {
         return centerPanel;
     }
 
-    public FungoriumGUI(int sor, int oszlop, List<PlayerGUI> playerGUIs) {
+    public FungoriumGUI(int sor, int oszlop, int korokszama, String nev, List<PlayerGUI> playerGUIs) {
         super("Fungorium");
+        this.korokszama = korokszama;
+        this.jatekNev = nev;
         this.jatekosokGUI = playerGUIs;
         this.fungorium = new Fungorium(sor, oszlop);
         this.rows = sor;
@@ -293,20 +318,42 @@ public class FungoriumGUI extends JFrame {
     }
     private JButton initSkipButton(){
         JButton skipButton = new JButton("SKIP");
-            skipButton.addActionListener(e -> {
-                fungorium.getMotor().kovetkezoJatekos();
-                viewFrissit();
-            });
+        skipButton.addActionListener(e -> {
+            int korElottiJatekos = fungorium.getMotor().getCurrentPlayerNumber();
+            fungorium.getMotor().kovetkezoJatekos();
+            int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
+
+            if (kovetkezoJatekos == 0) {
+                jelenlegikorokszama++;
+                try {
+                    mentes(jatekNev);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            if (jelenlegikorokszama > korokszama) {
+                JOptionPane.showMessageDialog(this, "Játék vége! A játékosok győztek!");
+            }
+
+            viewFrissit();
+        });
         return skipButton;
     }
 
     public FungoriumGUI(String betolString) {
         this.fungorium = new Fungorium(betolString);
+
+        Path path = Paths.get(betolString);
+        this.jatekNev = path.getFileName().toString(); 
+        System.out.println(jatekNev);
+
         this.jatekosokGUI = fungorium.getPlayerslist().stream()
                 .map(PlayerGUI::new)
                 .toList();
         addPlayers();
         betultszin(betolString + "/szinek.txt");
+        betultkorok(betolString + "/korok.txt");
 
         var shape = fungorium.getShape();
         rows = shape[0];
@@ -342,6 +389,11 @@ public class FungoriumGUI extends JFrame {
         // Hívja a fungorium mentést a megfelelő útvonallal
         fungorium.mentes(saveDir.toString());
 
+        System.out.println("korokszama = " + korokszama + ", jelenlegikorokszama = " + jelenlegikorokszama);
+        //jelenlegi kor száma és az összes körök száma
+        try (PrintWriter writer = new PrintWriter(new FileWriter(saveDir.resolve("korok.txt").toFile()))) {
+            writer.printf("%d;%d%n", korokszama, jelenlegikorokszama);
+        }
         // Színek mentése
         try (PrintWriter writer = new PrintWriter(new FileWriter(saveDir.resolve("szinek.txt").toFile()))) {
             for (PlayerGUI j : jatekosokGUI) {
@@ -376,4 +428,19 @@ public class FungoriumGUI extends JFrame {
             throw new RuntimeException("Hiba a fájl betöltésekor: " + e.getMessage(), e);
         }
     }
+
+    public void betultkorok(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            int index = 0;
+            while ((line = reader.readLine()) != null && index < jatekosokGUI.size()) {
+                String[] parts = line.split(";");
+                korokszama = Integer.parseInt(parts[0]);
+                jelenlegikorokszama = Integer.parseInt(parts[1]);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Hiba a fájl betöltésekor: " + e.getMessage(), e);
+        }
+    }
+
 }

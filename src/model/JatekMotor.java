@@ -68,7 +68,6 @@ public class JatekMotor {
      */
     public void kovetkezoLepes(Grid kezdo, Grid cel, Move move) throws IncompatibleGameObjectException, InvalidMoveException, FailedMoveException {
         jatekosok.get(currentPlayer).lepes(kezdo, cel, move);
-        nextPlayer();
     }
 
     ///  A következő játékosra léptet
@@ -80,6 +79,10 @@ public class JatekMotor {
     /// Visszaadja a jelenlegi játékost
     public Jatekos getCurrentPlayer() {
         return jatekosok.get(currentPlayer);
+    }
+
+    public int getCurrentPlayerNumber() {
+        return currentPlayer;
     }
 
     /**
