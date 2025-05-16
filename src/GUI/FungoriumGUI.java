@@ -128,6 +128,7 @@ public class FungoriumGUI extends JFrame {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    fungorium.ujKor();
                 }
 
                 // Ha vége, jelezzük
@@ -319,7 +320,6 @@ public class FungoriumGUI extends JFrame {
     private JButton initSkipButton(){
         JButton skipButton = new JButton("SKIP");
         skipButton.addActionListener(e -> {
-            int korElottiJatekos = fungorium.getMotor().getCurrentPlayerNumber();
             fungorium.getMotor().kovetkezoJatekos();
             int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
 
@@ -330,6 +330,7 @@ public class FungoriumGUI extends JFrame {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+                fungorium.ujKor();
             }
 
             if (jelenlegikorokszama > korokszama) {

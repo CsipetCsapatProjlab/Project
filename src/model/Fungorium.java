@@ -957,7 +957,6 @@ public class Fungorium {
     public void makeMove(int startCoordinate, int startCoordinate1, int endCoordinate, int endCoordinate1, Move move) throws IncompatibleGameObjectException, InvalidMoveException {
         motor.kovetkezoLepes(map[startCoordinate][startCoordinate1], map[endCoordinate][endCoordinate1], move);
         afterRound();
-        //this.ujKor();
     }
 
     /// skippeli a játékos körét
