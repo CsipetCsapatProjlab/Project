@@ -62,14 +62,32 @@ public class FungoriumGUI extends JFrame {
     public class GridButton extends JButton {
         private int gridx;
         private int gridy;
+
         public GridButton(int x, int y) {
             gridx = x;
             gridy = y;
             this.addActionListener(this::onButtonPressed);
         }
+
         public void onButtonPressed(ActionEvent event) {
-            actualisLepes.addLepes(gridx,gridy);
-            performMoveIfPossible();
+            if (!actualisLepes.isMoveSet && jelenlegikorokszama != 1) {
+                JOptionPane.showMessageDialog(null, "Először válassz ki egy lépést a bal oldali listából.");
+                return;
+            }
+
+            actualisLepes.addLepes(gridx, gridy);
+            highlightSelection();
+
+            if (actualisLepes.isDone()) {
+                performMoveIfPossible();
+            }
+        }
+        private void highlightSelection() {
+            if (actualisLepes.startx == gridx && actualisLepes.starty == gridy) {
+                this.setBackground(Color.YELLOW);
+            } else if (actualisLepes.endx == gridx && actualisLepes.endy == gridy) {
+                this.setBackground(Color.GREEN);
+            }
         }
     }
 
@@ -102,40 +120,29 @@ public class FungoriumGUI extends JFrame {
             isMoveSet=true;
         }
         public boolean isDone(){
+            if(jelenlegikorokszama == 1){
+                return isInBounds(startx,starty) && isInBounds(endx,endy);
+            }
             return isInBounds(startx,starty) && isInBounds(endx,endy) && isMoveSet;
         }
     }
 
     private void performMoveIfPossible(){
         if(actualisLepes.isDone()){
-            int x1=actualisLepes.startx;
-            int x2=actualisLepes.endx;
-            int y1=actualisLepes.starty;
-            int y2=actualisLepes.endy;
-            Move move=actualisLepes.move;
-            actualisLepes=new Lepes();
-            try{
-                fungorium.makeMove(x1,y1,x2,y2,move);
+            int x1 = actualisLepes.startx;
+            int x2 = actualisLepes.endx;
+            int y1 = actualisLepes.starty;
+            int y2 = actualisLepes.endy;
+            Move move = actualisLepes.move;
+            actualisLepes = new Lepes();
 
-                fungorium.getMotor().kovetkezoJatekos();
-                int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
-
-                // Ha visszaértünk az első játékoshoz, nő a kör
-                if (kovetkezoJatekos == 0) {
-                    jelenlegikorokszama++;
-                    try {
-                        mentes(jatekNev);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    fungorium.ujKor();
+            try {
+                if (jelenlegikorokszama == 1) {
+                    fungorium.makeMove(x1, y1, x2, y2, Move.Kezdo_lepes);
+                    fungorium.getMotor().kovetkezoJatekos();
+                }else{
+                    fungorium.makeMove(x1, y1, x2, y2, move);
                 }
-
-                // Ha vége, jelezzük
-                if (jelenlegikorokszama == korokszama) {
-                    JOptionPane.showMessageDialog(this, "Játék vége! A játékosok győztek!");
-                }
-
             } catch (IncompatibleGameObjectException | InvalidMoveException | FailedMoveException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }

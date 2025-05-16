@@ -1,0 +1,2 @@
+Sanyi ; 0 ; 2 ; Gombasz
+csak ; 1 ; 0 ; Rovarasz
