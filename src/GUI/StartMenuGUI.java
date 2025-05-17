@@ -7,11 +7,9 @@ import java.awt.FlowLayout;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 public class StartMenuGUI extends JFrame {
 
@@ -53,6 +52,7 @@ public class StartMenuGUI extends JFrame {
 
         JLabel titleLabel = new JLabel("<html><h1>Fungi<br>Mungi<br>2000</h1></html>");
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(titleLabel);
 
         panel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -62,11 +62,11 @@ public class StartMenuGUI extends JFrame {
         panel.add(jatekNevField);
 
         panel.add(new JLabel("Körök száma:"));
-        korokSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 1000, 1)); // alapértelmezett 10, min 1, max 1000
+        korokSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 1000, 1)); // alapértelmezett 10, min 1, max 1000
         panel.add(korokSpinner);
 
         panel.add(new JLabel("Pályaméret:"));
-        JPanel sizePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel sizePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         widthField = new JTextField(3);
         heightField = new JTextField(3);
         sizePanel.add(widthField);
@@ -74,7 +74,7 @@ public class StartMenuGUI extends JFrame {
         sizePanel.add(heightField);
         panel.add(sizePanel);
 
-        JSpinner jatekosSpinner = new JSpinner(new SpinnerNumberModel(playerSelectionPanel.getNumPlayers(), 0, 100, 1));
+        JSpinner jatekosSpinner = new JSpinner(new SpinnerNumberModel(playerSelectionPanel.getNumPlayers(), 2, 100, 1));
         jatekosSpinner.addChangeListener(x -> playerSelectionPanel.resizeTo((int) jatekosSpinner.getValue()));
         panel.add(new  JLabel("Jatekosok Száma:"));
         panel.add(jatekosSpinner);

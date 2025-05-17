@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,8 +27,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
-
 import model.Fungorium;
 import model.enums.Move;
 import model.exceptions.FailedMoveException;
@@ -144,6 +142,7 @@ public class FungoriumGUI extends JFrame {
                     int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
                     if (kovetkezoJatekos == 0) {
                         jelenlegikorokszama++;
+                        fungorium.ujKor();
                     }
 
                 }else{
@@ -160,7 +159,7 @@ public class FungoriumGUI extends JFrame {
     private void viewFrissit(){
         palyaFrissit();
         moveListaFrissit();
-        current.setText(fungorium.getMotor().getCurrentPlayer().toString() + ":");
+        current.setText(fungorium.getMotor().getCurrentPlayer().toString());
     }
 
     private void moveListaFrissit(){
@@ -219,14 +218,20 @@ public class FungoriumGUI extends JFrame {
     public JPanel initLeftPanel(){
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        leftPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+
+        JLabel currentLabel = new JLabel("Név: Típus; Pontszám");
+        currentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(currentLabel);
+        
+        current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString());
+        current.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(current);
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         JLabel leftTitle = new JLabel("Lehetséges lépések:");
         leftTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(leftTitle);
-
-        current = new JLabel(fungorium.getMotor().getCurrentPlayer().toString() + ":");
-        current.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(current);
 
         possibleMoves = new DefaultListModel<>();
         possibleMovesList = new JList<>(possibleMoves);

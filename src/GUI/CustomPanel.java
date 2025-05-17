@@ -1,18 +1,20 @@
 package GUI;
 
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.Objects;
+import java.util.Random;
+import javax.swing.*;
 import model.players.Gombasz;
 import model.players.Jatekos;
 import model.players.Rovarasz;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Objects;
-import java.util.Random;
 
 public class CustomPanel extends JPanel {
     private final JTextField nameField;
     private final JComboBox<String> comboBox;
     private final JButton colorButton;
+    private final JLabel confirmLabel;
     private final Random rand = new Random();
     private Color selectedColor = new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
 
@@ -21,8 +23,14 @@ public class CustomPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         // Név beviteli mező
-        nameField = new JTextField("Sanyi", 8);
+        nameField = new JTextField("", 8);
         nameField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        nameField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e){}
+            @Override
+            public void focusLost(FocusEvent e){confirmSwitcher();}
+        });
         add(nameField);
 
         // Szöveg választó
@@ -47,9 +55,9 @@ public class CustomPanel extends JPanel {
         add(colorButton);
 
         // Zöld pipa (ikonos label)
-        JLabel confirmLabel = new JLabel("✔");
-        confirmLabel.setForeground(new Color(0, 180, 0));
-        confirmLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        confirmLabel = new JLabel("X");
+        confirmLabel.setForeground(new Color(180, 0, 0));
+        confirmLabel.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
         add(confirmLabel);
     }
 
@@ -69,6 +77,18 @@ public class CustomPanel extends JPanel {
         return name != null && !name.trim().isEmpty();
     }
 
+    private void confirmSwitcher(){
+        boolean state = isValidName();
+        if (state){
+            confirmLabel.setText("✔");
+            confirmLabel.setForeground(new Color(0, 180, 0));
+        }
+        else{
+            confirmLabel.setText("X");
+            confirmLabel.setForeground(new Color(180, 0, 0));
+        }
+    }
+
     /**
      * Megcsinálja a PlayerGUI-kat az állapotából, ha nem jó a név, akkor IlligalArgumentException
      * @return PlayerGUI, amit csinált
@@ -84,7 +104,8 @@ public class CustomPanel extends JPanel {
                 default -> throw new RuntimeException();
             };
             return new PlayerGUI(jatekos, selectedColor);
-        } else throw new IllegalArgumentException("Nem megfelelő a név");
+        } 
+        else throw new IllegalArgumentException("Nem megfelelő a név");
     }
 }
 
