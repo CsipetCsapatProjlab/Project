@@ -84,6 +84,9 @@ public class SporaPlaceLogic implements GridVisitor, GameObjectVisitor {
         tekton=null;
 
         if(origin!=null && destination!=null){
+                if(origin==destination){
+                    return Optional.of(celGrid);
+                }
                 if(origin.getNeighbours().contains(destination)){
                     return Optional.of(celGrid);
                 }
