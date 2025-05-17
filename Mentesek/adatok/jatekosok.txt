@@ -2,3 +2,7 @@ Gomba1 ; 0 ; 0 ; Gombasz
 Gomba2 ; 1 ; 0 ; Gombasz
 Rovar1 ; 2 ; 0 ; Rovarasz
 Rovar2 ; 3 ; 0 ; Rovarasz
+Gomba1 ; 0 ; 0 ; Gombasz
+Gomba2 ; 1 ; 0 ; Gombasz
+Rovar1 ; 2 ; 0 ; Rovarasz
+Rovar2 ; 3 ; 0 ; Rovarasz

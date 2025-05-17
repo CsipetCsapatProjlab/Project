@@ -764,7 +764,6 @@ public class Fungorium {
         tektons = new ArrayList<>();
         motor = new JatekMotor();
         motor.betoltes(alapmappa + "/jatekosok.txt");
-
         // 1. Pálya típusainak betöltése
         try (BufferedReader reader = new BufferedReader(new FileReader(alapmappa + "/tekton/palya_tektonelemek.txt"))) {
             for (int i = 0; i < sor; i++) {

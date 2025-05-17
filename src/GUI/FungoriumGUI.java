@@ -316,7 +316,7 @@ public class FungoriumGUI extends JFrame {
             if (filename != null && !filename.trim().isEmpty()) {
                 try {
                     JOptionPane.showMessageDialog(null, "Játék elmentve: " + filename.trim());
-                    mentes(filename.trim());
+                    this.mentes(filename.trim());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Hiba történt a mentés során: " + ex.getMessage());
                 }
@@ -333,7 +333,7 @@ public class FungoriumGUI extends JFrame {
             if (kovetkezoJatekos == 0) {
                 jelenlegikorokszama++;
                 try {
-                    mentes(jatekNev);
+                    this.mentes(jatekNev);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -351,7 +351,6 @@ public class FungoriumGUI extends JFrame {
 
     public FungoriumGUI(String betolString) {
         this.fungorium = new Fungorium(betolString);
-
         Path path = Paths.get(betolString);
         this.jatekNev = path.getFileName().toString(); 
         System.out.println(jatekNev);
@@ -359,7 +358,6 @@ public class FungoriumGUI extends JFrame {
         this.jatekosokGUI = fungorium.getPlayerslist().stream()
                 .map(PlayerGUI::new)
                 .toList();
-        addPlayers();
         betultszin(betolString + "/szinek.txt");
         betultkorok(betolString + "/korok.txt");
 

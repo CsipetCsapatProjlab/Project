@@ -93,7 +93,7 @@ public class JatekMotor {
         String filePath = alapmappa + "/jatekosok.txt";
         File file = new File(filePath);
         file.getParentFile().mkdirs();
-
+        System.out.println(jatekosok.size());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Jatekos jatekos : jatekosok) {
                 writer.write(jatekos.mentes());
@@ -104,7 +104,6 @@ public class JatekMotor {
             System.err.println("Hiba történt a játékosok mentésekor: " + e.getMessage());
         }
     }
-
 
     /**
      * Jatekallas betoltese
