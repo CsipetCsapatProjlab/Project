@@ -140,6 +140,12 @@ public class FungoriumGUI extends JFrame {
                 if (jelenlegikorokszama == 1) {
                     fungorium.makeMove(x1, y1, x2, y2, Move.Kezdo_lepes);
                     fungorium.getMotor().kovetkezoJatekos();
+
+                    int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
+                    if (kovetkezoJatekos == 0) {
+                        jelenlegikorokszama++;
+                    }
+
                 }else{
                     fungorium.makeMove(x1, y1, x2, y2, move);
                 }

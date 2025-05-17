@@ -1,4 +1,2 @@
-Gomba1 ; 0 ; 0 ; Gombasz
-Gomba2 ; 1 ; 0 ; Gombasz
-Rovar1 ; 2 ; 0 ; Rovarasz
-Rovar2 ; 3 ; 0 ; Rovarasz
+Sanyi ; 0 ; 0 ; Gombasz
+Sanyi ; 1 ; 0 ; Rovarasz
