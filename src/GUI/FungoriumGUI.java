@@ -142,6 +142,7 @@ public class FungoriumGUI extends JFrame {
                     int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
                     if (kovetkezoJatekos == 0) {
                         jelenlegikorokszama++;
+                        fungorium.ujKor();
                     }
 
                 }else{
