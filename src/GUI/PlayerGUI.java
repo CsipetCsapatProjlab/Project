@@ -57,4 +57,12 @@ public class PlayerGUI extends JPanel {
     public Jatekos getJatekos() {
         return jatekos;
     }
+
+    public void frissit() {
+        nameLabel.setText(jatekos.getNev());
+        scoreLabel.setText(Integer.toString(jatekos.getPoints()));
+        nameLabel.setForeground(colorOfJatekos);
+        scoreLabel.setForeground(colorOfJatekos);
+    }
+
 }

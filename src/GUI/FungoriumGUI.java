@@ -140,6 +140,7 @@ public class FungoriumGUI extends JFrame {
                     fungorium.getMotor().kovetkezoJatekos();
 
                     int kovetkezoJatekos = fungorium.getMotor().getCurrentPlayerNumber();
+                    System.out.println(kovetkezoJatekos);
                     if (kovetkezoJatekos == 0) {
                         jelenlegikorokszama++;
                         fungorium.ujKor();
@@ -159,6 +160,7 @@ public class FungoriumGUI extends JFrame {
     private void viewFrissit(){
         palyaFrissit();
         moveListaFrissit();
+        jobbPanelFrissit();
         current.setText(fungorium.getMotor().getCurrentPlayer().toString());
     }
 
@@ -180,7 +182,7 @@ public class FungoriumGUI extends JFrame {
                     Jatekos gameObjectOwner=obj.getObserver();
                     var color = jatekosokGUI.stream().filter(e->gameObjectOwner==e.jatekos).findFirst();
                     Color jatekosColor=color.isPresent()?color.get().colorOfJatekos:Color.BLACK;
-                    label.append(wrapInColor(obj.toStringShort(),jatekosColor,20));
+                    label.append(wrapInColor(obj.toStringShort(), jatekosColor));
                 }
                 label.append("</html>");
 
@@ -195,6 +197,21 @@ public class FungoriumGUI extends JFrame {
             }
         }
     }
+
+    private void jobbPanelFrissit() {
+        SwingUtilities.invokeLater(() -> {
+            Jatekos currentPlayer = fungorium.getMotor().getCurrentPlayer();
+            for (PlayerGUI playerGUI : jatekosokGUI) {
+                playerGUI.frissit();
+                if (playerGUI.getJatekos().equals(currentPlayer)) {
+                    playerGUI.setBorder(BorderFactory.createLineBorder(Color.RED, 3)); // piros keret
+                } else {
+                    playerGUI.setBorder(null); // eltávolítja a keretet a többiektől
+                }
+            }
+        });
+    }
+
     public void MoveListSelectionChanged(ListSelectionEvent evt) {
         int selectedIx = evt.getFirstIndex();
         if(selectedIx>=0 && selectedIx<possibleMoves.getSize()){
@@ -379,8 +396,13 @@ public class FungoriumGUI extends JFrame {
         initFrame();
     }
 
-    private static String wrapInColor(String label, Color color, int size) {
-        return String.format("<font size='%s' color='%s'>%s</font>", size,ColorUtils.colorToHex(color),label);
+    private String wrapInColor(String label, Color color) {
+        // A font méretet dinamikusan számoljuk: kisebb pályán nagyobb szöveg
+        int baseSize = 20;
+        int scaleFactor = Math.max(rows, cols); // nagyobb dimenzió határozza meg
+        int size = Math.max(8, baseSize - (scaleFactor / 10)); // alsó limit 8
+
+        return String.format("<font size='%d' color='%s'>%s</font>", size, ColorUtils.colorToHex(color), label);
     }
 
     private void addPlayers() {
