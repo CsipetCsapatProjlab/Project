@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -291,6 +292,8 @@ public class FungoriumGUI extends JFrame {
                 viewGrid[y][x] = new GridButton(y,x);
                 viewGrid[y][x].setOpaque(true);
                 viewGrid[y][x].setBorderPainted(true);
+                int fontSize = Math.max(2, 500 / Math.max(rows, cols));
+                viewGrid[y][x].setFont(new Font("MV Boli", Font.PLAIN, fontSize));
                 centerPanel.add(viewGrid[y][x]);
             }
         }
